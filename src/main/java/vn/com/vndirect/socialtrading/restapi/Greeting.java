@@ -1,4 +1,4 @@
-package vn.com.vndirect.socialtrading.restservice;
+package vn.com.vndirect.socialtrading.restapi;
 
 
 public class Greeting {

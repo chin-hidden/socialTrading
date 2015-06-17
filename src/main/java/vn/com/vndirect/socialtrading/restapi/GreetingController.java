@@ -1,4 +1,4 @@
-package vn.com.vndirect.socialtrading.restservice;
+package vn.com.vndirect.socialtrading.restapi;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
