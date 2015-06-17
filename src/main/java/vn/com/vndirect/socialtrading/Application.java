@@ -26,6 +26,7 @@ class MyDataSource extends AbstractDataSource {
 public class Application {
 
     public static void main(String[] args) {
+        // SpringApplication.run(Application.class, args);
         FollowerDao followerDao = new FollowerDao(new MyDataSource());
         System.out.println(followerDao.findAll().size());
     }
