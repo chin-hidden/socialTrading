@@ -1,0 +1,1 @@
+`model` chứa các class đơn giản, map trực tiếp với bảng trong db.

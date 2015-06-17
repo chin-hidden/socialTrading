@@ -1,0 +1,1 @@
+The `dao` package contains lightweight classes that provide direct access to a database table.
