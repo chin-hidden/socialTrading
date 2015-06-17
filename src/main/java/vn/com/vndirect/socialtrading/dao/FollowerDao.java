@@ -4,14 +4,13 @@ package vn.com.vndirect.socialtrading.dao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import vn.com.vndirect.socialtrading.model.Follower;
-import vn.com.vndirect.socialtrading.model.Trader;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class FollowerDao implements Dao<Trader, String> {
+public class FollowerDao implements Dao<Follower, String> {
 
     private final JdbcTemplate template;
     private String baseQuery =
@@ -23,38 +22,38 @@ public class FollowerDao implements Dao<Trader, String> {
     }
 
     @Override
-    public Trader getSingle(String id) {
+    public Follower getSingle(String id) {
         return template.queryForObject(
                 baseQuery + " WHERE account.accountNumber = ?",
-                Trader.class, id);
+                new FollowerMapper(), id);
     }
 
     @Override
-    public List<Trader> findAll() {
-        return template.queryForList(baseQuery, Trader.class);
+    public List<Follower> findAll() {
+        return template.query(baseQuery, new FollowerMapper());
     }
 
     @Override
-    public boolean insert(Trader e) {
+    public boolean insert(Follower e) {
         return false;
     }
 
     @Override
-    public boolean update(Trader e) {
+    public boolean update(Follower e) {
         return false;
     }
 
     @Override
-    public boolean save(Trader e) {
+    public boolean save(Follower e) {
         return false;
     }
 
     @Override
-    public boolean delete(Trader e) {
+    public boolean delete(Follower e) {
         return false;
     }
 
-    class FollowerMapper implements RowMapper<Follower> {
+    private static final class FollowerMapper implements RowMapper<Follower> {
         @Override
         public Follower mapRow(ResultSet resultSet, int i) throws SQLException {
             Follower follower = new Follower();
