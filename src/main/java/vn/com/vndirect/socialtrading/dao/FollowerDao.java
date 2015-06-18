@@ -1,31 +1,32 @@
 package vn.com.vndirect.socialtrading.dao;
 
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Follower;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class FollowerDao implements Dao<Follower, String> {
+@Service
+public class FollowerDao extends AbstractDao<Follower, String> {
 
-    private final JdbcTemplate template;
     private String baseQuery =
-            "SELECT * FROM account JOIN traderInfo " +
-            "ON account.accountNumber = traderInfo.accountNumber";
-
-    public FollowerDao(DataSource source) {
-        template = new JdbcTemplate(source);
-    }
+            "SELECT * FROM account JOIN followerInfo " +
+            "ON account.accountNumber = followerInfo.accountNumber";
 
     @Override
     public Follower getSingle(String id) {
         return template.queryForObject(
                 baseQuery + " WHERE account.accountNumber = ?",
                 new FollowerMapper(), id);
+    }
+
+    public Follower getByUsername(String username) {
+        return template.queryForObject(
+                baseQuery + " WHERE username = ?",
+                new FollowerMapper(), username);
     }
 
     @Override

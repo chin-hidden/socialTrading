@@ -1,13 +1,15 @@
 package vn.com.vndirect.socialtrading.dao;
 
 import org.javatuples.Pair;
+import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Following;
 import vn.com.vndirect.socialtrading.model.Trader;
 
 import java.util.List;
 
 
-public class FollowingDao implements Dao<Following, Pair<String, String>> {
+@Service
+public class FollowingDao extends AbstractDao<Following, Pair<String, String>> {
     @Override
     public Following getSingle(Pair<String, String> id) {
         return null;
