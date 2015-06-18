@@ -14,8 +14,8 @@ public class FollowerDao implements Dao<Follower, String> {
 
     private final JdbcTemplate template;
     private String baseQuery =
-            "SELECT * FROM account JOIN traderInfo " +
-            "ON account.accountNumber = traderInfo.accountNumber";
+            "SELECT * FROM account JOIN followerinfo " +
+            "ON account.accountNumber = followerinfo.accountNumber";
 
     public FollowerDao(DataSource source) {
         template = new JdbcTemplate(source);

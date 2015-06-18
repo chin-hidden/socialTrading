@@ -1,33 +1,23 @@
 package vn.com.vndirect.socialtrading;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jdbc.datasource.AbstractDataSource;
-import vn.com.vndirect.socialtrading.dao.FollowerDao;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-
-class MyDataSource extends AbstractDataSource {
-    @Override
-    public Connection getConnection() throws SQLException {
-        return getConnection("postgres", "1111");
-    }
-
-    @Override
-    public Connection getConnection(String username, String password) throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:5432/duber",
-                username, password);
-    }
-}
 
 @SpringBootApplication
+
+@EnableScheduling
 public class Application {
 
     public static void main(String[] args) {
-        // SpringApplication.run(Application.class, args);
-        FollowerDao followerDao = new FollowerDao(new MyDataSource());
-        System.out.println(followerDao.findAll().size());
+        SpringApplication.run(Application.class, args);
+        //FollowerDao followerDao = new FollowerDao(new MyDataSource());
+       // System.out.println(followerDao.findAll().size());
     }
+	 
+	/*@Bean
+	public InMemory memory() {
+		return new InMemory();
+	}*/
 }
