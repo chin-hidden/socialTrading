@@ -3,12 +3,13 @@ package vn.com.vndirect.socialtrading.model;
 import java.math.BigDecimal;
 
 
-public abstract class Account {
+public class Account {
     private String accountNumber;
     private String username;
     private String password;
     private String name;
     private BigDecimal cash;
+    private String type;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -48,5 +49,13 @@ public abstract class Account {
 
     public void setCash(BigDecimal cash) {
         this.cash = cash;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
