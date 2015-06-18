@@ -13,7 +13,7 @@ CREATE TABLE account (
 	password text NOT NULL,
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
-	type char                           -- The account type 0: FOLLOWER | 1: TRADER
+	type text                           -- The account FOLLOWER | TRADER
 );
 
 CREATE TABLE followerInfo (
@@ -94,12 +94,12 @@ CREATE TABLE performance (
 
 
 INSERT INTO account (accountNumber, username, password, name, cash, type) VALUES
-       ('0001210254', 'user1', 'user1', 'Đỗ Quốc Huy', 10000, 0),
-       ('0001210287', 'user2', 'user2', 'Trần Xuân Anh', 15000, 0),
-       ('0001041716', 'user3', 'user3', 'aeoaeo', 45, 1),
-       ('0001052458', 'user4', 'user4', 'iiii', 5656, 1),
-       ('0001011079', 'user5', 'user5', 'uuu', 4544, 1),
-       ('0001029605', 'user6', 'user6', 'thtnhh', 323, 1);
+       ('0001210254', 'user1', 'user1', 'Đỗ Quốc Huy', 10000, 'FOLLOWER'),
+       ('0001210287', 'user2', 'user2', 'Trần Xuân Anh', 15000, 'FOLLOWER'),
+       ('0001041716', 'user3', 'user3', 'aeoaeo', 45, 'TRADER'),
+       ('0001052458', 'user4', 'user4', 'iiii', 5656, 'TRADER'),
+       ('0001011079', 'user5', 'user5', 'uuu', 4544, 'TRADER'),
+       ('0001029605', 'user6', 'user6', 'thtnhh', 323, 'TRADER');
 
 INSERT INTO followerInfo (accountNumber, riskFactor) VALUES
        ('0001210254', 60),
