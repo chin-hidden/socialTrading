@@ -53,8 +53,8 @@ CREATE TABLE orderlist (
 	date timestamp with time zone NOT NULL,
 	side text NOT NULL,     -- NS/NB
 	type text NOT NULL,     -- MP, LO, etc.
-	matchPrice numeric(19,2),   -- These two can be NULL,
-	matchQuantity integer       -- meaning this order has not been matched yet.
+	matchPrice numeric(19,2) NOT NULL,   -- These two can be 0,
+	matchQuantity integer NOT NULL       -- meaning this order has not been matched yet.
 );
 
 
@@ -115,7 +115,7 @@ INSERT INTO following (followerAccount, traderAccount, allocatedMoney) VALUES
 	('0001210287', '0001011079', 34343);
 
 INSERT INTO orderList VALUES
-	('ORDER_123123', '0001210287', '0001011079', 'VND', 12323, 3434, now(), 'NB', 'MP', NULL, NULL);
+	('ORDER_123123', '0001210287', '0001011079', 'VND', 12323, 3434, now(), 'NB', 'MP', 0, 0);
 
 INSERT INTO position VALUES
        ('0001052458', NULL, 'FPT', 100, 3434);
