@@ -1,0 +1,205 @@
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+img {
+  display: block;
+}
+
+html {
+  background-color: #F2F2F2;
+}
+
+body {
+  max-width: 795px;  /* Linh's number */
+  background-image: url("/img/background.jpg");
+  margin: 0 auto;
+  font-size: 12px;
+  color: #535551;
+}
+
+.trader-list > .trader:nth-child(odd) {
+  background: #EFEFEF;
+}
+
+.traderLine {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.traderLine .basic-info {
+  width: 250px;
+}
+
+.block {
+  float: left;
+  margin-right: 20px;
+}
+
+.text-label {
+  font-size: 10px;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.form-login {
+  margin: 165px auto;
+  max-width: 400px;
+}
+
+.form-login .form-control {
+  font-size: 16px;
+  height: auto;
+  margin-bottom: 1em;
+}
+
+.navbar-default {
+  background-color: #5E5E5E;
+  border-radius: 0px;
+  margin-left: -15px;
+  margin-right: -15px;
+  border: none;
+  box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
+}
+
+.navbar-default .navbar-text,
+.navbar-default .navbar-brand {
+  color: white;
+}
+
+.navbar-default .navbar-brand {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: white;
+}
+
+.navbar-right .navbar-btn {
+  margin-left: 10px;
+}
+
+.btn {
+  box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
+}
+
+.btn-primary {
+  background-color: #FF9900;
+  color: #333;
+  font-weight: bold;
+  border: none;
+}
+
+.home-container {
+  padding-left: 44px;
+  padding-right: 44px;
+}
+
+.hero {
+  margin-top: -20px;
+  margin-bottom: 20px;
+  margin-left: -59px;
+  margin-right: -59px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: 59px;
+  padding-right: 59px;
+
+  background-image: url("/img/hero-background.jpg");
+  background-position: 0% 100%;
+  color: white;
+}
+
+.hero p {
+  font-size: 20px;
+}
+
+.hero p, .hero h1 {
+  text-shadow: 1px 1px 3px #333;
+}
+
+.hero img {
+  margin-left: -27px;
+  margin-bottom: 25px;
+}
+
+.features {
+  margin-bottom: 60px
+}
+
+.features h3 {
+  font-size: 18px;;
+}
+
+.features h3::before {
+  content: url("/img/bullet-point.png");
+  margin-left: -20px;
+  margin-right: 9px;
+}
+
+footer {
+  background: #5E5E5E;
+  color: #D7D7D7;
+  margin: 0px -15px;
+  padding: 15px;
+}
+
+span.accent {
+  color: #FF9900;
+}
+
+.wizard {
+  font-size: 18px;
+}
+
+.wizard .step {
+  margin-bottom: 20px;
+}
+
+.wizard .step h3 {
+  margin-bottom: 20px;
+}
+
+.button-row button {
+  float: right;
+  margin-left: 10px;
+}
+
+
+.trader-thumb-slider img {
+    margin: 10px auto;
+    transition: 300ms ease 0s;
+}
+
+.trader-thumb-slider .slick-slide {
+    transition: 300ms ease 0s;
+}
+
+.trader-thumb-slider .slick-center {
+    background-color: #FF9900;
+}
+
+.trader-thumb-slider .slick-center img {
+    transform: scale(1.08);
+}
+
+.noUi-connect {
+  background-color: #FF9900;
+}
+
+.highlight-label {
+  color: white;
+  background-color: #FF9900;
+  padding: 5px 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.step img {
+  width: 120px;
+  height: auto;
+}
