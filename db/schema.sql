@@ -45,16 +45,16 @@ CREATE TABLE following (
 
 CREATE TABLE orderlist (
 	orderId text PRIMARY KEY,
-	followerAccount text NOT NULL,
-	traderAccount text NOT NULL,
+	byAccount text NOT NULL REFERENCES account (accountNumber),
+	mimickingAccount text REFERENCES account (accountNumber),   -- Can be null if this order is made by a trader
 	stock text NOT NULL,
 	quantity integer NOT NULL,
 	price numeric(19, 2) NOT NULL,
 	date timestamp with time zone NOT NULL,
-	side integer NOT NULL,
-	type text NOT NULL,
+	side text NOT NULL,     -- NS/NB
+	type text NOT NULL,     -- MP, LO, etc.
 	matchPrice numeric(19,2),   -- These two can be NULL,
-	matchQuantity integer   -- meaning this order has not been matched yet.
+	matchQuantity integer       -- meaning this order has not been matched yet.
 );
 
 
@@ -114,9 +114,11 @@ INSERT INTO traderInfo (accountNumber, totalAllocatedMoney, peopleFollowing) VAL
 INSERT INTO following (followerAccount, traderAccount, allocatedMoney) VALUES
 	('0001210287', '0001011079', 34343);
 
+INSERT INTO orderList VALUES
+	('ORDER_123123', '0001210287', '0001011079', 'VND', 12323, 3434, now(), 'NB', 'MP', NULL, NULL);
+
 INSERT INTO position VALUES
        ('0001052458', NULL, 'FPT', 100, 3434);
-
 
 select * from position;
 
