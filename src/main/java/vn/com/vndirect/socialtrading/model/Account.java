@@ -1,11 +1,15 @@
 package vn.com.vndirect.socialtrading.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.math.BigDecimal;
 
 
 public class Account {
     private String accountNumber;
     private String username;
+
+    @JsonIgnore
     private String password;
     private String name;
     private BigDecimal cash;
