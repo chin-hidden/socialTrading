@@ -21,7 +21,8 @@ public class FollowerServiceTest {
     public void setup() {
         followerDao = Mockito.mock(FollowerDao.class);
         followingDao = Mockito.mock(FollowingDao.class);
-        fs = new FollowerService(followingDao, followerDao);
+        // FIXME This has not been updated to reflect the latest API
+        fs = new FollowerService();
     }
 
     @Test
@@ -33,7 +34,7 @@ public class FollowerServiceTest {
         aTrader.setAccountNumber("0012312031023");  // Random numbers
         aFollower.setAccountNumber("0013873579785");
 
-        fs.followTrader(aFollower, aTrader, amount);
+        fs.followTrader(aFollower.getAccountNumber(), aTrader.getAccountNumber(), amount);
 
         Following newRlts = new Following(aFollower.getAccountNumber(), aTrader.getAccountNumber(), amount);
         Mockito.verify(followingDao).save(newRlts);
