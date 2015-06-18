@@ -30,6 +30,7 @@ CREATE TABLE traderInfo (
 
 CREATE TABLE cashFlow (
 	accountNumber text NOT NULL,
+	accountTrader text,
 	amount numeric(19, 2) NOT NULL,
 	date timestamp with time zone NOT NULL
 );
@@ -82,7 +83,6 @@ CREATE TABLE position (
 -- Used mostly to make charts.
 CREATE TABLE performance (
 	accountNumber text NOT NULL REFERENCES account (accountNumber),
-	equity numeric(19, 2) NOT NULL,
 	profit numeric(19, 2) NOT NULL,
 	date timestamp with time zone NOT NULL
 );
@@ -96,31 +96,29 @@ CREATE TABLE performance (
 INSERT INTO account (accountNumber, username, password, name, cash, type) VALUES
        ('0001210254', 'user1', 'user1', 'Đỗ Quốc Huy', 10000, 'FOLLOWER'),
        ('0001210287', 'user2', 'user2', 'Trần Xuân Anh', 15000, 'FOLLOWER'),
-       ('0001041716', 'user3', 'user3', 'aeoaeo', 45, 'TRADER'),
+       ('0001041716', 'user3', 'user3', 'Trần Nguyên Đán', 45, 'TRADER'),
        ('0001052458', 'user4', 'user4', 'iiii', 5656, 'TRADER'),
        ('0001011079', 'user5', 'user5', 'uuu', 4544, 'TRADER'),
-       ('0001029605', 'user6', 'user6', 'thtnhh', 323, 'TRADER');
+       ('0001029605', 'user6', 'user6', 'Trần Nguyên Đức', 323, 'TRADER');
 
 INSERT INTO followerInfo (accountNumber, riskFactor) VALUES
        ('0001210254', 60),
        ('0001210287', 40);
 
 INSERT INTO traderInfo (accountNumber, totalAllocatedMoney, peopleFollowing) VALUES
-	('0001041716', 12321313, 3943),
-	('0001052458', 12321313, 3943),
-	('0001011079', 12321313, 3943),
-	('0001029605', 12321313, 3943);
+	('0001041716', 0, 0),
+	('0001052458', 0, 0),
+	('0001011079', 100000000, 1),
+	('0001029605', 0, 0);
 
 INSERT INTO following (followerAccount, traderAccount, allocatedMoney) VALUES
-	('0001210287', '0001011079', 34343);
+	('0001210287', '0001011079', 100000000);
 
 INSERT INTO orderList VALUES
 	('ORDER_123123', '0001210287', '0001011079', 'VND', 12323, 3434, now(), 'NB', 'MP', 0, 0);
 
 INSERT INTO position VALUES
        ('0001052458', NULL, 'FPT', 100, 3434);
-
-select * from position;
 
 INSERT INTO stockrisk (stock, risk, name, floor) VALUES
 	('FPT', 30, 'Tập đoàn FPT', 10),

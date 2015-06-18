@@ -1,8 +1,6 @@
 package vn.com.vndirect.socialtrading.model;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 
 public class Trader extends Account {
