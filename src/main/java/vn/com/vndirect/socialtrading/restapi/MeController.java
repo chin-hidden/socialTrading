@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class MeController {
     HttpSession session;
 
+    @Autowired
     public MeController(HttpSession session) {
         this.session = session;
     }

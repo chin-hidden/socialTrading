@@ -16,6 +16,7 @@ public class FollowerService {
     FollowingDao followingDao;
     FollowerDao followerDao;
 
+    @Autowired
     public FollowerService(FollowingDao followingDao, FollowerDao followerDao) {
         this.followingDao = followingDao;
         this.followerDao = followerDao;

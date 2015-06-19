@@ -13,13 +13,17 @@ import vn.com.vndirect.socialtrading.service.FollowerService;
 import java.math.BigDecimal;
 import java.util.List;
 
+// FIXME Error handling
 @RestController
 public class FollowerController {
-    @Autowired
     FollowerDao followerDao;
-    @Autowired
     FollowerService followerService;
 
+    @Autowired
+    public FollowerController(FollowerDao followerDao, FollowerService followerService) {
+        this.followerDao = followerDao;
+        this.followerService = followerService;
+    }
 
     @RequestMapping(value = "/api/v1/follower/{id}", method = RequestMethod.GET)
     public Follower getFollower(@PathVariable String id) {
@@ -33,7 +37,6 @@ public class FollowerController {
 
     @RequestMapping(value = "/api/v1/follower/{id}/following", method = RequestMethod.POST)
     public void followTrader(@PathVariable String id, String traderAccount, BigDecimal amount) {
-        // return followerService.followTrader(id, traderAccount, amount);
+        followerService.followTrader(id, traderAccount, amount);
     }
-
 }
