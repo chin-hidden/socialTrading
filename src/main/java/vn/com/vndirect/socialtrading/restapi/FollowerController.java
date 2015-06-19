@@ -31,7 +31,7 @@ public class FollowerController {
     }
 
     @RequestMapping(value = "/api/v1/followers", method = RequestMethod.GET)
-    public List<Follower> getAllFollower() {
+    public List<Follower> getAllFollowers() {
         return followerDao.findAll();
     }
 
