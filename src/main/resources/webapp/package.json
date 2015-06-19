@@ -17,5 +17,7 @@
   },
 
   "devDependencies": {
+      "react-tools": "latest",
+      "npm-css": "latest"
   }
 }
