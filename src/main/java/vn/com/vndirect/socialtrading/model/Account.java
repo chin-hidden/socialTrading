@@ -6,6 +6,22 @@ import java.math.BigDecimal;
 
 
 public class Account {
+    public enum UserType {
+        FOLLOWER("FOLLOWER"),
+        TRADER("TRADER");
+
+        private final String text;
+
+        private UserType(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return this.text;
+        }
+    }
+
     private String accountNumber;
     private String username;
 
@@ -13,7 +29,7 @@ public class Account {
     private String password;
     private String name;
     private BigDecimal cash;
-    private String type;
+    private UserType type;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -55,11 +71,11 @@ public class Account {
         this.cash = cash;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 }
