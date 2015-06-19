@@ -15,6 +15,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>vn.com.vndirect.ors</groupId>
+            <artifactId>ors-client-api</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
@@ -25,12 +31,6 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>vn.com.vndirect.ors</groupId>
-            <artifactId>ors-client-api</artifactId>
-            <version>0.0.2</version>
-        </dependency>
- 
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-amqp</artifactId>
