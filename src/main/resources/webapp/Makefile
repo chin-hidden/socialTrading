@@ -5,25 +5,25 @@ deps:
 	bower install
 
 dir:
-	mkdir -p dist/scripts
-	mkdir -p dist/styles
+	mkdir -p ../public/scripts
+	mkdir -p ../public/styles
 	mkdir -p .tmp
 
 js: dir
 	jsx -x jsx app/js .tmp
 	jsx -x js app/js .tmp
-	cat .tmp/*.js > dist/scripts/bundle.js
+	cat .tmp/*.js > ../public/scripts/bundle.js
 
 css: dir
-	npm-css app/styles/main.css > dist/styles/bundle.css
+	npm-css app/styles/main.css > ../public/styles/bundle.css
 
 build: js css
-	cp app/index.html dist
-	cp -rfu app/img dist
-	cp -rfu bower_components dist
+	cp app/index.html ../public
+	cp -rfu app/img ../public
+	cp -rfu bower_components ../public
 
 clean:
-	rm -rf dist
+	rm -rf ../public
 	rm -rf .tmp
 
 watch:
