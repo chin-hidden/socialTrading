@@ -2,7 +2,10 @@ package vn.com.vndirect.socialtrading.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import vn.com.vndirect.socialtrading.InjectedTestCase;
 import vn.com.vndirect.socialtrading.dao.FollowerDao;
 import vn.com.vndirect.socialtrading.dao.FollowingDao;
 import vn.com.vndirect.socialtrading.model.Follower;
@@ -12,18 +15,14 @@ import vn.com.vndirect.socialtrading.model.Trader;
 import java.math.BigDecimal;
 
 
-public class FollowerServiceTest {
+public class FollowerServiceTest extends InjectedTestCase {
+    @Mock
     FollowerDao followerDao;
+    @Mock
     FollowingDao followingDao;
-    FollowerService fs;
 
-    @Before
-    public void setup() {
-        followerDao = Mockito.mock(FollowerDao.class);
-        followingDao = Mockito.mock(FollowingDao.class);
-        // FIXME This has not been updated to reflect the latest API
-        fs = new FollowerService();
-    }
+    @InjectMocks
+    FollowerService fs;
 
     @Test
     public void testFollowTrader() throws Exception {

@@ -13,10 +13,13 @@ import java.util.List;
 
 @Service
 public class FollowerService {
-    @Autowired
     FollowingDao followingDao;
-    @Autowired
     FollowerDao followerDao;
+
+    public FollowerService(FollowingDao followingDao, FollowerDao followerDao) {
+        this.followingDao = followingDao;
+        this.followerDao = followerDao;
+    }
 
     /**
      * Return the list of traders a follower is following.
