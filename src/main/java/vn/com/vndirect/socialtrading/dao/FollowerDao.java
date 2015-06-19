@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Follower;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FollowerDao extends AbstractDao<Follower, String> {
@@ -15,10 +16,10 @@ public class FollowerDao extends AbstractDao<Follower, String> {
             "ON account.accountNumber = followerInfo.accountNumber";
 
     @Override
-    public Follower getSingle(String id) {
-        return template.queryForObject(
+    public Optional<Follower> getSingle(String id) {
+        return Optional.of(template.queryForObject(
                 baseQuery + " WHERE account.accountNumber = ?",
-                new BeanPropertyRowMapper<Follower>(Follower.class), id);
+                new BeanPropertyRowMapper<Follower>(Follower.class), id));
     }
 
     public Follower getByUsername(String username) {

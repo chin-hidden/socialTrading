@@ -10,6 +10,7 @@ import vn.com.vndirect.socialtrading.model.Account;
 import vn.com.vndirect.socialtrading.service.AuthenticationService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @RestController
 public class AuthenticationController {
@@ -24,15 +25,18 @@ public class AuthenticationController {
         boolean authenticated = as.authenticate(username, password);
 
         if (authenticated) {
-            Account account = accountDao.getByUsername(username);
-            if (account.getType().equals("FOLLOWER")) {
-                account = followerDao.getByUsername(username);
-            } else {
-                //account = traderDao.getByUsername(username));
-            }
+            accountDao.getByUsername(username).ifPresent(account -> {
+                if (account.getType() == Account.UserType.FOLLOWER) {
+                    account = followerDao.getByUsername(username);
+                } else {
+                    //account = traderDao.getByUsername(username));
+                }
 
-            session.setAttribute("user", account);
+                session.setAttribute("user", account);
+            });
         }
+
+        // FIXME Throw 401
         return authenticated ? "Yes!" : "nope";
     }
 }

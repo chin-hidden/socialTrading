@@ -27,7 +27,7 @@ public class FollowerController {
 
     @RequestMapping(value = "/api/v1/follower/{id}", method = RequestMethod.GET)
     public Follower getFollower(@PathVariable String id) {
-        return followerDao.getSingle(id);
+        return followerDao.getSingle(id).get();
     }
 
     @RequestMapping(value = "/api/v1/followers", method = RequestMethod.GET)

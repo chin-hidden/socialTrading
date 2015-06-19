@@ -2,9 +2,10 @@ package vn.com.vndirect.socialtrading.dao;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Dao <Entity, Key> {
-    Entity getSingle(Key id);
+    Optional<Entity> getSingle(Key id);
     List<Entity> findAll();
     boolean insert(Entity e);
     boolean update(Entity e);

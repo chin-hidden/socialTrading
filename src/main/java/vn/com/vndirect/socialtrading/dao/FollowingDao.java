@@ -6,12 +6,13 @@ import vn.com.vndirect.socialtrading.model.Following;
 import vn.com.vndirect.socialtrading.model.Trader;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
 public class FollowingDao extends AbstractDao<Following, Pair<String, String>> {
     @Override
-    public Following getSingle(Pair<String, String> id) {
+    public Optional<Following> getSingle(Pair<String, String> id) {
         return null;
     }
 

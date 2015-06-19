@@ -6,19 +6,20 @@ import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Account;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountDao extends AbstractDao<Account, String> {
 
-    public Account getByUsername(String username) {
-        return template.queryForObject("SELECT * FROM account WHERE username = ?",
+    public Optional<Account> getByUsername(String username) {
+        return Optional.of(template.queryForObject("SELECT * FROM account WHERE username = ?",
                 new BeanPropertyRowMapper<Account>(Account.class),
-                username);
+                username));
     }
 
     @Override
-    public Account getSingle(String id) {
-        return null;
+    public Optional<Account> getSingle(String id) {
+        return Optional.empty();
     }
 
     @Override

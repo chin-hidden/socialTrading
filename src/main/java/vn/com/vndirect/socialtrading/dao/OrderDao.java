@@ -7,6 +7,7 @@ import vn.com.vndirect.socialtrading.model.Order;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderDao implements Dao<Order, String> {
     private JdbcTemplate template;
@@ -16,7 +17,7 @@ public class OrderDao implements Dao<Order, String> {
     }
 
     @Override
-    public Order getSingle(String id) {
+    public Optional<Order> getSingle(String id) {
         return null;
     }
 
