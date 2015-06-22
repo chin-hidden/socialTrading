@@ -1,16 +1,22 @@
 'use strict';
 
 
+ActionTypes = {
+	FOLLOW_TRADER: "FOLLOW_TRADER",
+	UNFOLLOW_TRADER: "UNFOLLOW_TRADER"
+};
+
+
 var TraderLine = React.createClass({
     followBtnToggled: function() {
         if (me.isFollowing(this.props.trader)) {
             dispatcher.dispatch({
-                type: "ask_to_unfollow_trader",
+                type: ActionTypes.FOLLOW_TRADER,
                 trader: this.props.trader
             });
         } else {
             dispatcher.dispatch({
-                type: "ask_to_follow_trader",
+                type: ActionTypes.UNFOLLOW_TRADER,
                 trader: this.props.trader
             });
         }
@@ -108,7 +114,7 @@ var NavBar = React.createClass({
     },
 
     render: function() {
-        if (me.get("id")) {
+        if (isLoggedIn()) {
             var accountControls = (
                 <ul className="nav navbar-nav navbar-right">
                     <li><button className="btn btn-primary navbar-btn"
@@ -146,11 +152,20 @@ var App = React.createClass({
         dispatcher.register(function(message) {
             switch(message.type) {
                 case "auth.authenticated":
-                    _this.setState({authChecking: false, loggedIn: true});
-                    me.fetch().then(function() {
-                        _this.props.router.navigate("wizard", {trigger: true});
-                    });
-            }
+
+		if (message.accountType === "FOLLOWER") {
+		    _this.setState({authChecking: false, loggedIn: true});
+
+		    me = new Follower();
+		    me.url = "/api/v1/follower/" + message.accountNumber;
+		    me.fetch().then(function() {
+			_this.props.router.navigate("wizard", {trigger: true});
+		    });
+		} else {
+		    alert("Xin lỗi quý khách. Hiện chúng tôi chưa hỗ trợ đăng nhập cho trader.")
+		}
+
+	    }
         });
 
         this.props.router.on("route", function() {
@@ -160,18 +175,16 @@ var App = React.createClass({
 
     getInitialState: function() {
         var _this = this;
-        $.get("/api/v1/me").then(
-            function() {
-                _this.setState({authChecking: false, loggedIn: true});
-                _this.forceUpdate();
-            }).fail(
-                function() {
-                    _this.setState({authChecking: false, loggedIn: false});
-                    _this.forceUpdate();
-                });
+	$.get("/api/v1/login").then(function() {
+	    _this.setState({authChecking: false, loggedIn: true});
+	    _this.forceUpdate();
+	}).fail(function() {
+	    _this.setState({authChecking: false, loggedIn: false});
+	    _this.forceUpdate();
+	});
 
-        return {
-            authChecking: true,
+	return {
+	    authChecking: true,
             loggedIn: false
         };
     },
@@ -218,11 +231,13 @@ var App = React.createClass({
 var LoginScreen = React.createClass({
     login: function() {
         $.post("/api/v1/login", {
-            "user": this.refs.username.getDOMNode().value,
-            "pass": this.refs.password.getDOMNode().value
-        }).then(function() {
+            "username": this.refs.username.getDOMNode().value,
+            "password": this.refs.password.getDOMNode().value
+        }).then(function(data) {
             dispatcher.dispatch({
-                type: "auth.authenticated"
+                type: "auth.authenticated",
+		accountType: data["type"],
+		accountNumber: data["accountNumber"]
             });
         }).fail(function() {
             alert("NOPE!")
@@ -363,7 +378,7 @@ var Router = Backbone.Router.extend({
     },
 
     wizard: function() {
-        if (me.get("id") === undefined) {
+        if (!isLoggedIn()) {
             this.navigate("login", {trigger: true});
             return;
         }
@@ -371,7 +386,7 @@ var Router = Backbone.Router.extend({
     },
 
     account: function() {
-        if (me.get("id") === undefined) {
+        if (!isLoggedIn()) {
             this.navigate("login", {trigger: true});
             return;
         }
@@ -379,15 +394,20 @@ var Router = Backbone.Router.extend({
     }
 });
 
+
+function isLoggedIn() {
+    return me !== undefined;
+}
+
+
 var dispatcher;
 var traders;
 var router;
+var me;
 
 $(document).ready(function() {
     dispatcher = new Flux.Dispatcher();
     traders = new Traders();
-    me = new Follower();
-    me.url = "/api/v1/me";
 
     dispatcher.register(function(message) {
         console.log(message);
@@ -395,13 +415,9 @@ $(document).ready(function() {
     router = new Router();
     traders.fetch();
 
-    var afterMeLoaded = function() {
-        React.render(
-                <App router={router}/>,
-                document.getElementById('example')
-        );
-        Backbone.history.start();
-    };
-
-    me.fetch().then(afterMeLoaded).fail(afterMeLoaded);
+    React.render(
+	    <App router={router}/>,
+	    document.getElementById('example')
+    );
+    Backbone.history.start();
 });
