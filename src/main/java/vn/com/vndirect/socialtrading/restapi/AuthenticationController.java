@@ -51,7 +51,7 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
     public ResponseEntity<Account> login(@RequestParam String username,
-                        @RequestParam String password) {
+                                         @RequestParam String password) {
         boolean authenticated = as.authenticate(username, password);
 
         if (authenticated) {
@@ -68,5 +68,10 @@ public class AuthenticationController {
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @RequestMapping(value = "/api/v1/logout")
+    public void logout() {
+        session.invalidate();
     }
 }
