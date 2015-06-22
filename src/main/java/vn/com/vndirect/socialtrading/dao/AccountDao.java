@@ -1,6 +1,7 @@
 package vn.com.vndirect.socialtrading.dao;
 
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Account;
@@ -12,9 +13,17 @@ import java.util.Optional;
 public class AccountDao extends AbstractDao<Account, String> {
 
     public Optional<Account> getByUsername(String username) {
-        return Optional.of(template.queryForObject("SELECT * FROM account WHERE username = ?",
-                new BeanPropertyRowMapper<Account>(Account.class),
-                username));
+        Account result = null;
+
+        try {
+            result = template.queryForObject("SELECT * FROM account WHERE username = ?",
+                    new BeanPropertyRowMapper<Account>(Account.class),
+                    username);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+
+        return Optional.of(result);
     }
 
     @Override
