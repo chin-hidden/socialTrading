@@ -2,10 +2,9 @@ package vn.com.vndirect.socialtrading.restapi;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import vn.com.vndirect.socialtrading.dao.FollowerDao;
 import vn.com.vndirect.socialtrading.model.Follower;
 import vn.com.vndirect.socialtrading.model.Following;
@@ -31,10 +30,19 @@ public class FollowerController {
         return followerDao.getSingle(id).get();
     }
 
+    @RequestMapping(value = "/api/v1/follower/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Follower> updateFollower(@PathVariable String id,
+                                                   @RequestBody Follower updatedFollower) {
+        updatedFollower.setAccountNumber(id);
+        followerDao.update(updatedFollower);
+        return ResponseEntity.ok(updatedFollower);
+    }
+
     @RequestMapping(value = "/api/v1/followers", method = RequestMethod.GET)
     public List<Follower> getAllFollowers() {
         return followerDao.findAll();
     }
+
 
     @RequestMapping(value = "/api/v1/follower/{id}/following", method = RequestMethod.GET)
     public List<Following> followingTraders(@PathVariable String id) {
