@@ -29,10 +29,7 @@ public class FollowerLoader {
 	private void loadListFollowerToMemory()
 			throws Exception {
 		 FollowerDao followerDao = new FollowerDao(myDataSource);
-		 System.out.println("aaaaaaaaaaaaaaaa");
-	     System.out.println(followerDao.findAll().size());
-		
-	    memory.put("FOLLOWER", "",followerDao.findAll());
-		 
+	     memory.put("FOLLOWER", "",followerDao.findAll());
+	     memory.put("FOLLOWERID", "",followerDao.findAllFollowerId());
 	}
 }

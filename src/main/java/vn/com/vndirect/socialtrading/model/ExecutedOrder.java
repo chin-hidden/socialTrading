@@ -1,8 +1,10 @@
 package vn.com.vndirect.socialtrading.model;
 
+import java.math.BigDecimal;
+
 public class ExecutedOrder extends Order{
 	private int matchedQty;
-	private int matchedPrice;
+	private BigDecimal matchedPrice;
 
 	public int getMatchedQty() {
 		return matchedQty;
@@ -10,10 +12,10 @@ public class ExecutedOrder extends Order{
 	public void setMatchedQty(int matchedQty) {
 		this.matchedQty = matchedQty;
 	}
-	public int getMatchedPrice() {
+	public BigDecimal getMatchedPrice() {
 		return matchedPrice;
 	}
-	public void setMatchedPrice(int matchedPrice) {
+	public void setMatchedPrice(BigDecimal matchedPrice) {
 		this.matchedPrice = matchedPrice;
 	}
     @Override

@@ -6,6 +6,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,6 @@ public class RabbitConfiguration {
 	
 	@Value("${rabbitmq.addresses}") 
 	private String rabbitmqAddresses;
-	
 	
 	@Value("${rabbitmq.username}") 
 	private String username;
@@ -37,28 +37,28 @@ public class RabbitConfiguration {
 		return connectionFactory;
 	}
 
+
 	@Bean
-	public MessageListenerAdapter messageListener() {
-		MessageListenerAdapter listener = new MessageListenerAdapter(this, jsonMessageConverter());
-		return listener;
-	}
+	 public MessageConverter messageConverter() {
+	     return new Jackson2JsonMessageConverter();
+	 }
 	
 	@Bean 
 	public RabbitTemplate rabbitTemplate() {
 		RabbitTemplate template = new RabbitTemplate(connectionFactory());
-		template.setMessageConverter(jsonMessageConverter());
+		template.setMessageConverter(messageConverter());
 		return template;
 	}
 
-	@Bean
+	/*@Bean
 	public MessageConverter jsonMessageConverter() {
 		return new JsonMessageConverter();
-	}
+	}*/
 	
 	@Bean
 	public AmqpAdmin amqpAdmin() {
 		RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
 		return rabbitAdmin ;
 	}
-
+	
 }

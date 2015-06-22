@@ -1,5 +1,7 @@
 package vn.com.vndirect.socialtrading.model;
 
+import java.math.BigDecimal;
+
 public abstract class Order {
 	public String orderId;
 	public String account;
@@ -11,7 +13,7 @@ public abstract class Order {
 	public String tradeDate;
 
 	public int qty;
-	public int price;
+	public BigDecimal price;
 	public String eventName;
 
 	public String getOrderId() {
@@ -70,11 +72,11 @@ public abstract class Order {
 		this.qty = qty;
 	}
 
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 

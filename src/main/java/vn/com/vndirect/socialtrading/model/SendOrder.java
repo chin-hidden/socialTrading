@@ -1,5 +1,6 @@
 package vn.com.vndirect.socialtrading.model;
 
+
 public class SendOrder extends Order {
 	// FIXME Refactor to use enum
     private int type;

@@ -8,8 +8,6 @@ public interface Dao <Entity, Key> {
     List<Entity> findAll();
     boolean insert(Entity e);
     boolean update(Entity e);
-
-    // Insert or update
     boolean save(Entity e);
     boolean delete(Entity e);
 }
