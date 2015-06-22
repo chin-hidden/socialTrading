@@ -40,6 +40,10 @@ public class TraderDao extends AbstractDao<Trader, String> {
     }
 
     public Optional<Trader> getByUsername(String username) {
-        return null;
+        return Optional.of(template.queryForObject("SELECT * FROM account JOIN traderInfo " +
+                        "ON account.accountNumber = traderInfo.accountNumber " +
+                        "WHERE username = ?",
+                new BeanPropertyRowMapper<Trader>(Trader.class),
+                username));
     }
 }
