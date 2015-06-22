@@ -1,6 +1,7 @@
 package vn.com.vndirect.socialtrading.dao;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Follower;
@@ -10,6 +11,12 @@ import java.util.Optional;
 
 @Service
 public class FollowerDao extends AbstractDao<Follower, String> {
+    private AccountDao accountDao;
+
+    @Autowired
+    public FollowerDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
     private String baseQuery =
             "SELECT * FROM account JOIN followerInfo " +
@@ -22,10 +29,10 @@ public class FollowerDao extends AbstractDao<Follower, String> {
                 new BeanPropertyRowMapper<Follower>(Follower.class), id));
     }
 
-    public Follower getByUsername(String username) {
-        return template.queryForObject(
+    public Optional<Follower> getByUsername(String username) {
+        return Optional.of(template.queryForObject(
                 baseQuery + " WHERE username = ?",
-                new BeanPropertyRowMapper<Follower>(Follower.class), username);
+                new BeanPropertyRowMapper<Follower>(Follower.class), username));
     }
 
     @Override
@@ -35,22 +42,23 @@ public class FollowerDao extends AbstractDao<Follower, String> {
     }
 
     @Override
-    public boolean insert(Follower e) {
-        return false;
+    public void insert(Follower e) {
     }
 
     @Override
-    public boolean update(Follower e) {
-        return false;
+    public void update(Follower e) {
+        accountDao.update(e);
+
+        template.update("UPDATE followerInfo SET riskFactor = ? WHERE accountNumber = ?",
+                e.getRiskFactor(),
+                e.getAccountNumber());
     }
 
     @Override
-    public boolean save(Follower e) {
-        return false;
+    public void save(Follower e) {
     }
 
     @Override
-    public boolean delete(Follower e) {
-        return false;
+    public void delete(Follower e) {
     }
 }

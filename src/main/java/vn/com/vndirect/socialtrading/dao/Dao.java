@@ -1,16 +1,18 @@
 package vn.com.vndirect.socialtrading.dao;
 
 
+import org.springframework.dao.DataAccessException;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface Dao <Entity, Key> {
     Optional<Entity> getSingle(Key id);
     List<Entity> findAll();
-    boolean insert(Entity e);
-    boolean update(Entity e);
+    void insert(Entity e) throws DataAccessException;
+    void update(Entity e) throws DataAccessException;
 
     // Insert or update
-    boolean save(Entity e);
-    boolean delete(Entity e);
+    void save(Entity e) throws DataAccessException;
+    void delete(Entity e) throws DataAccessException;
 }

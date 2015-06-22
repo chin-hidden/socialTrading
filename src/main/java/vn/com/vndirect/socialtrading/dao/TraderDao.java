@@ -2,7 +2,6 @@ package vn.com.vndirect.socialtrading.dao;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
-import vn.com.vndirect.socialtrading.model.Account;
 import vn.com.vndirect.socialtrading.model.Trader;
 
 import java.util.List;
@@ -25,26 +24,22 @@ public class TraderDao extends AbstractDao<Trader, String> {
     }
 
     @Override
-    public boolean insert(Trader e) {
-        return false;
+    public void insert(Trader e) {
     }
 
     @Override
-    public boolean update(Trader e) {
-        return false;
+    public void update(Trader e) {
     }
 
     @Override
-    public boolean save(Trader e) {
-        return false;
+    public void save(Trader e) {
     }
 
     @Override
-    public boolean delete(Trader e) {
-        return false;
+    public void delete(Trader e) {
     }
 
-    public Trader getByUsername(String username) {
+    public Optional<Trader> getByUsername(String username) {
         return null;
     }
 }

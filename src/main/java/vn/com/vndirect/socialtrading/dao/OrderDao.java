@@ -27,22 +27,18 @@ public class OrderDao implements Dao<Order, String> {
     }
 
     @Override
-    public boolean insert(Order e) {
-        return false;
+    public void insert(Order e) {
     }
 
     @Override
-    public boolean update(Order e) {
-        return false;
+    public void update(Order e) {
     }
 
     @Override
-    public boolean save(Order e) {
-        return false;
+    public void save(Order e) {
     }
 
     @Override
-    public boolean delete(Order e) {
-        return false;
+    public void delete(Order e) {
     }
 }

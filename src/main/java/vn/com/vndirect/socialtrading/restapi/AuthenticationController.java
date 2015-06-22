@@ -58,9 +58,9 @@ public class AuthenticationController {
             Account account = accountDao.getByUsername(username).get();
 
             if (account.getType() == Account.UserType.FOLLOWER) {
-                account = followerDao.getByUsername(username);
+                account = followerDao.getByUsername(username).get();
             } else {
-                account = traderDao.getByUsername(username);
+                account = traderDao.getByUsername(username).get();
             }
 
             session.setAttribute("user", account);

@@ -36,22 +36,18 @@ public class FollowingDao extends AbstractDao<Following, Pair<String, String>> {
     }
 
     @Override
-    public boolean insert(Following e) {
-        return false;
+    public void insert(Following e) {
     }
 
     @Override
-    public boolean update(Following e) {
-        return false;
+    public void update(Following e) {
     }
 
     @Override
-    public boolean save(Following e) {
-        return false;
+    public void save(Following e) {
     }
 
     @Override
-    public boolean delete(Following e) {
-        return false;
+    public void delete(Following e) {
     }
 }

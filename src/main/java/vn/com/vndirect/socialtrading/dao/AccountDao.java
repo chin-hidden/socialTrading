@@ -37,22 +37,21 @@ public class AccountDao extends AbstractDao<Account, String> {
     }
 
     @Override
-    public boolean insert(Account e) {
-        return false;
+    public void insert(Account e) {
     }
 
     @Override
-    public boolean update(Account e) {
-        return false;
+    public void update(Account e) {
+        // FIXME Which fields do we want to update?
+        template.update("UPDATE account SET name = ?, cash = ?",
+                e.getName(), e.getCash());
     }
 
     @Override
-    public boolean save(Account e) {
-        return false;
+    public void save(Account e) {
     }
 
     @Override
-    public boolean delete(Account e) {
-        return false;
+    public void delete(Account e) {
     }
 }

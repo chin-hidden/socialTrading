@@ -32,9 +32,8 @@ public class FollowerService {
     /**
      * Follow a trader. Can also be used to change an existing following relationship.
      */
-    public boolean followTrader(String followerAccount, String traderAccount, BigDecimal allocatedMoney) {
-        // FIXME Use the FollowingDao to create a new following row
+    public void followTrader(String followerAccount, String traderAccount, BigDecimal allocatedMoney) {
         Following newRlts = new Following(followerAccount, traderAccount, allocatedMoney);
-        return followingDao.save(newRlts);
+        followingDao.save(newRlts);
     }
 }
