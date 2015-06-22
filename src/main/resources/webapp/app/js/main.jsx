@@ -259,7 +259,6 @@ var LoginScreen = React.createClass({
 
 var HomeScreen = React.createClass({
     transitToApp: function() {
-        console.log("haha");
         this.props.onTransit();
     },
 
@@ -337,7 +336,7 @@ var RiskSlider = React.createClass({
 
         // FIXME: we are calling `me` directly
         $(slider).noUiSlider({
-            start: [ me.get("riskfactor") ],
+            start: [ me.get("riskFactor") ],
             step: 10,
             connect: "lower",
             range: {

@@ -28,7 +28,7 @@ var WizardScreen = React.createClass({
             allocatedMoney: allocatedMoney
         });
 
-        me.set("riskfactor", riskFactor);
+        me.set("riskFactor", riskFactor);
         me.save();
 
         this.props.onCompletion();
