@@ -12,7 +12,7 @@ var AccountScreen = React.createClass({
 
 var InfoBox = React.createClass({
     riskSliderChanged: function(value) {
-        me.set("riskfactor", Math.floor(value));
+        me.set("riskFactor", Math.floor(value));
         me.save(null, {
             success: function() {
                 alert("Đã lưu!");
