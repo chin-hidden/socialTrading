@@ -13,6 +13,8 @@ var FollowingRels = Backbone.Collection.extend({
 });
 
 var Follower = Backbone.Model.extend({
+    idAttribute: "accountNumber",
+
     defaults: {
         followingTraders: new FollowingRels()
     },
