@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.com.vndirect.socialtrading.dao.AccountDao;
 import vn.com.vndirect.socialtrading.dao.FollowerDao;
+import vn.com.vndirect.socialtrading.dao.TraderDao;
 import vn.com.vndirect.socialtrading.model.Account;
 import vn.com.vndirect.socialtrading.service.AuthenticationService;
 
@@ -23,16 +24,20 @@ public class AuthenticationController {
     private AuthenticationService as;
     private FollowerDao followerDao;
     private AccountDao accountDao;
+    private TraderDao traderDao;
+
 
     @Autowired
     public AuthenticationController(HttpSession session,
                                     AuthenticationService as,
                                     FollowerDao followerDao,
-                                    AccountDao accountDao) {
+                                    AccountDao accountDao,
+                                    TraderDao traderDao) {
         this.session = session;
         this.as = as;
         this.followerDao = followerDao;
         this.accountDao = accountDao;
+        this.traderDao = traderDao;
     }
 
     @RequestMapping(value = "/api/v1/login", method = RequestMethod.GET)
@@ -56,7 +61,7 @@ public class AuthenticationController {
                 if (account.getType() == Account.UserType.FOLLOWER) {
                     account = followerDao.getByUsername(username);
                 } else {
-                    //account = traderDao.getByUsername(username));
+                    account = traderDao.getByUsername(username);
                 }
 
                 session.setAttribute("user", account);
