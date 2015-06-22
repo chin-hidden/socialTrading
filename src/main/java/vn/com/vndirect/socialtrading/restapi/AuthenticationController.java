@@ -3,7 +3,6 @@ package vn.com.vndirect.socialtrading.restapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +15,6 @@ import vn.com.vndirect.socialtrading.model.Account;
 import vn.com.vndirect.socialtrading.service.AuthenticationService;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @RestController
 public class AuthenticationController {
@@ -52,23 +50,23 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
-    public String login(@RequestParam String username,
+    public ResponseEntity<Account> login(@RequestParam String username,
                         @RequestParam String password) {
         boolean authenticated = as.authenticate(username, password);
 
         if (authenticated) {
-            accountDao.getByUsername(username).ifPresent(account -> {
-                if (account.getType() == Account.UserType.FOLLOWER) {
-                    account = followerDao.getByUsername(username);
-                } else {
-                    account = traderDao.getByUsername(username);
-                }
+            Account account = accountDao.getByUsername(username).get();
 
-                session.setAttribute("user", account);
-            });
+            if (account.getType() == Account.UserType.FOLLOWER) {
+                account = followerDao.getByUsername(username);
+            } else {
+                account = traderDao.getByUsername(username);
+            }
+
+            session.setAttribute("user", account);
+            return ResponseEntity.ok(account);
         }
 
-        // FIXME Throw 401
-        return authenticated ? "Yes!" : "nope";
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }
