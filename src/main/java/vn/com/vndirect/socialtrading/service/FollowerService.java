@@ -24,11 +24,9 @@ public class FollowerService {
 
     /**
      * Return the list of traders a follower is following.
-     * @param f
-     * @return
      */
-    public List<Following> followingTraders(Follower f) {
-        return null;
+    public List<Following> followingTraders(String followerAccount) {
+        return followingDao.findByFollower(followerAccount);
     }
 
     /**

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import vn.com.vndirect.socialtrading.dao.FollowerDao;
 import vn.com.vndirect.socialtrading.model.Follower;
+import vn.com.vndirect.socialtrading.model.Following;
 import vn.com.vndirect.socialtrading.service.FollowerService;
 
 import java.math.BigDecimal;
@@ -33,6 +34,11 @@ public class FollowerController {
     @RequestMapping(value = "/api/v1/followers", method = RequestMethod.GET)
     public List<Follower> getAllFollowers() {
         return followerDao.findAll();
+    }
+
+    @RequestMapping(value = "/api/v1/follower/{id}/following", method = RequestMethod.GET)
+    public List<Following> followingTraders(@PathVariable String id) {
+        return followerService.followingTraders(id);
     }
 
     @RequestMapping(value = "/api/v1/follower/{id}/following", method = RequestMethod.POST)

@@ -1,7 +1,9 @@
 package vn.com.vndirect.socialtrading.dao;
 
 import org.javatuples.Pair;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
+import vn.com.vndirect.socialtrading.model.Follower;
 import vn.com.vndirect.socialtrading.model.Following;
 import vn.com.vndirect.socialtrading.model.Trader;
 
@@ -21,8 +23,16 @@ public class FollowingDao extends AbstractDao<Following, Pair<String, String>> {
         return null;
     }
 
-    public List<Following> findByTrader(Trader t) {
-        return null;
+    public List<Following> findByTrader(String traderAccount) {
+        return template.query("SELECT * FROM following WHERE traderAccount = ?",
+                new BeanPropertyRowMapper<Following>(Following.class),
+                traderAccount);
+    }
+
+    public List<Following> findByFollower(String followerAccount) {
+        return template.query("SELECT * FROM following WHERE followerAccount = ?",
+                new BeanPropertyRowMapper<Following>(Following.class),
+                followerAccount);
     }
 
     @Override
