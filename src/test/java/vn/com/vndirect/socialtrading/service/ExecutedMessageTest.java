@@ -10,7 +10,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 
-import vn.com.vndirect.socialtrading.model.ExecutedOrder;
 import vn.com.vndirect.socialtrading.model.Order;
 
 
@@ -35,7 +34,7 @@ public class ExecutedMessageTest {
     public void send() throws InterruptedException {
 
         for (int i = 0; i < 1; i++) {
-            ExecutedOrder executedOrder = new ExecutedOrder();
+            Order executedOrder = new Order();
 
             executedOrder.setByAccount("0001011069");
             executedOrder.setOrderId("060815-FIXIN02-5147-0-TEST_CLIENT_44_4-2");

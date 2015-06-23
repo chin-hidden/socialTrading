@@ -11,7 +11,6 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 
 import vn.com.vndirect.socialtrading.model.Order;
-import vn.com.vndirect.socialtrading.model.SendOrder;
 
 public class SendMessageTest {
     public ConnectionFactory connectionFactory() {
@@ -33,7 +32,7 @@ public class SendMessageTest {
     @Test
     public void send() throws InterruptedException {
         for (int i = 0; i < 1; i++) {
-            SendOrder sentOrder = new SendOrder();
+            Order sentOrder = new Order();
             sentOrder.setByAccount("0001011079");
             sentOrder.setOrderId("006806041500515556");
             sentOrder.setSide(Order.OrderSide.NB);
