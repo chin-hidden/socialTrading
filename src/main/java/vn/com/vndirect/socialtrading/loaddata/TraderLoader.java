@@ -5,15 +5,17 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import vn.com.vndirect.socialtrading.dao.TraderDao;
 import vn.com.vndirect.socialtrading.utility.InMemory;
 
 @Component
 public class TraderLoader {
-
+	private TraderDao traderDao;
 	private InMemory memory;
 
 	@Autowired
-	public TraderLoader(InMemory memory) {
+	public TraderLoader(TraderDao traderDao, InMemory memory) {
+		this.traderDao = traderDao;
 		this.memory = memory;
 	}
 
@@ -22,14 +24,8 @@ public class TraderLoader {
 		loadListTraderToMemory();
 	}
 
-	
-	private void loadListTraderToMemory()
-			throws Exception {
-		 
-			//memory.put("MARKET", market.getFloorCode(), market);
-		 
+	private void loadListTraderToMemory()	throws Exception {
+	     memory.put("TRADER", "", traderDao.findAll());
+	     memory.put("TRADERID", "", traderDao.findAllTraderId());
 	}
-
-	
-
 }

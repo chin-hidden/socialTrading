@@ -1,4 +1,4 @@
 package vn.com.vndirect.socialtrading.model;
 
-public class ExecutedOrder extends Order{
+public class ExecutedOrder extends Order {
 }

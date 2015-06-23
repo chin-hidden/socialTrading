@@ -10,17 +10,27 @@ import java.util.Optional;
 
 @Service
 public class TraderDao extends AbstractDao<Trader, String> {
+    private String baseQuery =
+            "SELECT * FROM account JOIN traderinfo " +
+                    "ON account.accountNumber = traderinfo.accountNumber";
+
     @Override
     public Optional<Trader> getSingle(String id) {
-        return null;
+        return Optional.of(template.queryForObject(
+                baseQuery + " WHERE account.accountNumber = ?",
+                new BeanPropertyRowMapper<Trader>(Trader.class), id));
     }
 
     @Override
     public List<Trader> findAll() {
-        return template.query("SELECT * FROM account " +
-                        "JOIN traderInfo " +
-                        "ON account.accountNumber = traderInfo.accountNumber",
+        return template.query(baseQuery,
                 new BeanPropertyRowMapper<Trader>(Trader.class));
+    }
+
+    public List<String> findAllTraderId() {
+        return template.queryForList(
+                "SELECT accountNumber FROM account WHERE type = 'TRADER'",
+                String.class);
     }
 
     @Override
@@ -40,7 +50,8 @@ public class TraderDao extends AbstractDao<Trader, String> {
     }
 
     public Optional<Trader> getByUsername(String username) {
-        return Optional.of(template.queryForObject("SELECT * FROM account JOIN traderInfo " +
+        return Optional.of(template.queryForObject(
+                "SELECT * FROM account JOIN traderInfo " +
                         "ON account.accountNumber = traderInfo.accountNumber " +
                         "WHERE username = ?",
                 new BeanPropertyRowMapper<Trader>(Trader.class),

@@ -35,6 +35,10 @@ public class FollowerDao extends AbstractDao<Follower, String> {
                 new BeanPropertyRowMapper<Follower>(Follower.class), username));
     }
 
+    public List<String> findAllFollowerId() {
+        return template.queryForList(baseQuery, String.class);
+    }
+    
     @Override
     public List<Follower> findAll() {
         return template.query(baseQuery,
@@ -59,6 +63,5 @@ public class FollowerDao extends AbstractDao<Follower, String> {
     }
 
     @Override
-    public void delete(Follower e) {
-    }
+    public void delete(Follower e) {}
 }

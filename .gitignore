@@ -3,3 +3,14 @@
 /config
 *.iml
 /src/main/resources/public
+/fixlog/
+/store/
+*.class
+/.settings/
+/.vagrant/
+/src/web/build/
+node_modules/
+.tmp
+/src/main/webapp/dist
+*.log.*
+*.bak

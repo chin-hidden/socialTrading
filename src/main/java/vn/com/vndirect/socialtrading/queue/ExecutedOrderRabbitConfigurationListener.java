@@ -30,7 +30,6 @@ public class ExecutedOrderRabbitConfigurationListener extends
 		this.handlersOfMessage = this.eventHandlerFilter.filter(handlers, Arrays.asList("EXECUTED"));
 	}
 
-	
 	@Bean
 	public SimpleMessageListenerContainer executedOrderListenerContainer() {
 		return super.createListenerContainer();

@@ -9,13 +9,13 @@ import vn.com.vndirect.socialtrading.model.SendOrder;
 import vn.com.vndirect.socialtrading.utility.InMemory;
  
 @Component
-@EventHandlerApplyFor(priority = 3, values = { "SENT" })
-public class SentOrderMemoryHandler implements EventHandler {
+@EventHandlerApplyFor(priority = 3, values = { "EXPIRED" })
+public class ExpiredOrderMemoryHandler implements EventHandler {
 
 	private InMemory memory;
 
 	@Autowired
-	public SentOrderMemoryHandler(InMemory memory) {
+	public ExpiredOrderMemoryHandler(InMemory memory) {
 		this.memory = memory;
 	}
 
@@ -24,7 +24,6 @@ public class SentOrderMemoryHandler implements EventHandler {
 		SendOrder sentOrder = (SendOrder) source;
 		String account = sentOrder.getByAccount();
 		System.out.println("account:"+account+" "+ sentOrder.toString());
-		
 	}
 
 }

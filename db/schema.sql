@@ -74,7 +74,7 @@ CREATE TABLE position (
 	stock text NOT NULL,
 	quantity integer NOT NULL,
 	cost numeric(19,2) NOT NULL,
-	PRIMARY KEY (accountNumber, stock),
+	PRIMARY KEY (accountNumber,mimickingAccountNumber, stock),
 	FOREIGN KEY (accountNumber, mimickingAccountNumber) REFERENCES following (followerAccount, traderAccount)
 );
 

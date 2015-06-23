@@ -1,6 +1,7 @@
 package vn.com.vndirect.socialtrading.queue;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.AmqpAdmin;
@@ -14,9 +15,11 @@ import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import vn.com.vndirect.socialtrading.event.EventHandler;
 import vn.com.vndirect.socialtrading.event.EventHandlerFilter;
+import vn.com.vndirect.socialtrading.model.SendOrder;
 
 public class MessageRabbitConfigurationListener {
 
@@ -72,7 +75,7 @@ public class MessageRabbitConfigurationListener {
 	}
 
 	private FanoutExchange createFanoutExchange() {
-		FanoutExchange exchange = new FanoutExchange(nameFanoutExchange, true,false); //queue that I(nameFanoutExchange, false,false)
+		FanoutExchange exchange = new FanoutExchange(nameFanoutExchange, true,false); //queue that (nameFanoutExchange, false,false)
 		amqpAdmin.declareExchange(exchange);
 		return exchange;
 	}
@@ -89,7 +92,6 @@ public class MessageRabbitConfigurationListener {
 	public MessageListenerAdapter createListenerAdapter() {
 		return new MessageListenerAdapter(this, messageConverter);
 	}
-	
 	
 	public void setAmqpAdmin(AmqpAdmin amqpAdmin) {
 		this.amqpAdmin = amqpAdmin;
@@ -113,4 +115,5 @@ public class MessageRabbitConfigurationListener {
 		});
 
 	}
+	
 }

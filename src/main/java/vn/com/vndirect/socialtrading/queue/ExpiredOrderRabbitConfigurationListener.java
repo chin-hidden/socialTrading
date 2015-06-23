@@ -11,13 +11,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SentOrderRabbitConfigurationListener extends
+public class ExpiredOrderRabbitConfigurationListener extends
 		MessageRabbitConfigurationListener {
 
 	@Autowired
-	public SentOrderRabbitConfigurationListener(
-			@Value("${QUEUE_NAME_SENT}") String queueName,
-			@Value("${EXCHANGE_NAME_SENT}") String exchageName) {
+	public ExpiredOrderRabbitConfigurationListener(
+			@Value("${QUEUE_NAME_EXPIRED}") String queueName,
+			@Value("${EXCHANGE_NAME_EXPIRED}") String exchageName) {
 		super(queueName, exchageName);
 	}
 
@@ -28,11 +28,11 @@ public class SentOrderRabbitConfigurationListener extends
 	}
 
 	private void setMessageHandler() {
-		this.handlersOfMessage = this.eventHandlerFilter.filter(handlers, Arrays.asList("SENT"));
+		this.handlersOfMessage = this.eventHandlerFilter.filter(handlers, Arrays.asList("EXPIRED"));
 	}
 	
 	@Bean
-	public SimpleMessageListenerContainer sentOrderListenerContainer() {
+	public SimpleMessageListenerContainer expiredOrderListenerContainer() {
 		return super.createListenerContainer();
 	}
 

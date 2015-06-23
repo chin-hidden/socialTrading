@@ -21,6 +21,7 @@ public class FollowerLoader {
 	
 	private void loadListFollowerToMemory()
 			throws Exception {
-		memory.put("FOLLOWER", "", followerDao.findAll());
+		memory.put("FOLLOWER", "",followerDao.findAll());
+		memory.put("FOLLOWERID", "",followerDao.findAllFollowerId());
 	}
 }
