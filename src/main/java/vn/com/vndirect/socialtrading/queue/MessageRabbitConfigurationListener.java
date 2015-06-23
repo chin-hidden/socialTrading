@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Bean;
 
 import vn.com.vndirect.socialtrading.event.EventHandler;
 import vn.com.vndirect.socialtrading.event.EventHandlerFilter;
-import vn.com.vndirect.socialtrading.model.SendOrder;
 
 public class MessageRabbitConfigurationListener {
 
