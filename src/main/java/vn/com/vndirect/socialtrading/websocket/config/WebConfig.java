@@ -1,9 +1,5 @@
 package vn.com.vndirect.socialtrading.websocket.config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -14,17 +10,17 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;
-import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-
 import vn.com.vndirect.socialtrading.event.EventHandler;
 import vn.com.vndirect.socialtrading.event.EventHandlerApplyFor;
 import vn.com.vndirect.socialtrading.event.EventHandlerFilter;
-import vn.com.vndirect.socialtrading.websocket.handler.DefaultEchoService;
-import vn.com.vndirect.socialtrading.websocket.handler.EchoWebSocketHandler;
 import vn.com.vndirect.socialtrading.websocket.handler.StockWebSocketHandler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @EnableWebMvc
@@ -44,7 +40,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 
-		registry.addHandler(echoWebSocketHandler(), "/sockjs/echo").withSockJS();
 		registry.addHandler(stockWebSocketHandler, "/realtime").withSockJS();
 	}
 
@@ -56,12 +51,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 	}
 	
 	@Bean
-	public WebSocketHandler echoWebSocketHandler() {
-		return new EchoWebSocketHandler(echoService());
-	}
-	
-	
-	@Bean
 	public List<EventHandler> handlers() {
 		List<EventHandler> handlers = new ArrayList<EventHandler>();
 		Map<String, Object> map = applicationContext.getBeansWithAnnotation(EventHandlerApplyFor.class);
@@ -69,11 +58,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebSocketConfi
 			handlers.add((EventHandler) object);
 		});
 		return handlers;
-	}
-	
-	@Bean
-	public DefaultEchoService echoService() {
-		return new DefaultEchoService("Did you say \"%s\"?");
 	}
 
 	@Bean
