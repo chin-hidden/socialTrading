@@ -83,71 +83,43 @@ public class ExecutedOrderMemoryHandler {
         BigDecimal price = executedOrder.getPrice();
 
         //chi sinh lenh copy khi lenh cua trader khop toan bo
-        if (executedOrder.getMatchQuantity() == executedOrder.getQuantity()) {
-            Map<String, List<String>> mapOfTrader = (Map<String, List<String>>) memory.get("MapOfTrader", "");
-            List<String> followerIdList = mapOfTrader.get(account);
+        if (executedOrder.getMatchQuantity() != executedOrder.getQuantity()) {
+            return;
+        }
 
+        Map<String, List<String>> mapOfTrader = (Map<String, List<String>>) memory.get("MapOfTrader", "");
+        List<String> followerIdList = mapOfTrader.get(account);
+
+        // FIXME Check empty Optional
+        StockInfo stockInfo = stockDao.getSingle(symbol).get();
+        Date date = new Date();
+
+        for (String follower : followerIdList) {
+            //check dk co mua/ ban duoc theo khong
             // FIXME Check empty Optional
-            StockInfo stockInfo = stockDao.getSingle(symbol).get();
-            Date date = new Date();
+            Follower currentFollower = followerDao.getSingle(follower).get();
+            //if risk of follower < stock's risk then ignore
+            if (currentFollower.getRiskFactor() < stockInfo.getRisk()) continue;
 
-            for (String follower : followerIdList) {
-                //check dk co mua/ ban duoc theo khong
-                // FIXME Check empty Optional
-                Follower currentFollower = followerDao.getSingle(follower).get();
-                //if risk of follower < stock's risk then ignore
-                if (currentFollower.getRiskFactor() < stockInfo.getRisk()) continue;
+            //lenh mua ma da mua het so tien allocate thi bo qua
+            // FIXME Check empty Optional
+            Following myFollowing = followingDao.getSingle(Pair.with(follower, account)).get();
 
-                //lenh mua ma da mua het so tien allocate thi bo qua
-                // FIXME Check empty Optional
-                Following myFollowing = followingDao.getSingle(Pair.with(follower, account)).get();
+            BigDecimal totalCashUsed = positionDao.getCurentCashFollowing(follower, account);
 
-                BigDecimal totalCashUsed = positionDao.getCurentCashFollowing(follower, account);
+            if (totalCashUsed != null && (myFollowing.getAllocatedMoney().doubleValue() - totalCashUsed.doubleValue() < MoneySlot))
+                continue;
 
-                if (totalCashUsed != null && (myFollowing.getAllocatedMoney().doubleValue() - totalCashUsed.doubleValue() < MoneySlot))
-                    continue;
-
-                //if sell order and follower do not have stock to follow
-                if (side == Order.OrderSide.NS) {
-                    Position position = positionDao.getStockFollow(follower, account, symbol);
-                    if (position.getQuantity() < 0) continue;
-                    else {
-                        Report report;
-                        try {
-                            report = orderService.executePlaceOrder(follower, "NS", "MP", symbol, price.doubleValue(), position.getQuantity());
-                            String order_id_return = report.getMessage();
-                            System.out.println("Print sell order id: " + order_id_return);
-                            System.out.println("Print report.getStatus(): " + report.getStatus());
-
-                            if (report.getStatus()) {
-                                Order myOrder = new Order();
-                                myOrder.setOrderId(order_id_return);
-                                myOrder.setByAccount(follower);
-                                myOrder.setMimickingAccount(account);
-                                myOrder.setStock(symbol);
-                                myOrder.setPrice(price);
-                                myOrder.setQuantity(position.getQuantity());
-                                myOrder.setSide(side);
-                                myOrder.setType(Order.OrderType.MP);
-                                myOrder.setDate(date);
-                                myOrder.setMatchPrice(new BigDecimal("0"));
-                                myOrder.setMatchQuantity(0);
-
-                                orderDao.insert(myOrder);
-                            }
-
-                        } catch (OrderException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } else {
-                    // ok thi dat lenh mua theo voi kl la 10trieu/gia stock
-                    int quantity = MoneySlot / price.intValueExact();
-                    quantity = quantity - quantity % 100;
+            //if sell order and follower do not have stock to follow
+            if (side == Order.OrderSide.NS) {
+                Position position = positionDao.getStockFollow(follower, account, symbol);
+                if (position.getQuantity() < 0) continue;
+                else {
+                    Report report;
                     try {
-                        Report report = orderService.executePlaceOrder(follower, "NB", "MP", symbol, price.doubleValue(), quantity);
+                        report = orderService.executePlaceOrder(follower, "NS", "MP", symbol, price.doubleValue(), position.getQuantity());
                         String order_id_return = report.getMessage();
-                        System.out.println("Print buy order id: " + order_id_return);
+                        System.out.println("Print sell order id: " + order_id_return);
                         System.out.println("Print report.getStatus(): " + report.getStatus());
 
                         if (report.getStatus()) {
@@ -157,9 +129,9 @@ public class ExecutedOrderMemoryHandler {
                             myOrder.setMimickingAccount(account);
                             myOrder.setStock(symbol);
                             myOrder.setPrice(price);
-                            myOrder.setQuantity(quantity);
-                            myOrder.setSide(executedOrder.getSide());
-                            myOrder.setType(executedOrder.getType());
+                            myOrder.setQuantity(position.getQuantity());
+                            myOrder.setSide(side);
+                            myOrder.setType(Order.OrderType.MP);
                             myOrder.setDate(date);
                             myOrder.setMatchPrice(new BigDecimal("0"));
                             myOrder.setMatchQuantity(0);
@@ -170,6 +142,36 @@ public class ExecutedOrderMemoryHandler {
                     } catch (OrderException e) {
                         e.printStackTrace();
                     }
+                }
+            } else {
+                // ok thi dat lenh mua theo voi kl la 10trieu/gia stock
+                int quantity = MoneySlot / price.intValueExact();
+                quantity = quantity - quantity % 100;
+                try {
+                    Report report = orderService.executePlaceOrder(follower, "NB", "MP", symbol, price.doubleValue(), quantity);
+                    String order_id_return = report.getMessage();
+                    System.out.println("Print buy order id: " + order_id_return);
+                    System.out.println("Print report.getStatus(): " + report.getStatus());
+
+                    if (report.getStatus()) {
+                        Order myOrder = new Order();
+                        myOrder.setOrderId(order_id_return);
+                        myOrder.setByAccount(follower);
+                        myOrder.setMimickingAccount(account);
+                        myOrder.setStock(symbol);
+                        myOrder.setPrice(price);
+                        myOrder.setQuantity(quantity);
+                        myOrder.setSide(executedOrder.getSide());
+                        myOrder.setType(executedOrder.getType());
+                        myOrder.setDate(date);
+                        myOrder.setMatchPrice(new BigDecimal("0"));
+                        myOrder.setMatchQuantity(0);
+
+                        orderDao.insert(myOrder);
+                    }
+
+                } catch (OrderException e) {
+                    e.printStackTrace();
                 }
             }
         }
