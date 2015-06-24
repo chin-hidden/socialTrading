@@ -36,7 +36,7 @@ public class FollowerDao extends AbstractDao<Follower, String> {
     }
 
     public List<String> findAllFollowerId() {
-        return template.queryForList(baseQuery, String.class);
+        return template.queryForList("SELECT accountNumber FROM account WHERE type = 'FOLLOWER'", String.class);
     }
     
     @Override
