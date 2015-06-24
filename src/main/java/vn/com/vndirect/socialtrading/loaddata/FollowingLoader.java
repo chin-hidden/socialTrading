@@ -14,7 +14,8 @@ public class FollowingLoader {
 	private InMemory memory;
 
 	@Autowired
-	public FollowingLoader(InMemory memory) {
+	public FollowingLoader(FollowingDao followingDao, InMemory memory) {
+		this.followingDao = followingDao;
 		this.memory = memory;
 	}
 
@@ -25,7 +26,7 @@ public class FollowingLoader {
 
 	
 	private void loadMapFollowingToMemory()	throws Exception {
-	    memory.put("MapOfTrader", "",followingDao.findAllFollowing());
+	    memory.put("MapOfTrader", "", followingDao.findAllFollowing());
 	    //memory.put("OpenOrderMapping", "", followingDao.findAllFollowingOrder() );
 	}
 }
