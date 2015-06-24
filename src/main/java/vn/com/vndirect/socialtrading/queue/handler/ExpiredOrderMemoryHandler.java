@@ -1,15 +1,12 @@
-package vn.com.vndirect.socialtrading.event.server.handler;
+package vn.com.vndirect.socialtrading.queue.handler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import vn.com.vndirect.socialtrading.event.EventHandler;
-import vn.com.vndirect.socialtrading.event.EventHandlerApplyFor;
 import vn.com.vndirect.socialtrading.model.Order;
 import vn.com.vndirect.socialtrading.utility.InMemory;
  
 @Component
-@EventHandlerApplyFor(priority = 3, values = { "EXPIRED" })
-public class ExpiredOrderMemoryHandler implements EventHandler {
+public class ExpiredOrderMemoryHandler {
 
 	private InMemory memory;
 
@@ -18,7 +15,6 @@ public class ExpiredOrderMemoryHandler implements EventHandler {
 		this.memory = memory;
 	}
 
-	@Override
 	public void handle(Object source) {
 		Order sentOrder = (Order) source;
 		String account = sentOrder.getByAccount();

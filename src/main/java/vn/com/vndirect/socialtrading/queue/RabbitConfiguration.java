@@ -1,5 +1,7 @@
 package vn.com.vndirect.socialtrading.queue;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -37,10 +39,8 @@ public class RabbitConfiguration {
         return connectionFactory;
     }
 
-
     @Bean
     public MessageConverter messageConverter() {
-        // FIXME Use our own MessageConverter
         return new Jackson2JsonMessageConverter();
     }
 
@@ -52,9 +52,9 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public AmqpAdmin amqpAdmin() {
-        RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory());
-        return rabbitAdmin;
+    public ObjectMapper jsonMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return mapper;
     }
-
 }

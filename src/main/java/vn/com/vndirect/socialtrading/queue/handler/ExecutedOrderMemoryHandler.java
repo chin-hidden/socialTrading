@@ -1,12 +1,20 @@
-package vn.com.vndirect.socialtrading.event.server.handler;
+package vn.com.vndirect.socialtrading.queue.handler;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javatuples.Pair;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import vn.com.vndirect.ors.client.api.OrderService;
@@ -14,20 +22,18 @@ import vn.com.vndirect.ors.client.api.OrderServiceImpl;
 import vn.com.vndirect.ors.client.api.entity.Report;
 import vn.com.vndirect.ors.client.api.utils.OrderException;
 import vn.com.vndirect.socialtrading.dao.*;
-import vn.com.vndirect.socialtrading.event.EventHandler;
-import vn.com.vndirect.socialtrading.event.EventHandlerApplyFor;
 import vn.com.vndirect.socialtrading.model.*;
 import vn.com.vndirect.socialtrading.utility.InMemory;
 
 @Component
-@EventHandlerApplyFor(priority = 3, values = { "EXECUTED" })
-public class ExecutedOrderMemoryHandler implements EventHandler {
+public class ExecutedOrderMemoryHandler {
 	private FollowerDao followerDao;
 	private StockDao stockDao;
 	private PositionDao positionDao;
 	private FollowingDao followingDao;
 	private OrderDao orderDao;
 	private InMemory memory;
+	private ObjectMapper mapper;
 	static int MoneySlot = 10000000;
 	
 	@Autowired
@@ -36,18 +42,25 @@ public class ExecutedOrderMemoryHandler implements EventHandler {
 									  PositionDao positionDao,
 									  FollowingDao followingDao,
 									  OrderDao orderDao,
-									  InMemory memory) {
+									  InMemory memory,
+									  ObjectMapper mapper) {
 		this.followerDao = followerDao;
 		this.stockDao = stockDao;
 		this.positionDao = positionDao;
 		this.followingDao = followingDao;
 		this.orderDao = orderDao;
 		this.memory = memory;
+		this.mapper = mapper;
 	}
 
-	@Override
-	public void handle(Object source) {
-		Order executedOrder = (Order) source;
+	// FIXME Hardcoded queue name
+	@RabbitListener(queues = "executedOrderList2")
+	public void onExecutedOrderReceived(byte[] payload) throws IOException {
+		Order order = mapper.readValue(payload, Order.class);
+		System.out.println("Executed Order: " + order.getOrderId());
+	}
+
+	public void handle(Order executedOrder) {
 		String account = executedOrder.getByAccount();
 
 		System.out.println("account:" + account + " " + executedOrder.toString());
