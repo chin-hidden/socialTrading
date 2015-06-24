@@ -34,16 +34,18 @@ public class ExecutedOrderMemoryHandler {
 	private OrderDao orderDao;
 	private InMemory memory;
 	private ObjectMapper mapper;
+    private OrderService orderService;
 	static int MoneySlot = 10000000;
 	
 	@Autowired
 	public ExecutedOrderMemoryHandler(FollowerDao followerDao,
-									  StockDao stockDao,
-									  PositionDao positionDao,
-									  FollowingDao followingDao,
-									  OrderDao orderDao,
-									  InMemory memory,
-									  ObjectMapper mapper) {
+                                      StockDao stockDao,
+                                      PositionDao positionDao,
+                                      FollowingDao followingDao,
+                                      OrderDao orderDao,
+                                      InMemory memory,
+                                      ObjectMapper mapper,
+                                      OrderService orderService) {
 		this.followerDao = followerDao;
 		this.stockDao = stockDao;
 		this.positionDao = positionDao;
@@ -51,13 +53,14 @@ public class ExecutedOrderMemoryHandler {
 		this.orderDao = orderDao;
 		this.memory = memory;
 		this.mapper = mapper;
-	}
+        this.orderService = orderService;
+    }
 
 	// FIXME Hardcoded queue name
 	@RabbitListener(queues = "executedOrderList2")
 	public void onExecutedOrderReceived(byte[] payload) throws IOException {
 		Order order = mapper.readValue(payload, Order.class);
-		System.out.println("Executed Order: " + order.getOrderId());
+        handle(order);
 	}
 
 	public void handle(Order executedOrder) {
@@ -76,7 +79,6 @@ public class ExecutedOrderMemoryHandler {
 			//chi sinh lenh copy khi lenh cua trader khop toan bo 
 			if(executedOrder.getMatchQuantity() == executedOrder.getQuantity())
 			{
-				 OrderService orderService = OrderServiceImpl.getInstances();
 				 Map<String, List<String>> mapOfTrader = (Map<String, List<String>>) memory.get("MapOfTrader","");
 				 List<String> followerIdList = mapOfTrader.get(account);
 
@@ -168,7 +170,7 @@ public class ExecutedOrderMemoryHandler {
 				 }
 			}
 		}
-		else if (listOfFollowerId.contains(account)) //lenh khop cua follower 
+		else if (listOfFollowerId.contains(account)) //lenh khop cua follower
 		{
 			// FIXME Check empty Optional
 			Order myOrder = orderDao.getSingle(executedOrder.getOrderId()).get();
