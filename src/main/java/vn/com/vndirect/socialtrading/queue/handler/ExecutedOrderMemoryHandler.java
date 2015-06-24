@@ -1,29 +1,22 @@
 package vn.com.vndirect.socialtrading.queue.handler;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javatuples.Pair;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
-
 import vn.com.vndirect.ors.client.api.OrderService;
-import vn.com.vndirect.ors.client.api.OrderServiceImpl;
 import vn.com.vndirect.ors.client.api.entity.Report;
 import vn.com.vndirect.ors.client.api.utils.OrderException;
 import vn.com.vndirect.socialtrading.dao.*;
 import vn.com.vndirect.socialtrading.model.*;
 import vn.com.vndirect.socialtrading.utility.InMemory;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class ExecutedOrderMemoryHandler {
@@ -95,13 +88,14 @@ public class ExecutedOrderMemoryHandler {
         Date date = new Date();
 
         for (String follower : followerIdList) {
-            //check dk co mua/ ban duoc theo khong
+            // check dk co mua/ ban duoc theo khong
             // FIXME Check empty Optional
             Follower currentFollower = followerDao.getSingle(follower).get();
-            //if risk of follower < stock's risk then ignore
+
+            // if risk of follower < stock's risk then ignore
             if (currentFollower.getRiskFactor() < stockInfo.getRisk()) continue;
 
-            //lenh mua ma da mua het so tien allocate thi bo qua
+            // lenh mua ma da mua het so tien allocate thi bo qua
             // FIXME Check empty Optional
             Following myFollowing = followingDao.getSingle(Pair.with(follower, account)).get();
 
@@ -110,33 +104,38 @@ public class ExecutedOrderMemoryHandler {
             if (totalCashUsed != null && (myFollowing.getAllocatedMoney().doubleValue() - totalCashUsed.doubleValue() < MoneySlot))
                 continue;
 
-            //if sell order and follower do not have stock to follow
+            Order clonedOrder = new Order();  // FIXME Cloning?
+            clonedOrder.setByAccount(follower);
+            clonedOrder.setMimickingAccount(account);
+            clonedOrder.setStock(symbol);
+            clonedOrder.setPrice(price);
+            clonedOrder.setType(Order.OrderType.MP);
+            clonedOrder.setDate(date);
+            clonedOrder.setSide(side);
+
+            // if sell order and follower do not have stock to follow
             if (side == Order.OrderSide.NS) {
                 Position position = positionDao.getStockFollow(follower, account, symbol);
-                if (position.getQuantity() < 0) continue;
+                if (position.getQuantity() <= 0) continue;
                 else {
                     Report report;
                     try {
-                        report = orderService.executePlaceOrder(follower, "NS", "MP", symbol, price.doubleValue(), position.getQuantity());
+                        report = orderService.executePlaceOrder(follower,
+                                side.toString(),
+                                executedOrder.getType().toString(),
+                                symbol,
+                                price.doubleValue(),
+                                position.getQuantity());
+
                         String order_id_return = report.getMessage();
                         System.out.println("Print sell order id: " + order_id_return);
                         System.out.println("Print report.getStatus(): " + report.getStatus());
 
                         if (report.getStatus()) {
-                            Order myOrder = new Order();
-                            myOrder.setOrderId(order_id_return);
-                            myOrder.setByAccount(follower);
-                            myOrder.setMimickingAccount(account);
-                            myOrder.setStock(symbol);
-                            myOrder.setPrice(price);
-                            myOrder.setQuantity(position.getQuantity());
-                            myOrder.setSide(side);
-                            myOrder.setType(Order.OrderType.MP);
-                            myOrder.setDate(date);
-                            myOrder.setMatchPrice(new BigDecimal("0"));
-                            myOrder.setMatchQuantity(0);
+                            clonedOrder.setQuantity(position.getQuantity());
+                            clonedOrder.setOrderId(order_id_return);
 
-                            orderDao.insert(myOrder);
+                            orderDao.insert(clonedOrder);
                         }
 
                     } catch (OrderException e) {
@@ -148,28 +147,19 @@ public class ExecutedOrderMemoryHandler {
                 int quantity = MoneySlot / price.intValueExact();
                 quantity = quantity - quantity % 100;
                 try {
-                    Report report = orderService.executePlaceOrder(follower, "NB", "MP", symbol, price.doubleValue(), quantity);
+                    Report report = orderService.executePlaceOrder(
+                            follower, "NB", "MP", symbol, price.doubleValue(), quantity);
+
                     String order_id_return = report.getMessage();
                     System.out.println("Print buy order id: " + order_id_return);
                     System.out.println("Print report.getStatus(): " + report.getStatus());
 
                     if (report.getStatus()) {
-                        Order myOrder = new Order();
-                        myOrder.setOrderId(order_id_return);
-                        myOrder.setByAccount(follower);
-                        myOrder.setMimickingAccount(account);
-                        myOrder.setStock(symbol);
-                        myOrder.setPrice(price);
-                        myOrder.setQuantity(quantity);
-                        myOrder.setSide(executedOrder.getSide());
-                        myOrder.setType(executedOrder.getType());
-                        myOrder.setDate(date);
-                        myOrder.setMatchPrice(new BigDecimal("0"));
-                        myOrder.setMatchQuantity(0);
+                        clonedOrder.setOrderId(order_id_return);
+                        clonedOrder.setQuantity(quantity);
 
-                        orderDao.insert(myOrder);
+                        orderDao.insert(clonedOrder);
                     }
-
                 } catch (OrderException e) {
                     e.printStackTrace();
                 }
@@ -183,9 +173,7 @@ public class ExecutedOrderMemoryHandler {
         Order.OrderSide side = executedOrder.getSide();
 
         // FIXME Check empty Optional
-        Order myOrder = orderDao.getSingle(executedOrder.getOrderId()).get();
-
-        if (myOrder != null) {
+        orderDao.getSingle(executedOrder.getOrderId()).ifPresent(myOrder -> {
             myOrder.setMatchQuantity(myOrder.getMatchQuantity() + executedOrder.getQuantity());
 
             // FIXME Break this down
@@ -197,23 +185,7 @@ public class ExecutedOrderMemoryHandler {
             orderDao.update(myOrder);
 
             Position myPosition = positionDao.getStockFollow(account, myOrder.getByAccount(), symbol);
-            if (myPosition != null && side == Order.OrderSide.NS) {
-                myPosition.setQuantity(myPosition.getQuantity() + executedOrder.getQuantity());
-                double newCost = (myPosition.getQuantity() * myPosition.getCost().doubleValue()
-                        + executedOrder.getQuantity() * executedOrder.getMatchPrice().doubleValue())
-                        / (myPosition.getQuantity() + executedOrder.getQuantity());
-                myPosition.setCost(new BigDecimal(newCost));
-                positionDao.update(myPosition);
-            }
-
-            if (myPosition != null && side == Order.OrderSide.NB) {
-                if (myPosition.getQuantity() == executedOrder.getQuantity())
-                    positionDao.delete(myPosition);
-                else {
-                    myPosition.setQuantity(myPosition.getQuantity() - executedOrder.getQuantity());
-                    positionDao.update(myPosition);
-                }
-            } else {
+            if (myPosition != null) {
                 // chua co thi insert moi vao DB
                 myPosition.setAccountnumber(account);
                 myPosition.setMimickingaccountnumber(myOrder.getMimickingAccount());
@@ -221,7 +193,23 @@ public class ExecutedOrderMemoryHandler {
                 myPosition.setQuantity(executedOrder.getQuantity());
                 myPosition.setCost(executedOrder.getMatchPrice());
                 positionDao.insert(myPosition);
+            } else if (side == Order.OrderSide.NS) {
+                myPosition.setQuantity(myPosition.getQuantity() + executedOrder.getQuantity());
+
+                double newCost = (myPosition.getQuantity() * myPosition.getCost().doubleValue()
+                        + executedOrder.getQuantity() * executedOrder.getMatchPrice().doubleValue())
+                        / (myPosition.getQuantity() + executedOrder.getQuantity());
+
+                myPosition.setCost(new BigDecimal(newCost));
+                positionDao.update(myPosition);
+            } else if (side == Order.OrderSide.NB) {
+                if (myPosition.getQuantity() == executedOrder.getQuantity()) {
+                    positionDao.delete(myPosition);
+                } else {
+                    myPosition.setQuantity(myPosition.getQuantity() - executedOrder.getQuantity());
+                    positionDao.update(myPosition);
+                }
             }
-        }
+        });
     }
 }
