@@ -1,5 +1,8 @@
 package vn.com.vndirect.socialtrading.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -59,6 +62,7 @@ public class Order {
         this.orderId = orderId;
     }
 
+    @JsonProperty("account")
     public String getByAccount() {
         return byAccount;
     }
@@ -75,6 +79,7 @@ public class Order {
         this.mimickingAccount = mimickingAccount;
     }
 
+    @JsonProperty("symbol")
     public String getStock() {
         return stock;
     }
@@ -83,6 +88,7 @@ public class Order {
         this.stock = stock;
     }
 
+    @JsonProperty("qty")
     public int getQuantity() {
         return quantity;
     }
@@ -99,6 +105,8 @@ public class Order {
         this.price = price;
     }
 
+    @JsonProperty("tradeDate")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyyMMdd-HH:mm:ss")
     public Date getDate() {
         return date;
     }
@@ -123,6 +131,7 @@ public class Order {
         this.type = type;
     }
 
+    @JsonProperty("matchedPrice")
     public BigDecimal getMatchPrice() {
         return matchPrice;
     }
@@ -131,6 +140,7 @@ public class Order {
         this.matchPrice = matchPrice;
     }
 
+    @JsonProperty("matchedQty")
     public int getMatchQuantity() {
         return matchQuantity;
     }
