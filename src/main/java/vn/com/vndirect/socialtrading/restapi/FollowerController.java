@@ -4,6 +4,7 @@ package vn.com.vndirect.socialtrading.restapi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 import vn.com.vndirect.socialtrading.dao.FollowerDao;
 import vn.com.vndirect.socialtrading.model.Follower;
@@ -52,5 +53,10 @@ public class FollowerController {
     @RequestMapping(value = "/api/v1/follower/{id}/following", method = RequestMethod.POST)
     public void followTrader(@PathVariable String id, String traderAccount, BigDecimal amount) {
         followerService.followTrader(id, traderAccount, amount);
+    }
+
+    @MessageMapping("/hello")
+    public void greeting() {
+        System.out.println("Hello!");
     }
 }
