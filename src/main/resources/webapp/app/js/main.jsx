@@ -7,99 +7,6 @@ ActionTypes = {
 };
 
 
-var TraderLine = React.createClass({
-    followBtnToggled: function() {
-        if (me.isFollowing(this.props.trader)) {
-            dispatcher.dispatch({
-                type: ActionTypes.FOLLOW_TRADER,
-                trader: this.props.trader
-            });
-        } else {
-            dispatcher.dispatch({
-                type: ActionTypes.UNFOLLOW_TRADER,
-                trader: this.props.trader
-            });
-        }
-    },
-
-    render: function() {
-        var followBtnClasses = "btn ";
-        if (me.isFollowing(this.props.trader)) {
-            var followButtonText = "Unfollow";
-            followBtnClasses += "btn-danger";
-        } else {
-            followButtonText = "Follow";
-            followBtnClasses += "btn-primary";
-        }
-
-        return (
-            <div className="traderLine clearfix">
-              <div className="block">
-                <img src="/img/trader1.jpg" className="img-thumbnail"/>
-              </div>
-
-              <div className="block basic-info">
-                <h2>{this.props.trader.get("name")}</h2>
-                <p className="text-muted">
-                  {this.props.trader.get("id")}
-                  {this.props.trader.get("description")}
-                </p>
-              </div>
-
-              <div className="block">
-                <span className="text-label">NAV</span><br/>
-                <strong className="text-success">${this.props.trader.get("cash")}</strong><br/>
-
-                <span className="text-label">Số người copy</span><br/>
-                <strong className="text-success">{this.props.trader.get("peopleFollowing")}</strong><br/>
-
-              </div>
-
-              <div className="block">
-                <span className="text-label">ROI</span><br/>
-                <strong className="text-success">{this.props.trader.get("roi")}%</strong>
-                {/* <button type="submit" 
-                   className={followBtnClasses}
-                   onClick={this.followBtnToggled}>{{followButtonText}}</button> */}
-              </div>
-            </div>
-        );
-    }
-});
-
-var TraderList = React.createClass({
-    componentDidMount: function() {
-        var _this = this;
-
-        me.on("change add remove", function() {
-            _this.forceUpdate();
-        });
-
-        me.get("followingTraders").on("change", function() {
-            console.log("followingTraders changed")
-                _this.forceUpdate();
-        });
-
-        this.props.traders.on("change add remove reset", function() {
-            _this.forceUpdate();
-        });
-    },
-
-    render: function() {
-        var nodes = this.props.traders.map(function(trader) {
-            return (
-                <TraderLine trader={trader}/>
-            );
-        });
-
-        return (
-            <div className="trader-list">
-              {nodes}
-            </div>
-        );
-    }
-});
-
 var NavBar = React.createClass({
     logout: function() {
         $.post("/api/v1/logout").then(function() {
@@ -419,4 +326,16 @@ $(document).ready(function() {
 	    document.getElementById('example')
     );
     Backbone.history.start();
+
+    var socket = SockJS("/hello");
+    var stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log("Websocket Connected! " + frame);
+        
+        stompClient.subscribe("/topic/greetings", function(msg) {
+            console.log("New message: " + msg);
+        })
+    });
+
 });
