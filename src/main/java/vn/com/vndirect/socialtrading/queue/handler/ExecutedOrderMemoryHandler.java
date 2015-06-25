@@ -10,6 +10,7 @@ import vn.com.vndirect.ors.client.api.entity.Report;
 import vn.com.vndirect.ors.client.api.utils.OrderException;
 import vn.com.vndirect.socialtrading.dao.*;
 import vn.com.vndirect.socialtrading.model.*;
+import vn.com.vndirect.socialtrading.service.FollowerService;
 import vn.com.vndirect.socialtrading.utility.InMemory;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class ExecutedOrderMemoryHandler {
     private InMemory memory;
     private ObjectMapper mapper;
     private OrderService orderService;
+    private FollowerService followerService;
     static int MoneySlot = 10000000;
 
     @Autowired
@@ -38,7 +40,8 @@ public class ExecutedOrderMemoryHandler {
                                       OrderDao orderDao,
                                       InMemory memory,
                                       ObjectMapper mapper,
-                                      OrderService orderService) {
+                                      OrderService orderService,
+                                      FollowerService followerService) {
         this.followerDao = followerDao;
         this.stockDao = stockDao;
         this.positionDao = positionDao;
@@ -47,6 +50,7 @@ public class ExecutedOrderMemoryHandler {
         this.memory = memory;
         this.mapper = mapper;
         this.orderService = orderService;
+        this.followerService = followerService;
     }
 
     // FIXME Hardcoded queue name
@@ -54,6 +58,7 @@ public class ExecutedOrderMemoryHandler {
     public void onExecutedOrderReceived(byte[] payload) throws IOException {
         Order order = mapper.readValue(payload, Order.class);
         handle(order);
+        followerService.orderExecuted(order);
     }
 
     public void handle(Order executedOrder) {
