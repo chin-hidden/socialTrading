@@ -1,11 +1,15 @@
 package vn.com.vndirect.socialtrading.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
-public class Account {
+public class Account implements UserDetails {
     public enum UserType {
         FOLLOWER("FOLLOWER"),
         TRADER("TRADER");
@@ -43,6 +47,7 @@ public class Account {
         return username;
     }
 
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -77,5 +82,39 @@ public class Account {
 
     public void setType(UserType type) {
         this.type = type;
+    }
+
+    // Implementing UserDetails
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // FIXME Hardcoded
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // FIXME Hardcoded
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // FIXME Hardcoded
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // FIXME Hardcoded
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // FIXME Hardcoded roles
+        ArrayList<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(() -> "USER");
+        return roles;
     }
 }
