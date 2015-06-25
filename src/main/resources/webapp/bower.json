@@ -8,7 +8,9 @@
     "backbone": "~1.2.0",
     "jquery": "~2.1.4",
     "slick-carousel": "~1.5.5",
-    "nouislider": "~7.0.10"
+    "nouislider": "~7.0.10",
+    "stomp-websocket": "~2.3.4",
+    "sockjs-client": "~1.0.0"
   },
   "devDependencies": {}
 }
