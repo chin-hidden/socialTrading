@@ -44,6 +44,8 @@ public class FollowerService {
     }
 
     public void orderExecuted(Order executedOrder) {
-        template.convertAndSend("/topic/greetings", executedOrder);
+        // FIXME querying the db here might be slow
+        String username = followerDao.getSingle(executedOrder.getByAccount()).get().getUsername();
+        template.convertAndSendToUser(username, "/queue/executed-orders", executedOrder);
     }
 }

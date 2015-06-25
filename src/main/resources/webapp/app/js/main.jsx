@@ -331,9 +331,7 @@ $(document).ready(function() {
     var stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function (frame) {
-        console.log("Websocket Connected! " + frame);
-        
-        stompClient.subscribe("/topic/greetings", function(msg) {
+        stompClient.subscribe("/user/queue/executed-orders", function(msg) {
             console.log("New message: " + msg);
         })
     });
