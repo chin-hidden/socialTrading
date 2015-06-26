@@ -1,7 +1,10 @@
 package vn.com.vndirect.socialtrading.queue.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.javatuples.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +24,8 @@ import java.util.Map;
 
 @Component
 public class ExecutedOrderMemoryHandler {
+    private static Logger logger = LoggerFactory.getLogger(ExecutedOrderMemoryHandler.class);
+
     private FollowerDao followerDao;
     private StockDao stockDao;
     private PositionDao positionDao;
@@ -55,10 +60,16 @@ public class ExecutedOrderMemoryHandler {
 
     // FIXME Hardcoded queue name
     @RabbitListener(queues = "executedOrderList2")
-    public void onExecutedOrderReceived(byte[] payload) throws IOException {
-        Order order = mapper.readValue(payload, Order.class);
-        handle(order);
-        followerService.orderExecuted(order);
+    public void onExecutedOrderReceived(byte[] payload) {
+        try {
+            Order order = mapper.readValue(payload, Order.class);
+            handle(order);
+            followerService.orderExecuted(order);
+        } catch (JsonProcessingException e) {
+            logger.warn("Got an unknown message from the executedOrderList queue: ", e);
+        } catch (IOException e) {
+            logger.error("Something wrong came up: ", e);
+        }
     }
 
     public void handle(Order executedOrder) {
