@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.javatuples.Pair;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Follower;
@@ -32,11 +33,15 @@ public class FollowingDao extends AbstractDao<Following, Pair<String, String>> {
 
     @Override
     public Optional<Following> getSingle(Pair<String, String> id) {
-        return Optional.of(template.queryForObject("SELECT * FROM following " +
-                        "WHERE followeraccount = ? AND traderaccount = ?",
-                new BeanPropertyRowMapper<Following>(Following.class),
-                id.getValue0(),
-                id.getValue1()));
+        try {
+            return Optional.of(template.queryForObject("SELECT * FROM following " +
+                            "WHERE followeraccount = ? AND traderaccount = ?",
+                    new BeanPropertyRowMapper<Following>(Following.class),
+                    id.getValue0(),
+                    id.getValue1()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
