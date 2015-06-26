@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class ExecutedOrderMemoryHandler {
@@ -131,33 +132,33 @@ public class ExecutedOrderMemoryHandler {
 
             // if sell order and follower do not have stock to follow
             if (side == Order.OrderSide.NS) {
-                Position position = positionDao.getStockFollow(follower, account, symbol);
-                if (position.getQuantity() <= 0) continue;
-                else {
-                    Report report;
-                    try {
-                        report = orderService.executePlaceOrder(follower,
-                                side.toString(),
-                                executedOrder.getType().toString(),
-                                symbol,
-                                price.doubleValue(),
-                                position.getQuantity());
+                positionDao.getStockFollow(follower, account, symbol)
+                        .filter(p -> p.getQuantity() > 0)
+                        .ifPresent(position -> {
+                            Report report;
+                            try {
+                                report = orderService.executePlaceOrder(follower,
+                                        side.toString(),
+                                        executedOrder.getType().toString(),
+                                        symbol,
+                                        price.doubleValue(),
+                                        position.getQuantity());
 
-                        String order_id_return = report.getMessage();
-                        System.out.println("Print sell order id: " + order_id_return);
-                        System.out.println("Print report.getStatus(): " + report.getStatus());
+                                String order_id_return = report.getMessage();
+                                System.out.println("Print sell order id: " + order_id_return);
+                                System.out.println("Print report.getStatus(): " + report.getStatus());
 
-                        if (report.getStatus()) {
-                            clonedOrder.setQuantity(position.getQuantity());
-                            clonedOrder.setOrderId(order_id_return);
+                                if (report.getStatus()) {
+                                    clonedOrder.setQuantity(position.getQuantity());
+                                    clonedOrder.setOrderId(order_id_return);
 
-                            orderDao.insert(clonedOrder);
-                        }
+                                    orderDao.insert(clonedOrder);
+                                }
 
-                    } catch (OrderException e) {
-                        e.printStackTrace();
-                    }
-                }
+                            } catch (OrderException e) {
+                                e.printStackTrace();
+                            }
+                        });
             } else {
                 // ok thi dat lenh mua theo voi kl la 10trieu/gia stock
                 int quantity = MoneySlot / price.intValueExact();
@@ -200,30 +201,39 @@ public class ExecutedOrderMemoryHandler {
             myOrder.setMatchPrice(new BigDecimal(newPrice));
             orderDao.update(myOrder);
 
-            Position myPosition = positionDao.getStockFollow(account, myOrder.getByAccount(), symbol);
-            if (myPosition != null) {
-                // chua co thi insert moi vao DB
-                myPosition.setAccountnumber(account);
-                myPosition.setMimickingaccountnumber(myOrder.getMimickingAccount());
-                myPosition.setStock(symbol);
-                myPosition.setQuantity(executedOrder.getQuantity());
-                myPosition.setCost(executedOrder.getMatchPrice());
-                positionDao.insert(myPosition);
-            } else if (side == Order.OrderSide.NS) {
-                myPosition.setQuantity(myPosition.getQuantity() + executedOrder.getQuantity());
+            Optional<Position> maybePosition = positionDao.getStockFollow(account, myOrder.getByAccount(), symbol);
 
-                double newCost = (myPosition.getQuantity() * myPosition.getCost().doubleValue()
-                        + executedOrder.getQuantity() * executedOrder.getMatchPrice().doubleValue())
-                        / (myPosition.getQuantity() + executedOrder.getQuantity());
+            if (!maybePosition.isPresent()) {
+                // Chua co thi insert moi vao DB
+                Position p = new Position();
 
-                myPosition.setCost(new BigDecimal(newCost));
-                positionDao.update(myPosition);
-            } else if (side == Order.OrderSide.NB) {
-                if (myPosition.getQuantity() == executedOrder.getQuantity()) {
-                    positionDao.delete(myPosition);
-                } else {
-                    myPosition.setQuantity(myPosition.getQuantity() - executedOrder.getQuantity());
+                p.setAccountnumber(account);
+                p.setMimickingaccountnumber(myOrder.getMimickingAccount());
+                p.setStock(symbol);
+                p.setQuantity(executedOrder.getQuantity());
+                p.setCost(executedOrder.getMatchPrice());
+
+                positionDao.insert(p);
+            } else {
+                Position myPosition = maybePosition.get();
+
+                if (side == Order.OrderSide.NS) {
+                    myPosition.setQuantity(myPosition.getQuantity() + executedOrder.getQuantity());
+
+                    // FIXME Lossy conversion
+                    double newCost = (myPosition.getQuantity() * myPosition.getCost().doubleValue()
+                            + executedOrder.getQuantity() * executedOrder.getMatchPrice().doubleValue())
+                            / (myPosition.getQuantity() + executedOrder.getQuantity());
+
+                    myPosition.setCost(new BigDecimal(newCost));
                     positionDao.update(myPosition);
+                } else if (side == Order.OrderSide.NB) {
+                    if (myPosition.getQuantity() == executedOrder.getQuantity()) {
+                        positionDao.delete(myPosition);
+                    } else {
+                        myPosition.setQuantity(myPosition.getQuantity() - executedOrder.getQuantity());
+                        positionDao.update(myPosition);
+                    }
                 }
             }
         });
