@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,15 +23,21 @@ public class PositionDao extends AbstractDao<Position, String> {
     private String baseQuery = "SELECT * FROM position ";
 
     @Override
-	public Optional<Position> getSingle(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Optional<Position> getSingle(String id) {
+        throw new UnsupportedOperationException("Not implemented!");
+    }
 
-    public Position getStockFollow(String followerId, String traderId, String symbol) {
-        return template.queryForObject(
-                baseQuery + " WHERE accountnumber = ? and mimickingaccountnumber=? and stock =?",
-                new BeanPropertyRowMapper<Position>(Position.class), followerId,traderId,symbol);
+    public Optional<Position> getStockFollow(String followerId, String traderId, String symbol) {
+        try {
+            return Optional.of(template.queryForObject(
+                    baseQuery + " WHERE accountnumber = ? and mimickingaccountnumber=? and stock =?",
+                    new BeanPropertyRowMapper<Position>(Position.class),
+                    followerId,
+                    traderId,
+                    symbol));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

@@ -27,7 +27,14 @@ public class Order {
     }
 
     public enum OrderSide {
+        /**
+         * Selling side.
+         */
         NS("NS"),
+
+        /**
+         * Buying side.
+         */
         NB("NB");
 
         private final String text;

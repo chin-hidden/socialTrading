@@ -15,7 +15,7 @@ public class OrderDao extends AbstractDao<Order, String> {
 
     @Override
     public Optional<Order> getSingle(String id) {
-        return null;
+        throw new UnsupportedOperationException("Not implemented!");
     }
 
     @Override

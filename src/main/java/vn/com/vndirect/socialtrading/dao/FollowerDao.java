@@ -2,6 +2,8 @@ package vn.com.vndirect.socialtrading.dao;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Service;
 import vn.com.vndirect.socialtrading.model.Follower;
@@ -24,15 +26,23 @@ public class FollowerDao extends AbstractDao<Follower, String> {
 
     @Override
     public Optional<Follower> getSingle(String id) {
-        return Optional.of(template.queryForObject(
-                baseQuery + " WHERE account.accountNumber = ?",
-                new BeanPropertyRowMapper<Follower>(Follower.class), id));
+        try {
+            return Optional.of(template.queryForObject(
+                    baseQuery + " WHERE account.accountNumber = ?",
+                    new BeanPropertyRowMapper<Follower>(Follower.class), id));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public Optional<Follower> getByUsername(String username) {
-        return Optional.of(template.queryForObject(
-                baseQuery + " WHERE username = ?",
-                new BeanPropertyRowMapper<Follower>(Follower.class), username));
+        try {
+            return Optional.of(template.queryForObject(
+                    baseQuery + " WHERE username = ?",
+                    new BeanPropertyRowMapper<Follower>(Follower.class), username));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public List<String> findAllFollowerId() {
