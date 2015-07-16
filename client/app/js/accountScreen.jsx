@@ -273,25 +273,6 @@ var OverviewPanel = React.createClass({
         return (
             <div className="panel panel-default panel-overview">
               <div className="panel-body">
-                <div className="panel-overview-tabs">
-                  <ul className="list-unstyled">
-                    <li>
-                      Loi nhuan
-                      25.628.674 (25%)
-                    </li>
-
-                    <li>
-                      <img src="/img/avatar.png"/>
-
-                      Captain A.
-                                            25.628.674
-
-                      <button>Dung theo doi</button>
-                      <button>Ban danh muc</button>
-                    </li>
-                  </ul>
-                  <button className="btn btn-primary">Thay đổi chiến lược gia</button>
-                </div>
                 <div ref="graph" className="panel-overview-graph">
                   <img src="/static/img/chart.png"/>
                 </div>
