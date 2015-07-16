@@ -159,20 +159,20 @@ var PositionPanel = React.createClass({
             new Backbone.Model({
                 stock: "VND",
                 quantity: 9000,
-                cost: 8500,
-                mimickingAccountNumber: "0001052458"
+                buyingPrice: 8500,
+                mimickingUser: "thachvu"
             }),
             new Backbone.Model({
                 stock: "VND",
                 quantity: 5000,
-                cost: 8300,
-                mimickingAccountNumber: "0001011079"
+                buyingPrice: 8300,
+                mimickingUser: "thachvu"
             }),
             new Backbone.Model({
                 stock: "ACB",
                 quantity: 8000,
-                cost: 12000,
-                mimickingAccountNumber: "0001052458"
+                buyingPrice: 12000,
+                mimickingUser: "giangnguyen"
             }),
         ]);
     },
@@ -182,16 +182,24 @@ var PositionPanel = React.createClass({
     },
 
     positionRowsByTrader: function (positions) {
-        var posByTrader = positions.groupBy("mimickingAccountNumber");
+        var posByTrader = positions.groupBy("mimickingUser");
         var result = _.map(posByTrader, function (positions, traderAccount) {
             var rowsForThisTrader = _.map(positions, function (pos) {
+                var marketPrice = 23000;
+                var totalCost = pos.get("buyingPrice") * pos.get("quantity");
+                var totalValue = marketPrice * pos.get("quantity");
+                var gain = totalValue - totalCost;
+                var roi = (gain / totalCost * 100).toFixed(2);
                 return (
                     <tr>
                       <td>{pos.get("stock")}</td>
+                      <td>HOSE</td>
                       <td>{pos.get("quantity")}</td>
-                      <td>{formatVNCurrency(pos.get("cost"))}</td>
-                      <td>{formatVNCurrency(23000)}</td>
-                      <td><span className="text-success">100%</span></td>
+                      <td>{formatCurrency(pos.get("buyingPrice"))}</td>
+                      <td>{formatCurrency(marketPrice)}</td>
+                      <td>{formatCurrency(totalCost)}</td>
+                      <td>{formatCurrency(totalValue)}</td>
+                      <td><span className="text-success">{roi}%</span></td>
                     </tr>
                 );
             });
@@ -201,7 +209,7 @@ var PositionPanel = React.createClass({
             var headerRow = (
                 <tr>
                   <td colSpan="4">{traderName}</td>
-                  <td>{formatVNCurrency(25628674)} (25%)</td>
+                  <td>{formatCurrency(25628674)} (25%)</td>
                 </tr>
             );
 
@@ -218,18 +226,26 @@ var PositionPanel = React.createClass({
 
         return _.map(positions.groupBy("stock"), function (positions, stockSymbol) {
             var totalCost = _.reduce(_.map(positions, function (pos) {
-                return pos.get("cost") * pos.get("quantity");
+                return pos.get("buyingPrice") * pos.get("quantity");
             }), sum);
             var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
                                          sum);
 
+            var marketPrice = 23000;
+            var totalValue = marketPrice * totalQuantity;
+            var gain = totalValue - totalCost;
+            var roi = (gain / totalCost * 100).toFixed(2);
+
             return  (
                 <tr>
                   <td>{stockSymbol}</td>
+                  <td>HOSE</td>
                   <td>{totalQuantity}</td>
-                  <td>{formatVNCurrency(totalCost / totalQuantity)}</td>
-                  <td>{formatVNCurrency(23000)}</td>
-                  <td><span className="text-success">100%</span></td>
+                  <td>{formatCurrency(totalCost / totalQuantity)}</td>
+                  <td>{formatCurrency(23000)}</td>
+                  <td>{formatCurrency(totalCost)}</td>
+                  <td>{formatCurrency(totalValue)}</td>
+                  <td><span className="text-success">{roi}%</span></td>
                 </tr>
             );
         });
@@ -245,25 +261,24 @@ var PositionPanel = React.createClass({
 
         return (
             <div className="panel panel-default">
-              <div className="panel-heading">
-                <span>Danh muc cua toi</span>
-
+              <div className="panel-body">
                 <select ref="viewTypeSelector"
                         value={this.state.viewType}
                         onChange={this.changeViewType}>
-                  <option value="all">Toan bo</option>
-                  <option value="by-trader">Chien luoc gia</option>
+                  <option value="all">Toàn bộ</option>
+                  <option value="by-trader">Theo chiến lược gia</option>
                 </select>
-              </div>
 
-              <div className="panel-body">
                 <table className="table table-striped table-hover">
                   <thead>
                     <tr>
                       <th>Mã CK</th>
-                      <th>Số lượng</th>
+                      <th>Sàn</th>
+                      <th>Khối lượng</th>
                       <th>Giá vốn</th>
-                      <th>Giá hiện tại</th>
+                      <th>Giá thị trường</th>
+                      <th>Tổng giá vốn</th>
+                      <th>Tổng giá thị trường</th>
                       <th>Lợi nhuận</th>
                     </tr>
                   </thead>
@@ -291,11 +306,11 @@ var OverviewPanel = React.createClass({
                     <div className="second-line">
                       <div>
                         <span className="ui-label-strong">Lãi hiện tại: </span> 
-                          {formatVNCurrency(23223423)}
+                          {formatCurrency(23223423)}
                       </div>
                       <div>
                         <span className="ui-label-strong">Lãi thực tế: </span>
-                        {formatVNCurrency(23223423)}
+                        {formatCurrency(23223423)}
                       </div>
                       <div>
                         <span className="ui-label-strong">ROI: </span>
