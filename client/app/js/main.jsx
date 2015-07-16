@@ -270,7 +270,7 @@ $(document).ready(function() {
 
     React.render(
 	    <App router={router}/>,
-	    document.getElementById('example')
+	    document.getElementById('app')
     );
     Backbone.history.start();
 
