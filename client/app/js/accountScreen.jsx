@@ -29,20 +29,31 @@ var AccountScreen = React.createClass({
 
         return (
             <div>
+              <InfoBox/>
+
               <ul className="nav nav-tabs">
                 <li className={active['overview']}>
                   <a href="#"  onClick={this.switchTab.bind(this, "overview")}>
-                    <span className="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    Tổng quan
                   </a>
                 </li>
                 <li className={active['danhmuc']}>
                   <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
-                    <span className="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                    Danh mục đầu tư
+                  </a>
+                </li>
+                <li className={active['danhmuc']}>
+                  <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
+                    Sổ lệnh trong ngày
+                  </a>
+                </li>
+                <li className={active['danhmuc']}>
+                  <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
+                    Lịch sử giao dịch
                   </a>
                 </li>
               </ul>
 
-              <InfoBox/>
               {tabContent}
             </div>
         );
