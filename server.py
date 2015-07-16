@@ -190,7 +190,7 @@ def get_all_traders():
     traders = [
     {
         "name": "Nguyen Hoang Giang",
-        "username": "giangnguyen",
+        "id": "giangnguyen",
         "type": "TRADER",
         "accountNumber": "1234",
         "description": "lol",
@@ -200,7 +200,7 @@ def get_all_traders():
     },
     {
         "name": "Tran Vu Thach",
-        "username": "thachvu",
+        "id": "thachvu",
         "type": "TRADER",
         "accountNumber": "1234",
         "description": "lol",
@@ -210,7 +210,7 @@ def get_all_traders():
     },
     {
         "name": "Hoang Minh Chau",
-        "username": "chauhoang",
+        "id": "chauhoang",
         "type": "TRADER",
         "accountNumber": "1234",
         "description": "lol",
