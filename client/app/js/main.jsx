@@ -66,7 +66,7 @@ var App = React.createClass({
         var _this = this;
         $.get("/api/v1/account").then(function(account) {
             me = new Follower();
-            me.url = "/api/v1/follower/" + account.accountNumber;
+            me.url = "/api/v1/follower/" + account.result.id;
             me.fetch().then(function() {
                 _this.setState({authChecking: false, loggedIn: true});
                 _this.forceUpdate();

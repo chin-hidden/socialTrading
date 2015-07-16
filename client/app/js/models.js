@@ -3,13 +3,14 @@
 //
 
 var Traders = Backbone.Collection.extend({
-    model: Backbone.Model.extend({
-        idAttribute: "accountNumber"
-    }),
     url: "/api/v1/traders",
 
     comparator: function(item) {
         return item.get('id');
+    },
+
+    parse: function(data) {
+        return data.result;
     }
 });
 
@@ -17,15 +18,18 @@ var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         idAttribute: "traderId"
     }),
+    parse: function(data) {
+        return data.result;
+    }
 });
 
 var Follower = Backbone.Model.extend({
-    idAttribute: "accountNumber",
 
     defaults: {
         followingTraders: new FollowingRels(),
         positions: new Backbone.Collection(),
         firstLogin: true,
+        riskFactor: 0
     },
 
     initialize: function() {
@@ -70,14 +74,14 @@ var Follower = Backbone.Model.extend({
         });
     },
 
-    parse: function(res) {
-        console.log(res);
-        this.get("followingTraders").url = "/api/v1/follower/" + res.accountNumber + "/following";
+    parse: function(data) {
+        var data = data.result;
+        this.get("followingTraders").url = "/api/v1/follower/" + data.id + "/following";
         this.get("followingTraders").fetch();
 
-        this.get("positions").url = "/api/v1/follower/" + res.accountNumber + "/positions";
+        this.get("positions").url = "/api/v1/follower/" + data.id + "/positions";
         this.get("positions").fetch();
-        return res;
+        return data;
     },
 
     isFollowing: function(trader) {
