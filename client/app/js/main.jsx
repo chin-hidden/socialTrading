@@ -37,7 +37,7 @@ var NavBar = React.createClass({
 
         return (
             <nav className="navbar navbar-default">
-              <div className="container-fluid">
+              <div className="container">
                 <div className="navbar-header">
                   <a className="navbar-brand" href="#">
                     <span className="accent">A</span>utotrade
@@ -112,12 +112,17 @@ var App = React.createClass({
         }
 
         return (
-            <div className="container-fluid top-container">
+            <div className="top-container">
                 <NavBar/>
+
+                <div className="container">
                 {inner}
+                </div>
 
                 <footer>
-                <span>Bản quyền © Công ty cổ phần chứng khoán VNDIRECT</span>
+                    <div className="container">
+                        <span>Bản quyền © Công ty cổ phần chứng khoán VNDIRECT</span>
+                    </div>
                 </footer>
             </div>
         );

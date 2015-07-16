@@ -13,11 +13,14 @@ html {
 }
 
 body {
-  max-width: 795px;  /* Linh's number */
   background-image: url("../img/background.jpg");
   margin: 0 auto;
   font-size: 16px;
   color: #535551;
+}
+
+.container {
+  width: 960px;
 }
 
 .ui-label-strong {
