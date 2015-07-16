@@ -26,7 +26,7 @@ var NavBar = React.createClass({
                 <ul className="nav navbar-nav navbar-right">
                     <li><button className="btn btn-primary navbar-btn"
                                 onClick={this.showWizardScreen}>
-                            Xin chào, {me.id}!
+                            Xin chào, {me.get("name")}!
                         </button>
                     </li>
 
