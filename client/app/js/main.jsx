@@ -116,7 +116,25 @@ var App = React.createClass({
                 <NavBar/>
 
                 <div className="container">
-                {inner}
+                    <ul className="nav nav-tabs">
+                      <li className="active">
+                        <a href="#account">
+                          Trang của tôi
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#traders">
+                          Chiến lược gia
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#help">
+                          Tìm hiểu về AutoTrade
+                        </a>
+                      </li>
+                    </ul>
+
+                    {inner}
                 </div>
 
                 <footer>
