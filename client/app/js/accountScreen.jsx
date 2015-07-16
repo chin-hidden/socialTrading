@@ -273,6 +273,27 @@ var OverviewPanel = React.createClass({
         return (
             <div className="panel panel-default panel-overview">
               <div className="panel-body">
+                <div className="info-pane">
+                  <img src="/static/img/avatar.png" alt=""/>
+                  <div>
+                    <div><span className="ui-label-strong">TraderAAA</span></div>
+                    <div className="second-line">
+                      <div>
+                        <span className="ui-label-strong">Lãi hiện tại: </span> 
+                          {formatVNCurrency(23223423)}
+                      </div>
+                      <div>
+                        <span className="ui-label-strong">Lãi thực tế: </span>
+                        {formatVNCurrency(23223423)}
+                      </div>
+                      <div>
+                        <span className="ui-label-strong">ROI: </span>
+                        24%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div ref="graph" className="panel-overview-graph">
                   <img src="/static/img/chart.png"/>
                 </div>

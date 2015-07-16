@@ -1,4 +1,3 @@
-
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-weight: bold;
@@ -17,8 +16,13 @@ body {
   max-width: 795px;  /* Linh's number */
   background-image: url("../img/background.jpg");
   margin: 0 auto;
-  font-size: 12px;
+  font-size: 16px;
   color: #535551;
+}
+
+.ui-label-strong {
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .trader-list > .trader:nth-child(odd) {
@@ -205,24 +209,28 @@ span.accent {
   height: auto;
 }
 
-.panel-overview > div {
-  display: flex;
+.panel-overview .info-pane {
+  background: #f6f6f6;
+  padding: 0.5em;
+  margin-bottom: 1em;
 }
 
-.panel-overview-tabs {
-  margin-right: 1em;
+.panel-overview .info-pane > * { 
+  display: inline-block;
 }
 
-.panel-overview-graph {
-  flex-grow: 1;
+.panel-overview .info-pane > img {
+  vertical-align: top;
+  margin-right: 0.5em;
 }
 
-.panel-overview-graph > img {
-  width: 100%;
+.panel-overview .info-pane .second-line > div {
+  display: inline-block;
+  margin-right: 3em;
 }
 
-.panel-overview-tabs ul > li {
-  border: 1px solid black;
+.panel-overview .info-pane > img {
+  height: 5em;
 }
 
 span.glyphicon {
