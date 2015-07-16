@@ -30,26 +30,27 @@ class VndirectTradeApiClient:
 
     def get_user_detail(self, token):
         """\
-        Return a dictionary object that consolidates the following API endpoints:
         - GET /customer
-        - GET /accounts/{id}, and
-        - GET /accounts/{id}/portfolio
         """
         headers = {"Authorization": "Bearer " + token}
 
         res = requests.get(self.API_URL + "/customer", headers=headers)
         user = res.json()
-
-        accounts = {}
-        for account_nr in user["accountNumbers"]:
-            res = requests.get(self.API_URL + "/accounts/" + account_nr, 
-                headers=headers)
-            accounts[account_nr] = res.json()
-            res = requests.get(self.API_URL + "/accounts/" + account_nr + "/portfolio", 
-                headers=headers)
-            accounts[account_nr].update(res.json())
-        user["accounts"] = accounts
         return user
+
+    def get_account_detail(self, token, account_nr):
+        """\
+        - GET /accounts/{id}, and
+        - GET /accounts/{id}/portfolio
+        """
+        headers = {"Authorization": "Bearer " + token}
+
+        res = requests.get(self.API_URL + "/accounts/" + account_nr, 
+            headers=headers)
+        accounts[account_nr] = res.json()
+        res = requests.get(self.API_URL + "/accounts/" + account_nr + "/portfolio", 
+            headers=headers)
+        accounts[account_nr].update(res.json())
 
 
 class User:
