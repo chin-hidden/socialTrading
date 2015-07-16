@@ -159,10 +159,10 @@ var TraderCarousel = React.createClass({
 
               <div style={styles.thumbSlider}>
                 <div ref="thumbSlider" className="trader-thumb-slider">
-                  <div><img className="img-thumbnail" src="/img/trader1.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/img/trader2.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/img/trader3.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/img/trader4.jpg"/></div>
+                  <div><img className="img-thumbnail" src="/static/img/trader1.jpg"/></div>
+                  <div><img className="img-thumbnail" src="/static/img/trader2.jpg"/></div>
+                  <div><img className="img-thumbnail" src="/static/img/trader3.jpg"/></div>
+                  <div><img className="img-thumbnail" src="/static/img/trader4.jpg"/></div>
                 </div>
 
                 <button style={styles.next} ref="btnNext">&#9654;</button>
@@ -199,7 +199,7 @@ var TraderLine = React.createClass({
             followBtnClasses += "btn-primary";
         }
 
-        var imgSrc = "/img/trader" + this.props.index + ".jpg";
+        var imgSrc = "/static/img/trader" + this.props.index + ".jpg";
         return (
             <div className="traderLine clearfix">
               <div className="block">
@@ -263,7 +263,7 @@ var TraderLine = React.createClass({
         return (
             <div className="traderLine clearfix">
               <div className="block">
-                <img src="/img/trader1.jpg" className="img-thumbnail"/>
+                <img src="/static/img/trader1.jpg" className="img-thumbnail"/>
               </div>
 
               <div className="block basic-info">

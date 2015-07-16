@@ -93,9 +93,9 @@ var InfoBox = React.createClass({
             <div className="panel panel-default">
               <div className="panel-body clearfix">
                 <div ref="personalInfo" style={styles.personalInfo}>
-                  <img src="/img/avatar.png"/>
-                  <strong>Superman</strong><br/>
-                  {me.id}
+                  <img src="/static/img/avatar.png"/>
+                  <strong>{me.get("name")}</strong><br/>
+                  {me.get("id")}
                 </div>
 
                 <div ref="accountInfo" style={styles.accountInfo}>
@@ -292,9 +292,8 @@ var OverviewPanel = React.createClass({
                   </ul>
                   <button className="btn btn-primary">Thay đổi chiến lược gia</button>
                 </div>
-
                 <div ref="graph" className="panel-overview-graph">
-                  <img src="/img/overview-graph.png"/>
+                  <img src="/static/img/chart.png"/>
                 </div>
               </div>
             </div>
