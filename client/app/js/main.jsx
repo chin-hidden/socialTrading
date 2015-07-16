@@ -9,7 +9,7 @@ ActionTypes = {
 
 var NavBar = React.createClass({
     logout: function() {
-        $.post("/login?logout").then(function() {
+        $.post("/logout").then(function() {
             location.reload();
         }).fail(function() {
             alert("Lỗi. Không thể đăng xuất!");
