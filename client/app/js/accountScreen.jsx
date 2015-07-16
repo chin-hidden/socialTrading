@@ -207,8 +207,8 @@ var PositionPanel = React.createClass({
             var traderName = traders.get(traderAccount).get("name");
 
             var headerRow = (
-                <tr>
-                  <td colSpan="4">{traderName}</td>
+                <tr style={{backgroundColor: "#cbffaf"}}>
+                  <td colSpan="7">{traderName}</td>
                   <td>{formatCurrency(25628674)} (25%)</td>
                 </tr>
             );
@@ -269,7 +269,7 @@ var PositionPanel = React.createClass({
                   <option value="by-trader">Theo chiến lược gia</option>
                 </select>
 
-                <table className="table table-striped table-hover">
+                <table className="table table-striped table-hover table-bordered">
                   <thead>
                     <tr>
                       <th>Mã CK</th>

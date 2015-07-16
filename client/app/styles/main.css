@@ -238,3 +238,20 @@ span.accent {
 span.glyphicon {
     color: black;
 }
+
+table.table thead {
+  background-color: #f6f6f6;
+}
+
+table.table th {
+  padding: 1em;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+  background: none;
+}
+
+.table-striped>tbody>tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
