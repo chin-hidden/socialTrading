@@ -1,0 +1,7 @@
+flask
+flask_login
+flask_failsafe
+flask-menu
+requests
+sqlalchemy
+psycopg2
