@@ -89,7 +89,7 @@ var TraderCarousel = React.createClass({
 
     componentDidMount: function() {
         var thumb = this.refs.thumbSlider.getDOMNode();
-        var detail = this.refs.detailSlider.getDOMNode(); 
+        var detail = this.refs.detailSlider.getDOMNode();
 
         $(thumb).slick({
             asNavFor: $(detail),
@@ -226,7 +226,7 @@ var TraderLine = React.createClass({
               <div className="block">
                 <span className="text-label">ROI</span><br/>
                 <strong className="text-success">{(Math.random() * 100).toFixed(2)}%</strong>
-                {/* <button type="submit" 
+                {/* <button type="submit"
                    className={followBtnClasses}
                    onClick={this.followBtnToggled}>{{followButtonText}}</button> */}
               </div>
@@ -286,7 +286,7 @@ var TraderLine = React.createClass({
               <div className="block">
                 <span className="text-label">ROI</span><br/>
                 <strong className="text-success">{this.props.trader.get("roi")}%</strong>
-                {/* <button type="submit" 
+                {/* <button type="submit"
                    className={followBtnClasses}
                    onClick={this.followBtnToggled}>{{followButtonText}}</button> */}
               </div>
