@@ -60,3 +60,8 @@ def traders():
 @app.route("/help")
 def help():
     return render_template("help.jinja.html")
+
+
+@app.route("/wizard")
+def wizard():
+    return render_template("wizard.jinja.html")
