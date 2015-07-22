@@ -2,7 +2,7 @@
 {% block content %}
 <div class="home-container">
   <div class="hero">
-    <h1 style={styles.shoutout}>Dễ hơn chơi lô,<br/> ngon hơn đánh đề!</h1>
+    <h1>Dễ hơn chơi lô,<br/> ngon hơn đánh đề!</h1>
     <div class="row">
       <div class="col-md-8">
         <p>
@@ -11,9 +11,9 @@
         </p>
       </div>
       <div class="col-md-4">
-        <button class="btn btn-lg btn-primary" style={styles.callToAction} onClick={this.transitToApp}>
+        <a class="btn btn-lg btn-primary" href="{{ url_for('wizard') }}">
         Đầu tư ngay!
-        </button>
+        </a>
       </div>
     </div>
   </div>
