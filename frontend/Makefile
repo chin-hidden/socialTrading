@@ -1,4 +1,4 @@
-DEST=../static
+DEST=../socialtrading/static
 
 all: build
 

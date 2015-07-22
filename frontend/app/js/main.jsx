@@ -22,33 +22,48 @@ var NavBar = React.createClass({
 
     render: function() {
         if (isLoggedIn()) {
-            var accountControls = (
-                <ul className="nav navbar-nav navbar-right">
+            var accountControls = [
                     <li><button className="btn btn-primary navbar-btn"
                                 onClick={this.showWizardScreen}>
-                            Xin chào, {me.get("name")}!
+                            {me.get("name")}!
                         </button>
                     </li>
-
-                    <li><button className="btn btn-default navbar-btn" onClick={this.logout}>Logout</button></li>
-                </ul>
-            );
+            ];
         }
 
         return (
-            <nav className="navbar navbar-default">
-              <div className="container">
-                <div className="navbar-header">
-                  <a className="navbar-brand" href="#">
-                    <span className="accent">A</span>utotrade
-                  </a>
-                </div>
+            <div>
+                <nav className="navbar navbar-inverse">
+                  <div className="container">
+                    <div className="navbar-header">
+                      <a className="navbar-brand" href="#">
+                        <span className="accent">A</span>utotrade
+                      </a>
+                    </div>
 
-                <div className="collapse navbar-collapse">
-                    {accountControls}
-                </div>
-              </div>
-            </nav>
+                    <div className="collapse navbar-collapse">
+                        <ul className="nav navbar-nav navbar-right">
+                            <li className="active">
+                              <a href="#account">
+                                Trang của tôi
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#traders">
+                                Chiến lược gia
+                              </a>
+                            </li>
+                            <li>
+                              <a href="#help">
+                                Tìm hiểu về AutoTrade
+                              </a>
+                            </li>
+                            {accountControls}
+                        </ul>
+                    </div>
+                  </div>
+                </nav>
+            </div>
         );
     }
 });
@@ -116,24 +131,6 @@ var App = React.createClass({
                 <NavBar/>
 
                 <div className="container">
-                    <ul className="nav nav-tabs">
-                      <li className="active">
-                        <a href="#account">
-                          Trang của tôi
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#traders">
-                          Chiến lược gia
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#help">
-                          Tìm hiểu về AutoTrade
-                        </a>
-                      </li>
-                    </ul>
-
                     {inner}
                 </div>
 
@@ -175,8 +172,8 @@ var HomeScreen = React.createClass({
                 <div className="row">
                     <div className="col-md-8">
                         <p>
-                        Mạng đầu tư <span className="accent">Autotrade</span> - 
-                        Hệ thống tự động sao chép chiến lược giao dịch lãi nhất thị trường. 
+                        Mạng đầu tư <span className="accent">Autotrade</span> -
+                        Hệ thống tự động sao chép chiến lược giao dịch lãi nhất thị trường.
                         </p>
                     </div>
 
@@ -225,7 +222,7 @@ var RiskSlider = React.createClass({
         var _this = this;
 
         // FIXME: we are calling `me` directly
-        $(slider).noUiSlider({
+        var tmp = $(slider).noUiSlider({
             start: [ me.get("riskFactor") ],
             step: 10,
             connect: "lower",
@@ -233,16 +230,20 @@ var RiskSlider = React.createClass({
                 'min': [  0 ],
                 'max': [ 100 ]
             }
-        }).noUiSlider_pips({
-            mode: "positions",
-            stepped: true,
-            values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-            densitiy: 4
         }).on("change", function() {
             if (_this.props.onChange) {
                 _this.props.onChange($(slider).val());
             }
         });
+
+        if (!this.props.withoutPips) {
+            tmp.noUiSlider_pips({
+                mode: "positions",
+                stepped: true,
+                values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                densitiy: 4
+            });
+        }
     },
     render: function() {
         return (<div ref="riskSlider" style={this.props.style}></div>);

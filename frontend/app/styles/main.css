@@ -18,6 +18,18 @@ body {
   color: #535551;
 }
 
+
+/* Sticky bottom footer */
+.top-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}
+
 .container {
   width: 1120px;
 }
@@ -62,7 +74,7 @@ body {
   margin-bottom: 1em;
 }
 
-.navbar-default {
+.navbar {
   background-color: #5E5E5E;
   border-radius: 0px;
   margin-left: -15px;
@@ -71,18 +83,18 @@ body {
   box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
 }
 
-.navbar-default .navbar-text,
-.navbar-default .navbar-brand {
+.navbar .navbar-text,
+.navbar .navbar-brand {
   color: white;
 }
 
-.navbar-default .navbar-brand {
+.navbar .navbar-brand {
   font-size: 40px;
   font-weight: bold;
 }
 
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
+.navbar .navbar-brand:hover,
+.navbar .navbar-brand:focus {
   color: white;
 }
 
@@ -90,15 +102,26 @@ body {
   margin-left: 10px;
 }
 
+.navbar-nav a {
+  font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  background: none;
+  color: #FF9900;
+}
+
 .btn {
   box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
+  border: none;
 }
 
 .btn-primary {
   background-color: #FF9900;
   color: #333;
   font-weight: bold;
-  border: none;
 }
 
 .home-container {
@@ -217,7 +240,7 @@ span.accent {
   margin-bottom: 1em;
 }
 
-.panel-overview .info-pane > * { 
+.panel-overview .info-pane > * {
   display: inline-block;
 }
 
@@ -247,11 +270,52 @@ table.table th {
   padding: 1em;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>td,
 .table-striped>tbody>tr:nth-child(odd)>th {
   background: none;
 }
 
 .table-striped>tbody>tr:nth-child(even) {
   background-color: #f6f6f6;
+}
+
+.panel-tabbed {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top: 0px;
+}
+
+ul.nav-tabs > li.active > a {
+  color: #FF9900;
+  /*border-top: 3px solid #FF9900;*/
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+ul.nav-tabs > li.active {
+  position: relative;
+}
+
+ul.nav-tabs > li.active::before {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background-color: #FF9900;
+  width: 100%;
+  height: 3px;
+  content: " ";
+  z-index: 1;
+}
+
+ul.nav-tabs > li > a {
+  color: #666;
+  background-color: #f6f6f6;
+  border: 1px solid #DDD;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  margin-right: 0px;
+}
+
+ul.nav-tabs > li {
+  margin-right: 1em;
 }

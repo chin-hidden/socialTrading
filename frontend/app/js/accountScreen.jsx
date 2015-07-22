@@ -42,13 +42,13 @@ var AccountScreen = React.createClass({
                     Danh mục đầu tư
                   </a>
                 </li>
-                <li className={active['danhmuc']}>
-                  <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
+                <li className={active['solenh']}>
+                  <a href="#" onClick={this.switchTab.bind(this, "solenh")}>
                     Sổ lệnh trong ngày
                   </a>
                 </li>
-                <li className={active['danhmuc']}>
-                  <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
+                <li className={active['lichsugd']}>
+                  <a href="#" onClick={this.switchTab.bind(this, "lichsugd")}>
                     Lịch sử giao dịch
                   </a>
                 </li>
@@ -77,21 +77,24 @@ var InfoBox = React.createClass({
 
     render: function() {
         // FIXME Decouple from `me`
+        var spacing = 20;
+
         var styles = {
             personalInfo: {
                 float: "left",
-                marginRight: 20,
-                textAlign: "center"
+                marginRight: spacing,
+                minWidth: "8em"
             },
             accountInfo: {
                 overflow: "hidden",
-                fontSize: "16px"
+                fontSize: "16px",
+                borderLeft: "1px solid #DDD",
+                paddingLeft: spacing
             },
             accountInfoRow: {
                 marginBottom: "1em"
             },
             riskSlider: {
-                marginBottom: 30,
                 marginLeft: 10,
                 marginRight: 10
             },
@@ -103,10 +106,17 @@ var InfoBox = React.createClass({
         return (
             <div className="panel panel-default">
               <div className="panel-body clearfix">
+                <div ref="personalInfo" style={{float: "left", marginRight: spacing}}>
+                  <img src="/static/img/avatar.png" style={{height: 120}}/>
+                </div>
+
                 <div ref="personalInfo" style={styles.personalInfo}>
-                  <img src="/static/img/avatar.png"/>
-                  <strong>{me.get("name")}</strong><br/>
-                  {me.get("id")}
+                  <strong style={{fontSize: "1.5em"}}>{me.get("name")}</strong><br/>
+
+                  <div>
+                  {me.get("id")}<br/>
+                  TK: {me.get("accountNumber")}
+                  </div>
                 </div>
 
                 <div ref="accountInfo" style={styles.accountInfo}>
@@ -132,7 +142,10 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-12">
                       <h4>Tốc độ đầu tư:</h4>
-                      <RiskSlider ref="riskSlider" onChange={this.riskSliderChanged} style={styles.riskSlider}/>
+                      <RiskSlider ref="riskSlider" 
+                                  onChange={this.riskSliderChanged} 
+                                  style={styles.riskSlider}
+                                  withoutPips={true}/>
                     </div>
                   </div>
                 </div>
@@ -260,11 +273,12 @@ var PositionPanel = React.createClass({
         }
 
         return (
-            <div className="panel panel-default">
+            <div className="panel panel-default panel-tabbed">
               <div className="panel-body">
                 <select ref="viewTypeSelector"
                         value={this.state.viewType}
-                        onChange={this.changeViewType}>
+                        onChange={this.changeViewType}
+                        style={{marginBottom: "1em"}}>
                   <option value="all">Toàn bộ</option>
                   <option value="by-trader">Theo chiến lược gia</option>
                 </select>
@@ -297,7 +311,7 @@ var PositionPanel = React.createClass({
 var OverviewPanel = React.createClass({
     render: function () {
         return (
-            <div className="panel panel-default panel-overview">
+            <div className="panel panel-default panel-overview panel-tabbed">
               <div className="panel-body">
                 <div className="info-pane">
                   <img src="/static/img/avatar.png" alt=""/>
