@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
+import redis
 from flask import Flask
 from models import UserDao
 from flask.ext.login import LoginManager
+from flask_kvsession import KVSessionExtension
+from simplekv.memory.redisstore import RedisStore
 
 from socialtrading.api import api
 
@@ -12,6 +15,10 @@ app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# Use Redis to store sessions
+# FIXME: Provide a fallback when the redis server is down.
+store = RedisStore(redis.StrictRedis())
+KVSessionExtension(store, app)
 
 
 @login_manager.user_loader
