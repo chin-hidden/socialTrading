@@ -56,8 +56,8 @@ def traders():
     return render_template("traders.jinja.html")
 
 
-@menu.register_menu(app, '.help', u'Tìm hiểu về AutoTrade', order=3)
 @app.route("/help")
+@menu.register_menu(app, '.help', u'Tìm hiểu về AutoTrade', order=3)
 def help():
     return render_template("help.jinja.html")
 
