@@ -16,6 +16,10 @@ menu.Menu(app=app)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    GET: Show the login page.
+    POST: Log the user in and set the `trade-api-token` and `user` keys in the session.
+    """
     if request.method == "GET":
         return render_template("login.jinja.html")
     else:
@@ -27,7 +31,10 @@ def login():
         client = tradeapi.VndirectTradeApiClient()
         token = client.login(request.form["username"], request.form["password"])
         session["trade-api-token"] = token
-        return token
+        session["user"] = user
+
+        _next = flask.request.args.get('next')
+        return flask.redirect(_next or flask.url_for('index'))
 
 
 # FIXME: GET should not have side effects
