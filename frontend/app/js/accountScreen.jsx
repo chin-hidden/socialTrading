@@ -142,8 +142,8 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-12">
                       <h4>Tốc độ đầu tư:</h4>
-                      <RiskSlider ref="riskSlider" 
-                                  onChange={this.riskSliderChanged} 
+                      <RiskSlider ref="riskSlider"
+                                  onChange={this.riskSliderChanged}
                                   style={styles.riskSlider}
                                   withoutPips={true}/>
                     </div>
@@ -319,7 +319,7 @@ var OverviewPanel = React.createClass({
                     <div><span className="ui-label-strong">TraderAAA</span></div>
                     <div className="second-line">
                       <div>
-                        <span className="ui-label-strong">Lãi hiện tại: </span> 
+                        <span className="ui-label-strong">Lãi hiện tại: </span>
                           {formatCurrency(23223423)}
                       </div>
                       <div>
