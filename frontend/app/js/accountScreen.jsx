@@ -26,7 +26,6 @@ var AccountScreen = React.createClass({
                 active["danhmuc"] = "active";
         }
 
-
         return (
             <div>
               <InfoBox/>
@@ -123,19 +122,19 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-3">
                       <span>Lợi nhuận</span><br/>
-                      <strong className="text-success">{me.get("cash")} VND</strong>
+                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tài sản</span><br/>
-                      <strong className="text-success">{me.get("cash")} VND</strong>
+                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Chứng khoán</span><br/>
-                      <strong className="text-success">{me.get("cash")} VND</strong>
+                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tiền mặt</span><br/>
-                      <strong className="text-success">{me.get("cash")} VND</strong>
+                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                   </div>
 
