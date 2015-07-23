@@ -2,8 +2,12 @@ flask
 flask_login
 flask_failsafe
 flask-menu
-flask-kvsession
 requests
+
+# Session persistence
+redis
+flask-kvsession
+
+# Normal storage
 sqlalchemy
 psycopg2
-redis
