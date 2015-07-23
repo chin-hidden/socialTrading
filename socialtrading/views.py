@@ -52,6 +52,7 @@ def index():
 
 
 @app.route("/account")
+@login_required
 @menu.register_menu(app, '.account', u'Trang của tôi', order=1)
 def account():
     return render_template("account.jinja.html")
@@ -70,5 +71,6 @@ def help():
 
 
 @app.route("/wizard")
+@login_required
 def wizard():
     return render_template("wizard.jinja.html")
