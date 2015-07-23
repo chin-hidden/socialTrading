@@ -63,6 +63,12 @@
     </div>  <!-- .top-container -->
 
 
+    {% if session.user %}
+    <script type="text/javascript">
+      var user = {{ session.user.__dict__|tojson }};
+    </script>
+    {% endif %}
+
     <script type="text/javascript" src="/static/bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/static/bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
 
