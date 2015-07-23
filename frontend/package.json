@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "make"
+  },
+
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+
+  "browserify-shim": {
+    "bootstrap-sass": {
+      "depends": ["jquery:jQuery"]
+    }
+  },
+
+  "devDependencies": {
+      "react-tools": "latest",
+      "npm-css": "latest"
+  }
+}

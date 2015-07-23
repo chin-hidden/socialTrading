@@ -1,0 +1,9 @@
+flask
+flask_login
+flask_failsafe
+flask-menu
+flask-kvsession
+requests
+sqlalchemy
+psycopg2
+redis

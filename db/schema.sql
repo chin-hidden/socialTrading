@@ -8,8 +8,9 @@ create schema public;
 
 
 CREATE TABLE account (
-	accountNumber text PRIMARY KEY,    -- VNDIRECT's internal account number
-	username text NOT NULL,
+	accountNumber text NOT NULL,    -- VNDIRECT's internal account number
+	broker text,                    -- VNDIRECT, SSI, BAOVIET
+	username text PRIMARY KEY,
 	password text NOT NULL,
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
@@ -17,37 +18,26 @@ CREATE TABLE account (
 );
 
 CREATE TABLE followerInfo (
-	accountNumber text PRIMARY KEY REFERENCES account (accountNumber),
+	username text PRIMARY KEY REFERENCES account (username),
 	riskFactor integer NOT NULL
 );
 
 CREATE TABLE traderInfo (
-	accountNumber text PRIMARY KEY REFERENCES account (accountNumber),
-	totalAllocatedMoney numeric(19,2) NOT NULL,
-	peopleFollowing integer NOT NULL
+	username text PRIMARY KEY REFERENCES account (username)
 );
-
-
-CREATE TABLE cashFlow (
-	accountNumber text NOT NULL,
-	accountTrader text,
-	amount numeric(19, 2) NOT NULL,
-	date timestamp with time zone NOT NULL
-);
-
 
 CREATE TABLE following (
-	followerAccount text NOT NULL REFERENCES account (accountNumber),
-	traderAccount text NOT NULL REFERENCES account (accountNumber),
+	follower text NOT NULL REFERENCES account (username),
+	trader text NOT NULL REFERENCES account (username),
 	allocatedMoney numeric(19,2) NOT NULL,
-	PRIMARY KEY (followerAccount, traderAccount)
+	PRIMARY KEY (follower, trader)
 );
 
 
 CREATE TABLE orderlist (
 	orderId text PRIMARY KEY,
-	byAccount text NOT NULL REFERENCES account (accountNumber),
-	mimickingAccount text REFERENCES account (accountNumber),   -- Can be null if this order is made by a trader
+	byUser text NOT NULL REFERENCES account (username),
+	mimickingUser text REFERENCES account (username),   -- Can be null if this order is made by a trader
 	stock text NOT NULL,
 	quantity integer NOT NULL,
 	price numeric(19, 2) NOT NULL,
@@ -69,22 +59,13 @@ CREATE TABLE stockrisk (
 
 -- The stocks that an account is holding
 CREATE TABLE position (
-	accountNumber text NOT NULL,
-	mimickingAccountNumber text,    -- If this position is held by a trader then this field is NULL
+	username text NOT NULL,
+	mimickingUsername text,    -- If this position is held by a trader then this field is NULL
 	stock text NOT NULL,
 	quantity integer NOT NULL,
 	cost numeric(19,2) NOT NULL,
-	PRIMARY KEY (accountNumber,mimickingAccountNumber, stock),
-	FOREIGN KEY (accountNumber, mimickingAccountNumber) REFERENCES following (followerAccount, traderAccount)
-);
-
-
--- Snapshots of an account's financial parameters at different points in time.
--- Used mostly to make charts.
-CREATE TABLE performance (
-	accountNumber text NOT NULL REFERENCES account (accountNumber),
-	profit numeric(19, 2) NOT NULL,
-	date timestamp with time zone NOT NULL
+	PRIMARY KEY (username, mimickingUsername, stock),
+	FOREIGN KEY (username, mimickingUsername) REFERENCES following (follower, trader)
 );
 
 
@@ -101,24 +82,22 @@ INSERT INTO account (accountNumber, username, password, name, cash, type) VALUES
        ('0001011079', 'user5', 'user5', 'uuu', 4544, 'TRADER'),
        ('0001029605', 'user6', 'user6', 'Trần Nguyên Đức', 323, 'TRADER');
 
-INSERT INTO followerInfo (accountNumber, riskFactor) VALUES
-       ('0001210254', 60),
-       ('0001210287', 40);
+INSERT INTO followerInfo (username, riskFactor) VALUES
+       ('user1', 60),
+       ('user2', 40);
 
-INSERT INTO traderInfo (accountNumber, totalAllocatedMoney, peopleFollowing) VALUES
-	('0001041716', 0, 0),
-	('0001052458', 0, 0),
-	('0001011079', 100000000, 1),
-	('0001029605', 0, 0);
+INSERT INTO traderInfo (username, totalAllocatedMoney, peopleFollowing) VALUES
+	('user3', 0, 0),
+	('user4', 0, 0),
+	('user5', 100000000, 1),
+	('user6', 0, 0);
 
-INSERT INTO following (followerAccount, traderAccount, allocatedMoney) VALUES
-	('0001210287', '0001011079', 100000000);
+INSERT INTO following (follower, trader, allocatedMoney) VALUES
+	('user1', 'user3', 100000000),
+	('user2', 'user3', 20000000);
 
 INSERT INTO orderList VALUES
-	('ORDER_123123', '0001210287', '0001011079', 'VND', 12323, 3434, now(), 'NB', 'MP', 0, 0);
-
-INSERT INTO position VALUES
-       ('0001052458', NULL, 'FPT', 100, 3434);
+	('ORDER_123123', 'user1', 'user3', 'VND', 12323, 3434, now(), 'NB', 'MP', 0, 0);
 
 INSERT INTO stockrisk (stock, risk, name, floor) VALUES
 	('FPT', 30, 'Tập đoàn FPT', 10),

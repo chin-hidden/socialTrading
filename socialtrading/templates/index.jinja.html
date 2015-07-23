@@ -1,0 +1,44 @@
+{% extends "base.jinja.html" %}
+{% block content %}
+<div class="home-container">
+  <div class="hero">
+    <h1>Dễ hơn chơi lô,<br/> ngon hơn đánh đề!</h1>
+    <div class="row">
+      <div class="col-md-8">
+        <p>
+        Mạng đầu tư <span class="accent">Autotrade</span> -
+        Hệ thống tự động sao chép chiến lược giao dịch lãi nhất thị trường.
+        </p>
+      </div>
+      <div class="col-md-4">
+        <a class="btn btn-lg btn-primary" href="{{ url_for('wizard') }}">
+        Đầu tư ngay!
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row features">
+    <div class="col-md-4">
+      <h3>Lãi nhất thị trường</h3>
+      <p>
+      Lựa chọn các chiến lược gia lãi nhất trên thị trường
+      và Autotrade sẽ tự động sao chép giao dịch của họ
+      vào tài khoản của bạn.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h3>Không tốn thời gian</h3>
+      <p>
+      Trong lúc bạn ngủ tiền tự đẻ ra tiền!
+      </p>
+    </div>
+    <div class="col-md-4">
+      <h3>Kết quả tức thời</h3>
+      <p>
+      Quản lý tài khoản dễ dàng, hiển thị minh bạch thông tin
+      đầu tư của bạn và Nhà đầu tư bạn theo dõi.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

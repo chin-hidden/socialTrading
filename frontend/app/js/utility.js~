@@ -1,0 +1,3 @@
+function formatVNCurrency(amount) {
+    return amount.toFixed(2) + " VND";
+}
