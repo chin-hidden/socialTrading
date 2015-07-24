@@ -33,6 +33,12 @@
                   {%- endif -%}
                 </li>
                 {%- endfor -%}
+
+                {% if session.user_id %}
+                <li>
+                  <a href="{{ url_for('logout') }}">Đăng xuất</a>
+                </li>
+                {% endif %}
               </ul>
             </div>
           </div>
