@@ -23,12 +23,19 @@ export var FollowingRels = Backbone.Collection.extend({
     }
 });
 
+
+var FollowerPositions = Backbone.Collection.extend({
+    parse: function(data) {
+        return data.result;
+    }
+});
+
 export var Follower = Backbone.Model.extend({
     idAttribute: "username",
 
     defaults: {
         followingTraders: new FollowingRels(),
-        positions: new Backbone.Collection(),
+        positions: new FollowerPositions(),
         firstLogin: true,
         riskFactor: 0,
         cash: 0,
@@ -81,10 +88,10 @@ export var Follower = Backbone.Model.extend({
 
     parse: function(data) {
         var data = data.result;
-        this.get("followingTraders").url = "/api/v1/follower/" + data.id + "/following";
+        this.get("followingTraders").url = "/api/v1/follower/" + data.username + "/following";
         this.get("followingTraders").fetch();
 
-        this.get("positions").url = "/api/v1/follower/" + data.id + "/positions";
+        this.get("positions").url = "/api/v1/follower/" + data.username + "/positions";
         this.get("positions").fetch();
         return data;
     },

@@ -171,29 +171,6 @@ var PositionPanel = React.createClass({
         me.get("positions").on("change", this.render);
     },
 
-    positions: function() {
-        return new Backbone.Collection([
-            new Backbone.Model({
-                stock: "VND",
-                quantity: 9000,
-                buyingPrice: 8500,
-                mimickingUser: "thachvu"
-            }),
-            new Backbone.Model({
-                stock: "VND",
-                quantity: 5000,
-                buyingPrice: 8300,
-                mimickingUser: "thachvu"
-            }),
-            new Backbone.Model({
-                stock: "ACB",
-                quantity: 8000,
-                buyingPrice: 12000,
-                mimickingUser: "giangnguyen"
-            }),
-        ]);
-    },
-
     changeViewType: function(event) {
         this.setState({viewType: event.target.value});
     },
@@ -269,11 +246,11 @@ var PositionPanel = React.createClass({
     },
 
     render: function() {
-        // FIXME Stop using fake data
+        var positions = me.get("positions");
         if (this.state.viewType === "by-trader") {
-            var positionRows = this.positionRowsByTrader(this.positions());
+            var positionRows = this.positionRowsByTrader(positions);
         } else {
-            var positionRows = this.positionRowsAll(this.positions());
+            var positionRows = this.positionRowsAll(positions);
         }
 
         return (

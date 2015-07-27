@@ -63,7 +63,30 @@ def following_relationships(username):
 
 @api.route("/follower/<username>/positions")
 def follower_positions(username):
-    return jsonify(result=[])
+    positions = [
+        {
+            "stock": "VND",
+            "exchange": "HOSE",
+            "quantity": 9000,
+            "buyingPrice": 8500,
+            "mimickingUser": "thachvu"
+        },
+        {
+            "stock": "VND",
+            "exchange": "HOSE",
+            "quantity": 5000,
+            "buyingPrice": 8300,
+            "mimickingUser": "thachvu"
+        },
+        {
+            "stock": "ACB",
+            "exchange": "HNX",
+            "quantity": 9000,
+            "buyingPrice": 12000,
+            "mimickingUser": "giangnguyen"
+        },
+    ]
+    return jsonify(result=positions)
 
 
 @api.route("/traders")
