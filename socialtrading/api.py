@@ -46,7 +46,7 @@ def follower(username):
     if request.method == "PUT":
         print(request.form)
 
-    return jsonify(result=user.__dict__)
+    return jsonify(result=user.as_dict())
 
 
 @api.route("/follower/<username>/following", methods=["GET", "POST"])
