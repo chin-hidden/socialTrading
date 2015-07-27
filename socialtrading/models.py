@@ -8,25 +8,11 @@ from sqlalchemy.orm import sessionmaker
 Base = declarative_base()
 
 
-class User:
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.id
-
-
 class UserDao:
     def get_user_by_username(self, username):
         if username == "ndtrung4419":
-            user = User()
-            user.id = username
+            user = Account()
+            user.username = username
             user.name = "Trung Ngo"
             user.type = "FOLLOWER"
             user.accountNumber = "1234"
@@ -69,6 +55,21 @@ class Account(Base):
 
     def __repr__(self):
         return "<{account_type} username={username}>".format(**self.__dict__)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.username
+
+    def as_dict(self):
+        return {key: value for key, value in self.__dict__.items() if not key.startswith("_")}
 
 
 class Follower(Account):
