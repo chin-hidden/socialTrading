@@ -100,6 +100,7 @@ class Trader(Account):
         'polymorphic_identity': 'TRADER',
     }
 
+
 engine = create_engine("postgresql://localhost/duber", echo=True)
 Session = sessionmaker(bind=engine)
-session = Session()
+db_session = Session()
