@@ -12,9 +12,7 @@ dir:
 	mkdir -p .tmp
 
 js: dir
-	jsx -x jsx app/js .tmp
-	jsx -x js app/js .tmp
-	cat .tmp/*.js > $(DEST)/scripts/bundle.js
+	babel js --out-dir $(DEST)/scripts --modules amd
 
 css: dir
 	npm-css styles/main.css > $(DEST)/styles/bundle.css
