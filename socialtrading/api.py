@@ -39,9 +39,13 @@ def follower(username):
         "type": "FOLLOWER",    // or TRADER
         "riskFactor": 60
     }
+
+    404 if no such user
     """
     user_dao = UserDao()
     user = user_dao.get_user_by_username(username)
+
+    # FIXME: throw 404
 
     if request.method == "PUT":
         print(request.form)
