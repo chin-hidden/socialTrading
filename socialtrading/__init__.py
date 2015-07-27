@@ -33,9 +33,11 @@ def load_user(userid):
 @app.context_processor
 def inject_user():
     """Inject the 'user' object into the template context"""
-    user_dao = UserDao()
-    user = user_dao.get_user_by_username(session["user_id"])
-    return dict(user=user)
+    if "user_id" in session:
+        user_dao = UserDao()
+        user = user_dao.get_user_by_username(session["user_id"])
+        return dict(user=user)
+    return {}
 
 
 app.register_blueprint(api, url_prefix="/api/v1")
