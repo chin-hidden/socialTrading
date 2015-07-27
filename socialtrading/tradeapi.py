@@ -2,13 +2,14 @@ import requests
 
 
 class VndirectTradeApiClient:
-    API_URL = "https://api.vndirect.com.vn/v1"
+    AUTH_URL = "https://api.vndirect.com.vn/auth"
+    API_URL = "https://api.vndirect.com.vn/trade"
 
     def login(self, username, password):
         """\
         Log the user in and return the 1st phase token.
         """
-        res = requests.post(self.API_URL + "/auth",
+        res = requests.post(self.AUTH_URL + "/auth",
             data={"username": username, "password": password})
         res.raise_for_status()
 
