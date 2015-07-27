@@ -43,8 +43,13 @@ def login():
         return flask.redirect(_next or flask.url_for('index'))
 
 
+def is_logged_in():
+    return "user_id" in session
+
+
 # FIXME: GET should not have side effects
 @app.route("/logout", methods=["GET", "POST"])
+@menu.register_menu(app, '.logout', u'Đăng xuất', order=4, visible_when=is_logged_in)
 @login_required
 def logout():
     logout_user()
@@ -60,7 +65,7 @@ def index():
 
 @app.route("/account")
 @login_required
-@menu.register_menu(app, '.account', u'Trang của tôi', order=1)
+@menu.register_menu(app, '.account', u'Trang của tôi', order=1, visible_when=is_logged_in)
 def account():
     return render_template("account.jinja.html")
 
