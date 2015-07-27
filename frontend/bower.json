@@ -10,7 +10,10 @@
     "slick-carousel": "~1.5.5",
     "nouislider": "~7.0.10",
     "stomp-websocket": "~2.3.4",
-    "sockjs-client": "~1.0.0"
+    "sockjs-client": "~1.0.0",
+    "requirejs": "~2.1.19",
+    "chartjs": "~1.0.2",
+    "bootstrap": "~3.3.5"
   },
   "devDependencies": {}
 }
