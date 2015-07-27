@@ -14,6 +14,12 @@ import tradeapi
 menu.Menu(app=app)
 
 
+# FIXME Disable this route on production mode
+@app.route("/__debug__")
+def debug():
+    raise Exception("Just for debugging")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
