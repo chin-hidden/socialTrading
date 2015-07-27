@@ -1,5 +1,10 @@
-export var RiskSlider = React.createClass({
-    componentDidMount: function() {
+import {me} from "common";
+
+/**
+ * A slider that is used to represent the risk bar on the UI.
+ */
+export default class RiskSlider extends React.Component {
+    componentDidMount() {
         var slider = this.refs.riskSlider.getDOMNode();
         var _this = this;
 
@@ -26,8 +31,9 @@ export var RiskSlider = React.createClass({
                 densitiy: 4
             });
         }
-    },
-    render: function() {
+    }
+
+    render() {
         return (<div ref="riskSlider" style={this.props.style}></div>);
     }
-});
+}
