@@ -1,7 +1,9 @@
-import "csrf.js";
+import {me, traders} from "common";
+import {formatCurrency} from "utils";
+import RiskSlider from "RiskSlider";
 
 
-var AccountScreen = React.createClass({
+export var AccountScreen = React.createClass({
     getInitialState: function() {
         return {
             activeTab: "overview"

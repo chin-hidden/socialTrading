@@ -1,7 +1,17 @@
 {% extends "base.jinja.html" %}
 
 {% block content %}
+<div id="app" class="container"></div>
+{% endblock %}
 
-<div id="app"></div>
+{% block extra_scripts %}
+<script type="text/javascript" src="/static/bower_components/chartjs/Chart.min.js"></script>
+<script type="text/javascript" src="/static/bower_components/requirejs/require.js"></script>
+<script type="text/javascript">
+	requirejs.config({
+	    baseUrl: '/static/scripts/',
+	});
 
+	requirejs(['/static/scripts/accountapp.js']);
+</script>
 {% endblock %}

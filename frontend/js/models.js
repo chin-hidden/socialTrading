@@ -2,7 +2,7 @@
 // These models are the "stores" in Facebook's Flux architecture
 //
 
-var Traders = Backbone.Collection.extend({
+export var Traders = Backbone.Collection.extend({
     url: "/api/v1/traders",
 
     comparator: function(item) {
@@ -14,7 +14,7 @@ var Traders = Backbone.Collection.extend({
     }
 });
 
-var FollowingRels = Backbone.Collection.extend({
+export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         idAttribute: "traderId"
     }),
@@ -23,7 +23,8 @@ var FollowingRels = Backbone.Collection.extend({
     }
 });
 
-var Follower = Backbone.Model.extend({
+export var Follower = Backbone.Model.extend({
+    idAttribute: "username",
 
     defaults: {
         followingTraders: new FollowingRels(),
