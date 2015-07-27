@@ -1,14 +1,14 @@
-function formatCurrency(amount) {
+export function formatCurrency(amount) {
     return amount.toLocaleString("vi", {
         style: "currency",
         currency: "VND",
     });
 }
 
-function formatAmount(amount) {
+export function formatAmount(amount) {
 	return amount.toLocaleString("vi");
 }
 
-function formatPercent(amount) {
+export function formatPercent(amount) {
 	return amount.toLocaleString("vi", {style: "percent"});
 }
