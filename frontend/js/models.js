@@ -29,7 +29,11 @@ var Follower = Backbone.Model.extend({
         followingTraders: new FollowingRels(),
         positions: new Backbone.Collection(),
         firstLogin: true,
-        riskFactor: 0
+        riskFactor: 0,
+        cash: 0,
+        profit: 0,
+        totalCurrentValue: 0,
+        stockValue: 0,
     },
 
     initialize: function() {
