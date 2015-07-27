@@ -71,7 +71,7 @@
 
     {% if session.user %}
     <script type="text/javascript">
-      var user = {{ session.user.__dict__|tojson }};
+      var user = {{ user.as_dict()|tojson }};
     </script>
     {% endif %}
 
