@@ -17,11 +17,10 @@ js: dir
 	cat .tmp/*.js > $(DEST)/scripts/bundle.js
 
 css: dir
-	npm-css app/styles/main.css > $(DEST)/styles/bundle.css
+	npm-css styles/main.css > $(DEST)/styles/bundle.css
 
 build: js css
-	cp app/index.html $(DEST)
-	cp -rfu app/img $(DEST)
+	cp -rfu img $(DEST)
 	cp -rfu bower_components $(DEST)
 
 clean:

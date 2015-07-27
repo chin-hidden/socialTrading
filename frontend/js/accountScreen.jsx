@@ -1,3 +1,6 @@
+import "csrf.js";
+
+
 var AccountScreen = React.createClass({
     getInitialState: function() {
         return {
@@ -122,15 +125,15 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-3">
                       <span>Lợi nhuận</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("profit"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tài sản</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("totalCurrentValue"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Chứng khoán</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("stockValue"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tiền mặt</span><br/>
@@ -308,9 +311,51 @@ var PositionPanel = React.createClass({
 
 
 var OverviewPanel = React.createClass({
+    componentDidMount: function() {
+        var data = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "My First dataset",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "My Second dataset",
+                    fillColor: "rgba(255, 153, 0, 0.2)",
+                    strokeColor: "rgba(255, 153, 0, 1)",
+                    pointColor: "rgba(255, 153, 0, 1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(255, 153, 0, 1)",
+                    data: [28, 48, 40, -22, 86, 27, 90]
+                }
+            ]
+        };
+
+        var ctx = this.refs.overviewChart.getDOMNode().getContext("2d");
+        var chart = new Chart(ctx).Line(data, {
+            responsive: true
+        });
+    },
     render: function () {
+        var style = "\
+        canvas {\
+            width: 100%;\
+        };";
+
         return (
             <div className="panel panel-default panel-overview panel-tabbed">
+
+                <style scoped={true}>
+                {style}
+                </style>
+
               <div className="panel-body">
                 <div className="info-pane">
                   <img src="/static/img/avatar.png" alt=""/>
@@ -334,7 +379,7 @@ var OverviewPanel = React.createClass({
                 </div>
 
                 <div ref="graph" className="panel-overview-graph">
-                  <img src="/static/img/chart.png"/>
+                  <canvas ref="overviewChart"></canvas>
                 </div>
               </div>
             </div>

@@ -35,30 +35,30 @@ var Follower = Backbone.Model.extend({
     initialize: function() {
         var _this = this;
 
-        dispatcher.register(function(message) {
-            switch (message.type) {
-                case "ask_to_follow_trader":
-                    $.post("/api/v1/follower/" + _this.id + "/following", {
-                        traderid: message.trader.id,
-                        money: message.allocatedMoney,
-                        maxopen: 3
-                    }).then(function() {
-                        _this.fetch();
-                        traders.fetch();
-                    });
-                    break;
-                case "ask_to_unfollow_trader":
-                    $.ajax({
-                        url: "/api/v1/follower/" + _this.id + "/following/" + message.trader.id,
-                        method: "DELETE",
-                        success: function() {
-                            _this.fetch();
-                            traders.fetch();
-                        }
-                    });
-                    break;
-            }
-        });
+        // dispatcher.register(function(message) {
+        //     switch (message.type) {
+        //         case "ask_to_follow_trader":
+        //             $.post("/api/v1/follower/" + _this.id + "/following", {
+        //                 traderid: message.trader.id,
+        //                 money: message.allocatedMoney,
+        //                 maxopen: 3
+        //             }).then(function() {
+        //                 _this.fetch();
+        //                 traders.fetch();
+        //             });
+        //             break;
+        //         case "ask_to_unfollow_trader":
+        //             $.ajax({
+        //                 url: "/api/v1/follower/" + _this.id + "/following/" + message.trader.id,
+        //                 method: "DELETE",
+        //                 success: function() {
+        //                     _this.fetch();
+        //                     traders.fetch();
+        //                 }
+        //             });
+        //             break;
+        //     }
+        // });
 
         // Setup the notification
         var socket = SockJS("/hello");
