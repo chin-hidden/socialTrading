@@ -101,6 +101,7 @@ class Trader(Account):
     }
 
 
-engine = create_engine("postgresql://localhost/duber", echo=True)
+# engine = create_engine("postgresql://localhost/duber", echo=True)
+engine = create_engine("postgresql+pg8000://localhost/duber", echo=True)
 Session = sessionmaker(bind=engine)
 db_session = Session()

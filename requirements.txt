@@ -10,4 +10,6 @@ flask-kvsession
 
 # Normal storage
 sqlalchemy
-psycopg2
+#psycopg2
+pg8000
+
