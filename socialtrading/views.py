@@ -22,25 +22,31 @@ def debug():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    """
+    """\
     GET: Show the login page.
     POST: Log the user in and set the `trade-api-token` and `user` keys in the session.
     """
-    if request.method == "GET":
-        return render_template("login.jinja.html")
-    else:
+    if request.method == "POST":
         # FIXME Use Flask-WTF to validate the form format
         user_dao = UserDao()
         user = user_dao.get_user_by_username(request.form["username"])
-        login_user(user)
 
-        client = tradeapi.VndirectTradeApiClient()
-        token = client.login(request.form["username"], request.form["password"])
-        session["trade-api-token"] = token
-        session["user"] = user
+        try:
+            client = tradeapi.VndirectTradeApiClient()
+            token = client.login(request.form["username"], request.form["password"])
+            login_user(user)
 
-        _next = flask.request.args.get('next')
-        return flask.redirect(_next or flask.url_for('index'))
+            session["trade-api-token"] = token
+            session["user"] = user
+
+            _next = flask.request.args.get('next')
+            return flask.redirect(_next or flask.url_for('index'))
+        except:
+            # Fallthrough to the GET case
+            pass
+
+    return render_template("login.jinja.html")
+
 
 
 def is_logged_in():
