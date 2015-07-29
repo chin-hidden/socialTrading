@@ -12,7 +12,7 @@ dir:
 	mkdir -p .tmp
 
 js: dir
-	babel js --out-dir $(DEST)/scripts --modules amd
+	babel js --out-dir $(DEST)/scripts --modules amd --source-maps
 
 css: dir
 	npm-css styles/main.css > $(DEST)/styles/bundle.css
