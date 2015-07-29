@@ -6,3 +6,7 @@ virtualenv:
 
 launch:
 	python launcher.py
+
+
+test:
+	PYTHONPATH=. py.test

@@ -13,3 +13,11 @@ sqlalchemy
 #psycopg2
 pg8000
 
+# Messaging support (rabbitmq)
+kombu
+
+# Testing
+pytest
+
+# For the snake_case to camelCase conversion
+inflection
