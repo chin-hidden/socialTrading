@@ -71,19 +71,6 @@ export var Follower = Backbone.Model.extend({
         //             break;
         //     }
         // });
-
-        // Setup the notification
-        var socket = SockJS("/hello");
-        var stompClient = Stomp.over(socket);
-        var self = this;
-
-        stompClient.connect({}, function (frame) {
-            console.log(frame);
-            stompClient.subscribe("/user/queue/executed-orders", function(msg) {
-                console.log("Executed Order: ");
-                self.get("positions").fetch();
-            });
-        });
     },
 
     parse: function(data) {
