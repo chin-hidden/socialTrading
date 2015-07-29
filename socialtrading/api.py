@@ -29,7 +29,7 @@ def account_detail():
     """
     user_dao = UserDao()
     user = user_dao.get_user_by_username(session["user_id"])
-    return jsonify(result=user.__dict__)
+    return jsonify(result=user.as_dict())
 
 
 @api.route("/followers", methods=["GET"])
