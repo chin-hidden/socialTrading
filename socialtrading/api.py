@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import flask
 from flask import jsonify as _jsonify, session, request
 from flask.ext.login import login_required
@@ -108,7 +110,7 @@ def get_all_traders():
     Return all traders
     """
     traders = [{
-        "name": "Nguyen Hoang Giang",
+        "name": u"Nguyễn Hoàng Giang",
         "id": "giangnguyen",
         "type": "TRADER",
         "accountNumber": "1234",
@@ -117,7 +119,7 @@ def get_all_traders():
         "peopleFollowing": 10,
         "roi": 100
     }, {
-        "name": "Tran Vu Thach",
+        "name": u"Trần Vũ Thạch",
         "id": "thachvu",
         "type": "TRADER",
         "accountNumber": "1234",
@@ -126,7 +128,7 @@ def get_all_traders():
         "peopleFollowing": 10,
         "roi": 100
     }, {
-        "name": "Hoang Minh Chau",
+        "name": u"Hoàng Minh Châu",
         "id": "chauhoang",
         "type": "TRADER",
         "accountNumber": "1234",
