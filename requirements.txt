@@ -3,6 +3,7 @@ flask_login
 flask_failsafe
 flask-menu
 requests
+Flask-Cache
 
 # Session persistence
 redis

@@ -2,7 +2,7 @@
 
 import flask
 from flask import request, session, redirect, render_template, url_for
-from models import UserDao
+import models
 from flask.ext.login import \
     login_user, login_required, logout_user
 from flask.ext import menu
@@ -28,8 +28,7 @@ def login():
     """
     if request.method == "POST":
         # FIXME Use Flask-WTF to validate the form format
-        user_dao = UserDao()
-        user = user_dao.get_user_by_username(request.form["username"])
+        user = models.UserDao.get_user_by_username(request.form["username"])
 
         try:
             client = tradeapi.VndirectTradeApiClient()

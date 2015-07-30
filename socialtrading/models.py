@@ -6,6 +6,9 @@ from sqlalchemy.orm import sessionmaker
 from flask import session
 
 
+from socialtrading import cache
+
+
 Base = declarative_base()
 
 
@@ -15,7 +18,9 @@ class UserDao:
         Query TradeAPI to sync the user's full name, cash.
         """
 
-    def get_user_by_username(self, username):
+    @classmethod
+    @cache.memoize(timeout=50)
+    def get_user_by_username(cls, username):
         user = Account()
         user.username = username
         user.account_type = "FOLLOWER"
@@ -25,7 +30,7 @@ class UserDao:
         user.first_login = False
 
         # Synchronize user data with the TradeAPI.
-        # FIXME: We are syncing for every request. VERY SLOW!!!
+        # FIXME: We are syncing on every request. VERY SLOW!!!
         if 'tradeapi-client' in session:
             client = session['tradeapi-client']
             user_detail = client.get_user_detail()

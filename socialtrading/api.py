@@ -4,24 +4,22 @@ import flask
 from flask import jsonify, session, request
 from flask.ext.login import login_required
 
-from models import UserDao
+import models
+
+api_blueprint = flask.Blueprint('api', __name__)
 
 
-api = flask.Blueprint('api', __name__)
-
-
-@api.route("/account")
+@api_blueprint.route("/account")
 @login_required
 def account_detail():
     """\
     Get the current user's detail
     """
-    user_dao = UserDao()
-    user = user_dao.get_user_by_username(session["user_id"])
+    user = models.UserDao.get_user_by_username(session["user_id"])
     return jsonify(result=user.as_dict())
 
 
-@api.route("/followers", methods=["GET"])
+@api_blueprint.route("/followers", methods=["GET"])
 def get_all_followers():
     """\
     Return all followers
@@ -29,7 +27,7 @@ def get_all_followers():
     return jsonify(result=[])
 
 
-@api.route("/follower/<username>", methods=["GET", "PUT"])
+@api_blueprint.route("/follower/<username>", methods=["GET", "PUT"])
 def follower(username):
     """\
     GET and PUT a follower.
@@ -44,8 +42,7 @@ def follower(username):
 
     404 if no such user
     """
-    user_dao = UserDao()
-    user = user_dao.get_user_by_username(username)
+    user = models.UserDao.get_user_by_username(username)
 
     # FIXME: throw 404
 
@@ -55,7 +52,7 @@ def follower(username):
     return jsonify(result=user.as_dict())
 
 
-@api.route("/follower/<username>/following", methods=["GET", "POST"])
+@api_blueprint.route("/follower/<username>/following", methods=["GET", "POST"])
 def following_relationships(username):
     if request.method == "POST":
         pass
@@ -63,7 +60,7 @@ def following_relationships(username):
     return jsonify(result=[])
 
 
-@api.route("/follower/<username>/positions")
+@api_blueprint.route("/follower/<username>/positions")
 def follower_positions(username):
     positions = [
         {
@@ -91,7 +88,7 @@ def follower_positions(username):
     return jsonify(result=positions)
 
 
-@api.route("/traders")
+@api_blueprint.route("/traders")
 def get_all_traders():
     """\
     Return all traders
