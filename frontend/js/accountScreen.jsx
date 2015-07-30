@@ -163,8 +163,16 @@ var InfoBox = React.createClass({
 var PositionPanel = React.createClass({
     getInitialState: function() {
         return {
-            viewType: "all"
+            viewType: "all",
+            marketPrices: {
+              "VND": 1234,
+              "ACB": 3453
+            },
         };
+    },
+
+    reloadPrices: function() {
+        _.map(positions.groupBy("stock"), function (positions, stockSymbol) {});
     },
 
     componentDidMount: function() {
@@ -175,12 +183,16 @@ var PositionPanel = React.createClass({
         this.setState({viewType: event.target.value});
     },
 
+    /**
+     * Get position rows, grouped by traders.
+     */
     positionRowsByTrader: function (positions) {
+        var self = this;
 
         var posByTrader = positions.groupBy("mimicking_user");
         var result = _.map(posByTrader, function (positions, traderAccount) {
             var rowsForThisTrader = _.map(positions, function (pos) {
-                var marketPrice = 23000;
+                var marketPrice = self.state.marketPrices[pos.get("stock")];
                 var totalCost = pos.get("buying_price") * pos.get("quantity");
                 var totalValue = marketPrice * pos.get("quantity");
                 var gain = totalValue - totalCost;
@@ -214,6 +226,8 @@ var PositionPanel = React.createClass({
         return _.flatten(result);
     },
 
+    /**
+     * Get position rows, lumped together by stock symbol.
      */
     positionRowsAll: function (positions) {
         var self = this;
@@ -229,7 +243,7 @@ var PositionPanel = React.createClass({
             var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
                                          add);
 
-            var marketPrice = 23000;
+            var marketPrice = self.state.marketPrices[stockSymbol];
             var totalValue = marketPrice * totalQuantity;
             var gain = totalValue - totalCost;
             var roi = (gain / totalCost * 100).toFixed(2);
@@ -243,7 +257,7 @@ var PositionPanel = React.createClass({
                   <td>{exchange}</td>
                   <td>{totalQuantity}</td>
                   <td>{formatCurrency(totalCost / totalQuantity)}</td>
-                  <td>{formatCurrency(23000)}</td>
+                  <td>{formatCurrency(marketPrice)}</td>
                   <td>{formatCurrency(totalCost)}</td>
                   <td>{formatCurrency(totalValue)}</td>
                   <td><span className="text-success">{formatPercent(roi)}</span></td>
