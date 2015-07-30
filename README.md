@@ -1,15 +1,27 @@
 # `Social Trading`
 
-TODO Write an actual README
+## Dependency
 
-Tạo db bằng script `db/schema.sql`.
+- PostgreSQL 9.x
+- Redis
+- Python development headers (to compile the py-psycopg native extension)
 
-Quản lý project bằng các lệnh thông thường của Maven:
+Install Python requirements
 
-```bash
-# Chạy webserver
-mvn spring-boot:run
+```
+pip install -r requirements.txt
+```
 
-# Unit test
-mvn test
+## Run
+
+Run a `redis-server`, then:
+
+```
+make launch
+```
+
+## Testing
+
+```
+make test
 ```
