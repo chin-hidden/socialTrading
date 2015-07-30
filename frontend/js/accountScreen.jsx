@@ -1,5 +1,5 @@
 import {me, traders} from "common";
-import {formatCurrency} from "utils";
+import {formatCurrency, getMarketInfo, formatPercent} from "utils";
 import RiskSlider from "RiskSlider";
 
 
@@ -194,7 +194,7 @@ var PositionPanel = React.createClass({
                       <td>{formatCurrency(marketPrice)}</td>
                       <td>{formatCurrency(totalCost)}</td>
                       <td>{formatCurrency(totalValue)}</td>
-                      <td><span className="text-success">{roi}%</span></td>
+                      <td><span className="text-success">{formatPercent(roi)}</span></td>
                     </tr>
                 );
             });
@@ -240,7 +240,7 @@ var PositionPanel = React.createClass({
                   <td>{formatCurrency(23000)}</td>
                   <td>{formatCurrency(totalCost)}</td>
                   <td>{formatCurrency(totalValue)}</td>
-                  <td><span className="text-success">{roi}%</span></td>
+                  <td><span className="text-success">{formatPercent(roi)}</span></td>
                 </tr>
             );
         });
