@@ -234,10 +234,13 @@ var PositionPanel = React.createClass({
             var gain = totalValue - totalCost;
             var roi = (gain / totalCost * 100).toFixed(2);
 
+            // We assume that the merged positions share the same exchange.
+            var exchange = positions[0].get('exchange');
+
             return  (
                 <tr>
                   <td>{stockSymbol}</td>
-                  <td>HOSE</td>
+                  <td>{exchange}</td>
                   <td>{totalQuantity}</td>
                   <td>{formatCurrency(totalCost / totalQuantity)}</td>
                   <td>{formatCurrency(23000)}</td>
