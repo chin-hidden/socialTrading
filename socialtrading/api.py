@@ -35,9 +35,9 @@ def follower(username):
     GET /follower/<username>
     {
         "name": "Superman",
-        "accountNumber": "1234",
+        "account_number": "1234",
         "type": "FOLLOWER",    // or TRADER
-        "riskFactor": 60
+        "risk_factor": 60
     }
 
     404 if no such user
@@ -67,22 +67,22 @@ def follower_positions(username):
             "stock": "VND",
             "exchange": "HOSE",
             "quantity": 9000,
-            "buyingPrice": 8500,
-            "mimickingUser": "thachvu"
+            "buying_price": 8500,
+            "mimicking_user": "thachvu"
         },
         {
             "stock": "VND",
             "exchange": "HOSE",
             "quantity": 5000,
-            "buyingPrice": 8300,
-            "mimickingUser": "thachvu"
+            "buying_price": 8300,
+            "mimicking_user": "thachvu"
         },
         {
             "stock": "ACB",
             "exchange": "HNX",
             "quantity": 9000,
-            "buyingPrice": 12000,
-            "mimickingUser": "giangnguyen"
+            "buying_price": 12000,
+            "mimicking_user": "giangnguyen"
         },
     ]
     return jsonify(result=positions)
@@ -97,28 +97,28 @@ def get_all_traders():
         "name": u"Nguyễn Hoàng Giang",
         "id": "giangnguyen",
         "type": "TRADER",
-        "accountNumber": "1234",
+        "account_number": "1234",
         "description": "lol",
         "cash": 1234,
-        "peopleFollowing": 10,
+        "people_following": 10,
         "roi": 100
     }, {
         "name": u"Trần Vũ Thạch",
         "id": "thachvu",
         "type": "TRADER",
-        "accountNumber": "1234",
+        "account_number": "1234",
         "description": "lol",
         "cash": 1234,
-        "peopleFollowing": 10,
+        "people_following": 10,
         "roi": 100
     }, {
         "name": u"Hoàng Minh Châu",
         "id": "chauhoang",
         "type": "TRADER",
-        "accountNumber": "1234",
+        "account_number": "1234",
         "description": "lol",
         "cash": 1234,
-        "peopleFollowing": 10,
+        "people_following": 10,
         "roi": 100
     },
     ]

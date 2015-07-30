@@ -1,5 +1,6 @@
 //
 // These models are the "stores" in Facebook's Flux architecture
+// The properties of these models follow Python's snake_case convention.
 //
 
 export var Traders = Backbone.Collection.extend({
@@ -34,14 +35,14 @@ export var Follower = Backbone.Model.extend({
     idAttribute: "username",
 
     defaults: {
-        followingTraders: new FollowingRels(),
+        following_traders: new FollowingRels(),
         positions: new FollowerPositions(),
-        firstLogin: true,
-        riskFactor: 0,
+        first_login: true,
+        risk_factor: 0,
         cash: 0,
         profit: 0,
-        totalCurrentValue: 0,
-        stockValue: 0,
+        total_current_value: 0,
+        stock_value: 0,
     },
 
     initialize: function() {
@@ -75,8 +76,8 @@ export var Follower = Backbone.Model.extend({
 
     parse: function(data) {
         var data = data.result;
-        this.get("followingTraders").url = "/api/v1/follower/" + data.username + "/following";
-        this.get("followingTraders").fetch();
+        this.get("following_traders").url = "/api/v1/follower/" + data.username + "/following";
+        this.get("following_traders").fetch();
 
         this.get("positions").url = "/api/v1/follower/" + data.username + "/positions";
         this.get("positions").fetch();
@@ -84,6 +85,6 @@ export var Follower = Backbone.Model.extend({
     },
 
     isFollowing: function(trader) {
-        return this.get("followingTraders").get(trader.get("id")) !== undefined;
+        return this.get("following_traders").get(trader.get("id")) !== undefined;
     }
 });

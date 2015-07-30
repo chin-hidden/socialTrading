@@ -10,7 +10,7 @@ export default class RiskSlider extends React.Component {
 
         // FIXME: we are calling `me` directly
         var tmp = $(slider).noUiSlider({
-            start: [ me.get("riskFactor") ],
+            start: [ me.get("risk_factor") ],
             step: 10,
             connect: "lower",
             range: {

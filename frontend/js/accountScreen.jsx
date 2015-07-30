@@ -67,7 +67,7 @@ export var AccountScreen = React.createClass({
 
 var InfoBox = React.createClass({
     riskSliderChanged: function(value) {
-        me.set("riskFactor", Math.floor(value));
+        me.set("risk_factor", Math.floor(value));
         me.save(null, {
             success: function() {
                 alert("Đã lưu!");
@@ -119,7 +119,7 @@ var InfoBox = React.createClass({
 
                   <div>
                   {me.get("id")}<br/>
-                  TK: {me.get("accountNumber")}
+                  TK: {me.get("account_number")}
                   </div>
                 </div>
 
@@ -131,11 +131,11 @@ var InfoBox = React.createClass({
                     </div>
                     <div className="col-md-3">
                       <span>Tài sản</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("totalCurrentValue"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("total_current_value"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Chứng khoán</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("stockValue"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tiền mặt</span><br/>
@@ -176,11 +176,12 @@ var PositionPanel = React.createClass({
     },
 
     positionRowsByTrader: function (positions) {
-        var posByTrader = positions.groupBy("mimickingUser");
+
+        var posByTrader = positions.groupBy("mimicking_user");
         var result = _.map(posByTrader, function (positions, traderAccount) {
             var rowsForThisTrader = _.map(positions, function (pos) {
                 var marketPrice = 23000;
-                var totalCost = pos.get("buyingPrice") * pos.get("quantity");
+                var totalCost = pos.get("buying_price") * pos.get("quantity");
                 var totalValue = marketPrice * pos.get("quantity");
                 var gain = totalValue - totalCost;
                 var roi = (gain / totalCost * 100).toFixed(2);
@@ -189,7 +190,7 @@ var PositionPanel = React.createClass({
                       <td>{pos.get("stock")}</td>
                       <td>HOSE</td>
                       <td>{pos.get("quantity")}</td>
-                      <td>{formatCurrency(pos.get("buyingPrice"))}</td>
+                      <td>{formatCurrency(pos.get("buying_price"))}</td>
                       <td>{formatCurrency(marketPrice)}</td>
                       <td>{formatCurrency(totalCost)}</td>
                       <td>{formatCurrency(totalValue)}</td>
@@ -220,8 +221,8 @@ var PositionPanel = React.createClass({
 
         return _.map(positions.groupBy("stock"), function (positions, stockSymbol) {
             var totalCost = _.reduce(_.map(positions, function (pos) {
-                return pos.get("buyingPrice") * pos.get("quantity");
-            }), sum);
+                return pos.get("buying_price") * pos.get("quantity");
+            }), add);
             var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
                                          sum);
 
