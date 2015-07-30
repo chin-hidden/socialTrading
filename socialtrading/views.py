@@ -33,10 +33,10 @@ def login():
 
         try:
             client = tradeapi.VndirectTradeApiClient()
-            token = client.login(request.form["username"], request.form["password"])
+            client.login(request.form["username"], request.form["password"])
             login_user(user)
 
-            session["trade-api-token"] = token
+            session["tradeapi-client"] = client
             session["user"] = user
 
             _next = flask.request.args.get('next')

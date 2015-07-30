@@ -3,24 +3,39 @@ from sqlalchemy import Column, Integer, String, Numeric, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from flask import session
 
 
 Base = declarative_base()
 
 
 class UserDao:
+    def sync_user_with_tradeapi(self, username, tradeapi_token):
+        """\
+        Query TradeAPI to sync the user's full name, cash.
+        """
+
     def get_user_by_username(self, username):
-        if username == "ndtrung4419":
-            user = Account()
-            user.username = username
-            user.name = "Trung Ngo"
-            user.type = "FOLLOWER"
-            user.accountNumber = "1234"
-            user.cash = 4566754
-            user.broker = "VND"
-            user.riskFactor = 60
-            user.firstLogin = False
-            return user
+        user = Account()
+        user.username = username
+        user.account_type = "FOLLOWER"
+        user.account_number = "1234"
+        user.broker = "VND"
+        user.risk_factor = 60
+        user.first_login = False
+
+        # Synchronize user data with the TradeAPI.
+        # FIXME: We are syncing for every request. VERY SLOW!!!
+        if 'tradeapi-client' in session:
+            client = session['tradeapi-client']
+            user_detail = client.get_user_detail()
+            user.name = user_detail['customerName']
+
+            account_detail = client.get_account_detail(user_detail["accounts"][0]['accountNumber'])
+            user.account_number = account_detail["accountNumber"]
+            user.cash = account_detail["cash"]
+
+        return user
 
 
 class Following(Base):
