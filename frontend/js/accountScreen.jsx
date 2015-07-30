@@ -214,8 +214,11 @@ var PositionPanel = React.createClass({
         return _.flatten(result);
     },
 
+     */
     positionRowsAll: function (positions) {
-        function sum(a, b) {
+        var self = this;
+
+        function add(a, b) {
             return a + b;
         }
 
@@ -224,7 +227,7 @@ var PositionPanel = React.createClass({
                 return pos.get("buying_price") * pos.get("quantity");
             }), add);
             var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
-                                         sum);
+                                         add);
 
             var marketPrice = 23000;
             var totalValue = marketPrice * totalQuantity;
