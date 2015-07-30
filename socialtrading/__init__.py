@@ -4,7 +4,7 @@
 import redis
 from flask import Flask, session
 from models import UserDao
-from flask.ext.login import LoginManager
+from flask.ext.login import LoginManager, UserMixin
 from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 
@@ -26,8 +26,10 @@ KVSessionExtension(store, app)
 
 @login_manager.user_loader
 def load_user(userid):
-    dao = UserDao()
-    return dao.get_user_by_username(userid)
+    # dao = UserDao()
+    # return dao.get_user_by_username(userid)
+    user = UserMixin()
+    return user
 
 
 @app.context_processor
