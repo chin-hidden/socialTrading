@@ -1,26 +1,13 @@
 # coding: utf-8
 
 import flask
-from flask import jsonify as _jsonify, session, request
+from flask import jsonify, session, request
 from flask.ext.login import login_required
 
 from models import UserDao
-import utils
 
 
 api = flask.Blueprint('api', __name__)
-
-
-def camel_jsonify(*args, **kwargs):
-    """\
-    A wrapper around flask.jsonify that converts snake_case keys into camelCase in the 'result' dictionary.
-    """
-    if 'result' in kwargs:
-        kwargs['result'] = utils.dict_keys_in_camel_case(kwargs['result'])
-    return _jsonify(*args, **kwargs)
-
-
-jsonify = camel_jsonify
 
 
 @api.route("/account")
