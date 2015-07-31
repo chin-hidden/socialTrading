@@ -14,3 +14,5 @@ sqlalchemy
 #psycopg2
 pg8000
 
+pytest
+pytest-xdist

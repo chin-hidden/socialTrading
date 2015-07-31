@@ -13,3 +13,6 @@ database:
 
 test:
 	PYTHONPATH=. py.test
+
+test-continuously:
+	PYTHONPATH=. py.test --looponfail
