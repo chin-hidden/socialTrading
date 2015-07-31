@@ -142,7 +142,7 @@ class Account(Base):
 class Follower(Account):
     __tablename__ = "followerinfo"
     username = Column(String, ForeignKey('account.username'), primary_key=True)
-    risk_factor = Column(Integer, name="riskfactor")
+    risk_factor = Column(Integer)
 
     __mapper_args__ = {
         'polymorphic_identity': 'FOLLOWER',
