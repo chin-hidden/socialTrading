@@ -1,8 +1,6 @@
+# Install dependencies
 dependencies:
 	pip install -r requirements.txt
-
-virtualenv:
-	source virtualenvwrapper.sh && workon socialtrading
 
 # Launch the server
 launch:
