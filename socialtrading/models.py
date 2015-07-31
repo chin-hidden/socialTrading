@@ -25,7 +25,7 @@ class UserDao:
         user.username = username
         user.account_type = "FOLLOWER"
         user.account_number = "1234"
-        user.broker = "VND"
+        user.brokerage = "VND"
         user.risk_factor = 60
         user.first_login = False
 
@@ -62,6 +62,7 @@ class Account(Base):
     username = Column(String, primary_key=True)
     password = Column(String)
     name = Column(String)
+    brokerage = Column(String)
     cash = Column(Numeric)
     account_type = Column(String, name="type")
 
