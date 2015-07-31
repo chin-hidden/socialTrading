@@ -13,3 +13,5 @@ database:
 	psql duber < db/schema.sql
 	psql duber < db/fixtures.sql
 
+test:
+	PYTHONPATH=. py.test
