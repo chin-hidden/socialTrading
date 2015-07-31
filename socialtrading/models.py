@@ -63,7 +63,14 @@ class UserDao:
     @classmethod
     @cache.memoize(timeout=50)
     def get_user_by_username(cls, username):
-        user = db_session.query(Account).filter(Account.username==username).one()
+        user = db_session.query(Account).get(username)
+        try:
+            # Triggers SQLAlchemy to load this property
+            # FIXME: Configure SQLAlchemy to always eagerly load risk_factor
+            user.risk_factor
+        except:
+            pass
+
         # user = Account()
         # user.username = username
         # user.account_type = "FOLLOWER"
