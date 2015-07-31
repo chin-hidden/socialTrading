@@ -4,8 +4,9 @@ dependencies:
 virtualenv:
 	source virtualenvwrapper.sh && workon socialtrading
 
+# Launch the server
 launch:
-	python launcher.py
+	redis-server & python launcher.py
 
 # Create the database
 database:
