@@ -16,3 +16,7 @@ pg8000
 
 pytest
 pytest-xdist
+
+# simplejson has builtin support for serializing Decimal.
+# Flask's jsonify will automatically pick it up instead of stdlib's json.
+simplejson

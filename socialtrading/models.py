@@ -1,3 +1,5 @@
+# coding: utf8
+
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
@@ -12,6 +14,46 @@ from socialtrading import cache
 Base = declarative_base()
 
 
+
+class Stock:
+    @classmethod
+    def get_stock_detail_by_symbol(cls, symbol):
+        """\
+        Look up a stock detail by its symbol.
+
+        Args:
+            symbol (str): the symbol name.
+
+        Returns:
+            dict or None if no such stock is found.
+                {'symbol': 'AAA', 'risk': 60, 'name': 'Công ty nhựa An Phát', 'exchange': 02}
+        """
+
+        stocks = [{'symbol': 'FPT', 'risk': 30, 'name': 'Tập đoàn FPT', 'exchange': 10},
+        {'symbol': 'AAA', 'risk': 60, 'name': 'Công ty nhựa An Phát', 'exchange': 02},
+        {'symbol': 'KLS', 'risk': 34, 'name': 'Chứng khoán Kim Long', 'exchange': 02},
+        {'symbol': 'MSN', 'risk': 15, 'name': 'Tập đoàn Masan', 'exchange': 10},
+        {'symbol': 'REE', 'risk': 35, 'name': 'CTCP cơ điện lạnh', 'exchange': 10},
+        {'symbol': 'SAM', 'risk': 35, 'name': 'CTCP Cáp Savico', 'exchange': 10},
+        {'symbol': 'VIC', 'risk': 20, 'name': 'Tập đoàn Vin Group', 'exchange': 10},
+        {'symbol': 'VNM', 'risk': 20, 'name': 'Sữa Vinamilk', 'exchange': 10},
+        {'symbol': 'VND', 'risk': 30, 'name': 'Chứng khoán Vndirect', 'exchange': 02},
+        {'symbol': 'ACB', 'risk': 28, 'name': 'Ngân hàng Á Châu', 'exchange': 02},
+        {'symbol': 'SSI', 'risk': 20, 'name': 'Chứng khoán SSI', 'exchange': 10},
+        {'symbol': 'SHS', 'risk': 50, 'name': 'CT chứng khoán SHB', 'exchange': 02},
+        {'symbol': 'SHB', 'risk': 40, 'name': 'Ngân hàng SHB', 'exchange': 02},
+        {'symbol': 'POT', 'risk': 30, 'name': 'CTCP thiết bị bưu điện', 'exchange': 02},
+        {'symbol': 'HQC', 'risk': 20, 'name': 'Địa ốc Hoàng Quân', 'exchange': 10},
+        {'symbol': 'VHG', 'risk': 20, 'name': 'Cao su Quảng Nam', 'exchange': 10},
+        {'symbol': 'PSD', 'risk': 30, 'name': 'CT dịch vụ dầu khí', 'exchange': 02},
+        {'symbol': 'PMC', 'risk': 30, 'name': 'Dược phẩm Pharmedic', 'exchange': 02}]
+
+        for stock in stocks:
+            if stock['symbol'] == symbol:
+                return stock
+
+
+
 class UserDao:
     def sync_user_with_tradeapi(self, username, tradeapi_token):
         """\
@@ -21,24 +63,25 @@ class UserDao:
     @classmethod
     @cache.memoize(timeout=50)
     def get_user_by_username(cls, username):
-        user = Account()
-        user.username = username
-        user.account_type = "FOLLOWER"
-        user.account_number = "1234"
-        user.brokerage = "VND"
-        user.risk_factor = 60
-        user.first_login = False
+        user = db_session.query(Account).filter(Account.username==username).one()
+        # user = Account()
+        # user.username = username
+        # user.account_type = "FOLLOWER"
+        # user.account_number = "1234"
+        # user.brokerage = "VND"
+        # user.risk_factor = 60
+        # user.first_login = False
 
-        # Synchronize user data with the TradeAPI.
-        # FIXME: We are syncing on every request. VERY SLOW!!!
-        if 'tradeapi-client' in session:
-            client = session['tradeapi-client']
-            user_detail = client.get_user_detail()
-            user.name = user_detail['customerName']
+        # # Synchronize user data with the TradeAPI.
+        # # FIXME: We are syncing on every request. VERY SLOW!!!
+        # if 'tradeapi-client' in session:
+        #     client = session['tradeapi-client']
+        #     user_detail = client.get_user_detail()
+        #     user.name = user_detail['customerName']
 
-            account_detail = client.get_account_detail(user_detail["accounts"][0]['accountNumber'])
-            user.account_number = account_detail["accountNumber"]
-            user.cash = account_detail["cash"]
+        #     account_detail = client.get_account_detail(user_detail["accounts"][0]['accountNumber'])
+        #     user.account_number = account_detail["accountNumber"]
+        #     user.cash = account_detail["cash"]
 
         return user
 
@@ -50,7 +93,7 @@ class Following(Base):
         name='trader', primary_key=True)
     follower_id = Column(String, ForeignKey('account.username'),
         name='follower', primary_key=True)
-    allocated_money = Column(Numeric, name='allocatedmoney')
+    allocated_money = Column(Numeric)
     trader = relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
@@ -58,13 +101,13 @@ class Following(Base):
 class Account(Base):
     __tablename__ = "account"
 
-    account_number = Column(String, name="accountnumber")
+    account_number = Column(String)
     username = Column(String, primary_key=True)
     password = Column(String)
     name = Column(String)
     brokerage = Column(String)
     cash = Column(Numeric)
-    account_type = Column(String, name="type")
+    account_type = Column(String)
 
     trader_assocs = relationship("Following",
         backref="follower",
@@ -90,7 +133,10 @@ class Account(Base):
         return self.username
 
     def as_dict(self):
-        return {key: value for key, value in self.__dict__.items() if not key.startswith("_")}
+        ignored_keys = ['password']
+        return {key: value
+            for key, value in self.__dict__.items()
+            if not key.startswith("_") and key not in ignored_keys}
 
 
 class Follower(Account):

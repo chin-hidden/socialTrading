@@ -8,18 +8,18 @@ create schema public;
 
 
 CREATE TABLE account (
-	accountNumber text NOT NULL,       -- VNDIRECT's internal account number
-	brokerage text,                    -- VNDIRECT, SSI, BAOVIET
 	username text PRIMARY KEY,
 	password text NOT NULL,
+	account_number text NOT NULL,       -- VNDIRECT's internal account number
+	brokerage text NOT NULL,            -- VNDIRECT, SSI, BAOVIET
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
-	type text                           -- The account FOLLOWER | TRADER
+	account_type text                           -- The account FOLLOWER | TRADER
 );
 
 CREATE TABLE followerInfo (
 	username text PRIMARY KEY REFERENCES account (username),
-	riskFactor integer NOT NULL
+	risk_factor integer NOT NULL
 );
 
 CREATE TABLE traderInfo (
@@ -29,43 +29,36 @@ CREATE TABLE traderInfo (
 CREATE TABLE following (
 	follower text NOT NULL REFERENCES account (username),
 	trader text NOT NULL REFERENCES account (username),
-	allocatedMoney numeric(19,2) NOT NULL,
+	allocated_money numeric(19,2) NOT NULL,
 	PRIMARY KEY (follower, trader)
 );
 
 
 CREATE TABLE orderlist (
-	orderId text PRIMARY KEY,
-	byUser text NOT NULL REFERENCES account (username),
-	mimickingUser text REFERENCES account (username),   -- Can be null if this order is made by a trader
-	stock text NOT NULL,
+	order_id text PRIMARY KEY,
+	by_user text NOT NULL REFERENCES account (username),
+	mimicking_user text REFERENCES account (username),   -- Can be null if this order is made by a trader
+	symbol text NOT NULL,
 	quantity integer NOT NULL,
 	price numeric(19, 2) NOT NULL,
 	date timestamp with time zone NOT NULL,
 	side text NOT NULL,     -- NS/NB
 	type text NOT NULL,     -- MP, LO, etc.
-	matchPrice numeric(19,2) NOT NULL,   -- These two can be 0,
-	matchQuantity integer NOT NULL       -- meaning this order has not been matched yet.
-);
-
-
-CREATE TABLE stockrisk (
-	stock text PRIMARY KEY,
-	risk integer NOT NULL,
-	name text NOT NULL,
-	floor text NOT NULL
+	matched_price numeric(19,2) NOT NULL,   -- These two can be 0,
+	matched_quantity integer NOT NULL       -- meaning this order has not been matched yet.
 );
 
 
 -- The stocks that an account is holding
 CREATE TABLE position (
 	username text NOT NULL,
-	mimickingUsername text,    -- If this position is held by a trader then this field is NULL
-	stock text NOT NULL,
+	mimicking_username text NOT NULL,
+	symbol text NOT NULL,
 	quantity integer NOT NULL,
-	cost numeric(19,2) NOT NULL,
-	PRIMARY KEY (username, mimickingUsername, stock),
-	FOREIGN KEY (username, mimickingUsername) REFERENCES following (follower, trader)
+	buying_price numeric(19,2) NOT NULL,
+	buying_date timestamp with time zone NOT NULL,
+	PRIMARY KEY (username, mimicking_username, symbol),
+	FOREIGN KEY (username, mimicking_username) REFERENCES following (follower, trader)
 );
 
 commit;
