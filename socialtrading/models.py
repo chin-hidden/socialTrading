@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Numeric, ForeignKey
+from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -120,6 +120,22 @@ class Trader(Account):
     __mapper_args__ = {
         'polymorphic_identity': 'TRADER',
     }
+
+
+class Position(Base):
+    __tablename__ = "position"
+
+    username = Column(String)
+    mimicking_username = Column(String)
+    stock = Column(String)
+    quantity = Column(String)
+    buying_price = Column(Numeric)
+
+    __table_args__ = (
+        ForeignKeyConstraint(['username', 'mimicking_username'],
+                             ['following.follower', 'following.trader']),
+        PrimaryKeyConstraint('username', 'mimicking_username', 'stock'),
+    )
 
 
 # engine = create_engine("postgresql://localhost/duber", echo=True)
