@@ -168,6 +168,10 @@ class Trader(Account):
         # FIXME: Slow query
         return len(self.follower_assocs)
 
+    @property
+    def roi(self):
+        return 10
+
     __mapper_args__ = {
         'polymorphic_identity': 'TRADER',
     }

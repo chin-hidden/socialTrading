@@ -97,33 +97,11 @@ def get_all_traders():
     """\
     Return all traders
     """
-    traders = [{
-        "name": u"Nguyễn Hoàng Giang",
-        "id": "giangnguyen",
-        "type": "TRADER",
-        "account_number": "1234",
-        "description": "lol",
-        "cash": 1234,
-        "people_following": 10,
-        "roi": 100
-    }, {
-        "name": u"Trần Vũ Thạch",
-        "id": "thachvu",
-        "type": "TRADER",
-        "account_number": "1234",
-        "description": "lol",
-        "cash": 1234,
-        "people_following": 10,
-        "roi": 100
-    }, {
-        "name": u"Hoàng Minh Châu",
-        "id": "chauhoang",
-        "type": "TRADER",
-        "account_number": "1234",
-        "description": "lol",
-        "cash": 1234,
-        "people_following": 10,
-        "roi": 100
-    },
-    ]
-    return jsonify(result=traders)
+    fields = ['name', 'username', 'account_type', 'account_number', 'description', 'cash', 'people_following', 'roi']
+
+    def trader_to_json(trader):
+        return {field: getattr(trader, field) for field in fields}
+
+    traders = models.db_session.query(models.Trader).all()
+
+    return jsonify(result=map(trader_to_json, traders))
