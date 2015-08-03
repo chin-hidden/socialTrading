@@ -1,11 +1,10 @@
 # coding: utf8
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint
+from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from flask import session
 
 
 
@@ -182,14 +181,15 @@ class Position(Base):
 
     username = Column(String)
     mimicking_username = Column(String)
-    stock = Column(String)
+    symbol = Column(String)
     quantity = Column(String)
     buying_price = Column(Numeric)
+    buying_date = Column(DateTime)  # FIXME: Check if we have timezone issue here.
 
     __table_args__ = (
         ForeignKeyConstraint(['username', 'mimicking_username'],
                              ['following.follower', 'following.trader']),
-        PrimaryKeyConstraint('username', 'mimicking_username', 'stock'),
+        PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
     )
 
 
