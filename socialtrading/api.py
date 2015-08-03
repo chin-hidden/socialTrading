@@ -47,7 +47,11 @@ def follower(username):
     # FIXME: throw 404
 
     if request.method == "PUT":
-        print(request.form)
+        user.name = request.json['name']
+        user.risk_factor = request.json['risk_factor']
+        models.db_session.add(user)
+        models.db_session.commit()
+
 
     return jsonify(result=user.as_dict())
 

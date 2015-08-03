@@ -8,8 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from flask import session
 
 
-from socialtrading import cache
-
 
 Base = declarative_base()
 
@@ -61,7 +59,6 @@ class UserDao:
         """
 
     @classmethod
-    @cache.memoize(timeout=50)
     def get_user_by_username(cls, username):
         user = db_session.query(Account).get(username)
         try:
