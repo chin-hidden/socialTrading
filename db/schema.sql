@@ -23,7 +23,8 @@ CREATE TABLE followerInfo (
 );
 
 CREATE TABLE traderInfo (
-	username text PRIMARY KEY REFERENCES account (username)
+	username text PRIMARY KEY REFERENCES account (username),
+	description text NOT NULL  -- FIXME: Should this field hold HTML?
 );
 
 CREATE TABLE following (

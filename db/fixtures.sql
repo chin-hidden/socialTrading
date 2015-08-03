@@ -16,10 +16,10 @@ INSERT INTO followerInfo (username, risk_factor) VALUES
        ('thachvu', 60),
        ('linhmai', 40);
 
-INSERT INTO traderInfo (username) VALUES
-	('giangnguyen'),
-	('chauhoang'),
-	('trungngo');
+INSERT INTO traderInfo (username, description) VALUES
+	('giangnguyen', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis sapien a nisl mollis iaculis.'),
+	('chauhoang', 'Etiam vulputate tristique libero. Vivamus eu lectus non orci rhoncus commodo.'),
+	('trungngo', 'Vivamus vestibulum dolor et consequat semper. Nunc ac elit volutpat, ullamcorper magna eu, pharetra diam.');
 
 
 -- for now, we only allow single following relationship

@@ -156,6 +156,7 @@ class Follower(Account):
 class Trader(Account):
     __tablename__ = "traderinfo"
     username = Column(String, ForeignKey('account.username'), primary_key=True)
+    description = Column(String)
 
     @property
     def total_allocated_money(self):
