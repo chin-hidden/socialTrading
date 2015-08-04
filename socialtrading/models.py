@@ -139,12 +139,6 @@ class Account(Base):
     def get_id(self):
         return self.username
 
-    def as_dict(self):
-        ignored_keys = ['password']
-        return {key: value
-            for key, value in self.__dict__.items()
-            if not key.startswith("_") and key not in ignored_keys}
-
 
 class Follower(Account):
     __tablename__ = "followerinfo"
