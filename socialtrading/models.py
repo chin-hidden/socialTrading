@@ -132,6 +132,10 @@ class Account(Base):
     def is_anonymous(self):
         return False
 
+    @property
+    def id(self):
+        return self.username
+
     def get_id(self):
         return self.username
 

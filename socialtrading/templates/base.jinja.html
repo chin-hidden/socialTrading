@@ -67,7 +67,7 @@
 
     {% if session.user %}
     <script type="text/javascript">
-      var user = {{ user.as_dict()|tojson }};
+      var USERNAME = "{{ user.username }}";
     </script>
     {% endif %}
 

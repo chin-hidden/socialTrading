@@ -172,7 +172,7 @@ var PositionPanel = React.createClass({
     },
 
     reloadPrices: function() {
-        _.map(positions.groupBy("stock"), function (positions, stockSymbol) {});
+        _.map(positions.groupBy("symbol"), function (positions, stockSymbol) {});
     },
 
     componentDidMount: function() {
@@ -189,7 +189,7 @@ var PositionPanel = React.createClass({
     positionRowsByTrader: function (positions) {
         var self = this;
 
-        var posByTrader = positions.groupBy("mimicking_user");
+        var posByTrader = positions.groupBy("mimicking_username");
         var result = _.map(posByTrader, function (positions, traderAccount) {
             var rowsForThisTrader = _.map(positions, function (pos) {
                 var marketPrice = self.state.marketPrices[pos.get("stock")];
@@ -199,7 +199,7 @@ var PositionPanel = React.createClass({
                 var roi = (gain / totalCost * 100).toFixed(2);
                 return (
                     <tr>
-                      <td>{pos.get("stock")}</td>
+                      <td>{pos.get("symbol")}</td>
                       <td>HOSE</td>
                       <td>{pos.get("quantity")}</td>
                       <td>{formatCurrency(pos.get("buying_price"))}</td>
@@ -236,7 +236,7 @@ var PositionPanel = React.createClass({
             return a + b;
         }
 
-        return _.map(positions.groupBy("stock"), function (positions, stockSymbol) {
+        return _.map(positions.groupBy("symbol"), function (positions, stockSymbol) {
             var totalCost = _.reduce(_.map(positions, function (pos) {
                 return pos.get("buying_price") * pos.get("quantity");
             }), add);

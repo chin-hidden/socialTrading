@@ -17,7 +17,7 @@ export var Traders = Backbone.Collection.extend({
 
 export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
-        idAttribute: "traderId"
+        idAttribute: "trader_id"
     }),
     parse: function(data) {
         return data.result;
@@ -32,8 +32,6 @@ var FollowerPositions = Backbone.Collection.extend({
 });
 
 export var Follower = Backbone.Model.extend({
-    idAttribute: "username",
-
     defaults: {
         following_traders: new FollowingRels(),
         positions: new FollowerPositions(),
