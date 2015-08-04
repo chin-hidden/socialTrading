@@ -83,6 +83,9 @@ def follower(username):
         models.db_session.commit()
 
     fields = ['id', 'username', 'account_number', 'name', 'brokerage', 'cash', 'account_type']
+    if isinstance(user, models.Follower):
+        fields.append('risk_factor')
+
     return make_serializer(fields)(user)
 
 

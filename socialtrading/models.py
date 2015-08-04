@@ -88,6 +88,10 @@ class UserDao:
 
         return user
 
+    @classmethod
+    def get_user_by_account_number(cls, account_number, brokerage):
+        pass
+
 
 class Following(Base):
     __tablename__ = "following"
@@ -148,6 +152,15 @@ class Follower(Account):
     __mapper_args__ = {
         'polymorphic_identity': 'FOLLOWER',
     }
+
+    def next_money_slot(self):
+        SLOT_SIZE = 10000000  # 10 million VND
+        quo, rem = divmod(self.cash, SLOT_SIZE)
+        if quo == 0:
+            return rem
+        else:
+            return SLOT_SIZE
+
 
 
 class Trader(Account):
