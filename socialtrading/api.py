@@ -4,7 +4,7 @@ import flask
 from flask import jsonify, session, request
 from flask.ext.login import login_required
 
-import models
+from . import models
 
 api_blueprint = flask.Blueprint('api', __name__)
 

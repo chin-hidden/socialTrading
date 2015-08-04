@@ -8,6 +8,9 @@ from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 from flask.ext.cache import Cache
 
+from . import models
+
+
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
@@ -31,7 +34,6 @@ def load_user(userid):
     return user
 
 
-import models
 @app.context_processor
 def inject_user():
     """Inject the 'user' object into the template context"""
@@ -41,6 +43,6 @@ def inject_user():
     return {}
 
 
-import api
+from . import api
 app.register_blueprint(api.api_blueprint, url_prefix="/api/v1")
 import socialtrading.views

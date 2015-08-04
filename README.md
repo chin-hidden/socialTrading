@@ -2,9 +2,9 @@
 
 ## Dependency
 
+- Python > 3.2
 - PostgreSQL 9.x
 - Redis
-- Python development headers (to compile the py-psycopg native extension)
 
 Install Python requirements
 

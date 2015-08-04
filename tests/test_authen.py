@@ -17,6 +17,6 @@ def test_show_logout_button(app):
     assert u"Đăng xuất" not in rv.get_data(as_text=True)
 
     rv = app.post("/login",
-        data={"username": "ndtrung4419", "password": "***REMOVED***"},
+        data={"username": "thachvu", "password": "password"},
         follow_redirects=True)
     assert u"Đăng xuất" in rv.get_data(as_text=True)

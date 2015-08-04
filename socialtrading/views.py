@@ -2,13 +2,13 @@
 
 import flask
 from flask import request, session, redirect, render_template, url_for
-import models
 from flask.ext.login import \
     login_user, login_required, logout_user
 from flask.ext import menu
 
 from socialtrading import app
-import tradeapi
+from . import tradeapi
+from . import models
 
 
 menu.Menu(app=app)
