@@ -90,7 +90,7 @@ class UserDao:
 
     @classmethod
     def get_user_by_account_number(cls, account_number, brokerage):
-        pass
+        return db_session.query(Account).filter(Account.account_number==account_number).first()
 
 
 class Following(Base):

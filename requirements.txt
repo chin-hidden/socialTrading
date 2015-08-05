@@ -5,6 +5,9 @@ flask-menu
 requests
 Flask-Cache
 
+# For RabbitMQ listening
+kombu
+
 # Session persistence
 redis
 flask-kvsession
