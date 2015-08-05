@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
+import logging
 import redis
 from flask import Flask, session
 from flask.ext.login import LoginManager, UserMixin
@@ -10,6 +11,8 @@ from flask.ext.cache import Cache
 
 from . import models
 
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 app = Flask(__name__)
