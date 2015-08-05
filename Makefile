@@ -4,7 +4,7 @@ dependencies:
 
 # Launch the server
 launch:
-	redis-server & python launcher.py
+	python launcher.py
 
 # Create the database
 database:
