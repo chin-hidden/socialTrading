@@ -75,6 +75,9 @@ def index():
 @login_required
 @menu.register_menu(app, '.account', u'Trang của tôi', order=1, visible_when=is_logged_in)
 def account():
+    # We don't support trader account page yet.
+    if isinstance(session['user'], models.Trader):
+        return render_template('noservice.jinja.html')
     return render_template("account.jinja.html")
 
 
