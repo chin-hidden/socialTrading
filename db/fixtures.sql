@@ -15,6 +15,7 @@ INSERT INTO account (account_number, username, password, name, cash, account_typ
 
 INSERT INTO followerInfo (username, risk_factor) VALUES
        ('thachvu', 60),
+       ('thangnt.nhtck47', 60),
        ('linhmai', 40);
 
 INSERT INTO traderInfo (username, description) VALUES
