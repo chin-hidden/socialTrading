@@ -7,6 +7,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
+import socialtrading as s
+
 
 Base = declarative_base()
 
@@ -205,6 +207,6 @@ class Position(Base):
 
 
 # engine = create_engine("postgresql://localhost/duber", echo=True)
-engine = create_engine("postgresql+pg8000://localhost/duber", echo=True)
+engine = create_engine("postgresql+pg8000://localhost/duber", echo=s.app.config['DEBUG'])
 Session = sessionmaker(bind=engine)
 db_session = Session()

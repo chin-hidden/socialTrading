@@ -13,4 +13,4 @@ if __name__ == "__main__":
     from socialtrading import cloner
     order_processing_thread = threading.Thread(target=cloner.run_order_processor)
     order_processing_thread.start()
-    create_app().run(debug=True)
+    create_app().run()

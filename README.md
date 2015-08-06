@@ -18,6 +18,10 @@ Run a `redis-server`, then:
 
 ```
 make launch
+
+# or
+
+make launch-production
 ```
 
 ## Testing

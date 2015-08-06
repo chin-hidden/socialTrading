@@ -6,6 +6,9 @@ dependencies:
 launch:
 	python launcher.py
 
+launch-production:
+	CONFIG_FILE=$(PWD)/production_configs.py python launcher.py
+
 # Create the database
 database:
 	psql duber < db/schema.sql
