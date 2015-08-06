@@ -5,6 +5,7 @@ from flask import request, session, redirect, render_template, url_for
 from flask.ext.login import \
     login_user, login_required, logout_user
 from flask.ext import menu
+import logging
 
 from socialtrading import app
 from . import tradeapi
@@ -12,6 +13,7 @@ from . import models
 
 
 menu.Menu(app=app)
+logger = logging.getLogger(__name__)
 
 
 # FIXME Disable this route on production mode
@@ -41,8 +43,9 @@ def login():
             _next = flask.request.args.get('next')
             return flask.redirect(_next or flask.url_for('index'))
         except:
+            logger.exception("Cannot login")
             # Fallthrough to the GET case
-            pass
+            flask.flash("Sai tên người dùng hoặc mật khẩu!")
 
     return render_template("login.jinja.html")
 
