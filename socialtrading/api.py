@@ -10,8 +10,7 @@ api_blueprint = flask.Blueprint('api', __name__)
 
 
 def make_serializer(fields):
-    """Make a function that returns a dictionary that only
-    includes the specified fields of its argument."""
+    """Make a function that serializes only selected fields of an object."""
 
     def inner(obj):
         return {field: getattr(obj, field) for field in fields}
@@ -48,6 +47,7 @@ def account_detail():
 
 
 @api_blueprint.route("/followers", methods=["GET"])
+@login_required
 @rest_endpoint
 def get_all_followers():
     """\
@@ -57,6 +57,7 @@ def get_all_followers():
 
 
 @api_blueprint.route("/follower/<username>", methods=["GET", "PUT"])
+@login_required
 @rest_endpoint
 def follower(username):
     """\
@@ -74,7 +75,11 @@ def follower(username):
     """
     user = models.UserDao.get_user_by_username(username)
 
-    # FIXME: throw 404
+    if not user:
+        flask.abort(404)
+
+    if user.username != session['user_id']:
+        flask.abort(401)
 
     if request.method == "PUT":
         user.name = request.json['name']
@@ -90,18 +95,23 @@ def follower(username):
 
 
 @api_blueprint.route("/follower/<username>/following", methods=["GET", "POST"])
+@login_required
 @rest_endpoint
 def following_relationships(username):
     if request.method == "POST":
         pass
 
     user = models.UserDao.get_user_by_username(username)
+    if not user:
+        flask.abort(404)
+
     fields = ['trader_id', 'follower_id', 'allocated_money']
 
     return map(make_serializer(fields), user.trader_assocs)
 
 
 @api_blueprint.route("/follower/<username>/positions")
+@login_required
 @rest_endpoint
 def follower_positions(username):
     positions = models.db_session.query(models.Position).filter(models.Position.username==username).all()
