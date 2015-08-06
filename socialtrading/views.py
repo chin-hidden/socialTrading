@@ -33,7 +33,7 @@ def login():
         user = models.UserDao.get_user_by_username(request.form["username"])
 
         try:
-            client = tradeapi.FakeVnDirectTradeApiClient()
+            client = tradeapi.VndirectTradeApiClient()
             client.login(request.form["username"], request.form["password"])
             login_user(user)
 

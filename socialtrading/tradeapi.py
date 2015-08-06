@@ -1,7 +1,7 @@
 import requests
 
 
-class FakeVnDirectTradeApiClient:
+class FakeVndirectTradeApiClient:
     def login(self, username, password):
         return "thisisatoken"
 
