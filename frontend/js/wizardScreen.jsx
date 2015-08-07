@@ -1,4 +1,7 @@
-var WizardScreen = React.createClass({
+import RiskSlider from "RiskSlider";
+import {me, traders} from "common";
+
+export var WizardScreen = React.createClass({
     componentDidMount: function() {
     },
 
