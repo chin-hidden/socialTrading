@@ -48,6 +48,9 @@ class VndirectTradeApiClient:
     https://ivnd.vndirect.com.vn/pages/viewpage.action?pageId=200605724
     """
 
+    # FIXME: Refactor to use requests.Session() so that we don't have
+    #        to litter `headers=headers` everyf*ckingwhere.
+
     AUTH_URL = "https://api.vndirect.com.vn/auth"
     API_URL = "https://api.vndirect.com.vn/trade"
 
@@ -56,13 +59,43 @@ class VndirectTradeApiClient:
         Log the user in.
 
         Returns:
-            str: The authentication token.
+            str: The first authentication token.
         """
         res = requests.post(self.AUTH_URL + "/auth",
-            data={"username": username, "password": password})
+            json={"username": username, "password": password})
         res.raise_for_status()
 
         self.token = res.json()["token"]
+        return self.token
+
+    def get_vtos(self):
+        """
+        Get the VTOS challenges.
+
+        Returns:
+            list: E.g. ["E1", "G1", "H3"]
+        """
+        headers = {"X-AUTH-TOKEN": self.token}
+        return requests.get(self.AUTH_URL + "/vtos",
+                            headers=headers).json()['challenges']
+
+    def login_vtos(self, v1, v2, v3):
+        """
+        Second phase login.
+
+        Returns:
+            str: The second phase token.
+        """
+        headers = {"X-AUTH-TOKEN": self.token}
+        payload = {
+            "codes": ", ".join((v1, v2, v3))
+        }
+
+        res = requests.post(self.AUTH_URL + '/vtos/auth',
+                            headers=headers,
+                            json=payload)
+
+        self.token = res.json()['token']
         return self.token
 
     def get_user_detail(self):
