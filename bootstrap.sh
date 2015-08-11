@@ -7,9 +7,17 @@ rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7
 
 $YUM groupinstall 'Development Tools'
 
-# NodeJS
+
 curl -sL https://rpm.nodesource.com/setup | bash -
-$YUM install nodejs
+$YUM install nodejs python3.4 redis
+
+
+npm install -g bower
+
+
+# Install  pip
+wget https://bootstrap.pypa.io/get-pip.py
+sudo python3.4 get-pip.py
 
 
 # Installing RabbitMQ
