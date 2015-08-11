@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import functools
 import flask
 from flask import jsonify, session, request
 from flask.ext.login import login_required
@@ -27,12 +28,12 @@ def rest_endpoint(route):
         "result": <the view's result>
     }
     """
+    @functools.wraps(route)
     def inner(*args, **kw_args):
         result = route(*args, **kw_args)
         if isinstance(result, map):
             result = list(result)
         return jsonify(result=result)
-    inner.__name__ = route.__name__
     return inner
 
 

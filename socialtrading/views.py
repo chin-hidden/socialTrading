@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import functools
 import flask
 from flask import request, session, redirect, render_template, url_for
 from flask.ext.login import \
@@ -14,6 +15,24 @@ from . import models
 
 menu.Menu(app=app)
 logger = logging.getLogger(__name__)
+
+
+def only_allow(account_types):
+    """\
+    Decorator to only allow some account types to get through.
+
+    Args:
+        account_type (list of str): List of allowed account types.
+    """
+    def decorator(route):
+        @functools.wraps(route)
+        def decorated_function(*args, **kw_args):
+            if session['user'].account_type in account_types:
+                return route(*args, **kw_args)
+            else:
+                return render_template('noservice.jinja.html')
+        return decorated_function
+    return decorator
 
 
 # FIXME Disable this route on production mode
@@ -71,13 +90,11 @@ def index():
     return flask.render_template("index.jinja.html")
 
 
+@only_allow(["FOLLOWER"])
+@menu.register_menu(app, '.account', u'Trang của tôi', order=1, visible_when=is_logged_in)
 @app.route("/account")
 @login_required
-@menu.register_menu(app, '.account', u'Trang của tôi', order=1, visible_when=is_logged_in)
 def account():
-    # We don't support trader account page yet.
-    if isinstance(session['user'], models.Trader):
-        return render_template('noservice.jinja.html')
     return render_template("account.jinja.html")
 
 
@@ -93,6 +110,7 @@ def help():
     return render_template("help.jinja.html")
 
 
+@only_allow(["FOLLOWER"])
 @app.route("/wizard")
 @login_required
 def wizard():
