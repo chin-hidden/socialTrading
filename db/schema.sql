@@ -11,7 +11,7 @@ CREATE TABLE account (
 	username text PRIMARY KEY,
 	password text NOT NULL,
 	account_number text NOT NULL,       -- VNDIRECT's internal account number
-	brokerage text NOT NULL,            -- VNDIRECT, SSI, BAOVIET
+	broker text NOT NULL,               -- VNDIRECT, SSI, BAOVIET
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
 	account_type text,                  -- The account FOLLOWER | TRADER

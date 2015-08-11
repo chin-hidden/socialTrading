@@ -4,7 +4,7 @@
 --
 
 
-INSERT INTO account (account_number, username, password, name, cash, account_type, brokerage) VALUES
+INSERT INTO account (account_number, username, password, name, cash, account_type, broker) VALUES
        ('0001210254', 'thachvu', 'password', 'Trần Vũ Thạch', 100000000, 'FOLLOWER', 'VNDIRECT'),
        ('0001032425', 'thangnt.nhtck47', 'password', 'Nguyễn Toàn Thắng', 100000000, 'FOLLOWER', 'VNDIRECT'),
        ('0001052458', 'chauhoang', 'password', 'Hoàng Minh Châu', 56560000, 'TRADER', 'VNDIRECT'),

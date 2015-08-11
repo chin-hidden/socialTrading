@@ -73,7 +73,7 @@ class UserDao:
         # user.username = username
         # user.account_type = "FOLLOWER"
         # user.account_number = "1234"
-        # user.brokerage = "VND"
+        # user.broker = "VND"
         # user.risk_factor = 60
         # user.first_login = False
 
@@ -91,7 +91,7 @@ class UserDao:
         return user
 
     @classmethod
-    def get_user_by_account_number(cls, account_number, brokerage):
+    def get_user_by_account_number(cls, account_number, broker):
         return db_session.query(Account).filter(Account.account_number==account_number).first()
 
 
@@ -114,7 +114,7 @@ class Account(Base):
     username = Column(String, primary_key=True)
     password = Column(String)
     name = Column(String)
-    brokerage = Column(String)
+    broker = Column(String)
     cash = Column(Numeric)
     account_type = Column(String)
 

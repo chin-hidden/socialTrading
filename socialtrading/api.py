@@ -87,7 +87,7 @@ def follower(username):
         models.db_session.add(user)
         models.db_session.commit()
 
-    fields = ['id', 'username', 'account_number', 'name', 'brokerage', 'cash', 'account_type']
+    fields = ['id', 'username', 'account_number', 'name', 'broker', 'cash', 'account_type']
     if isinstance(user, models.Follower):
         fields.append('risk_factor')
 
