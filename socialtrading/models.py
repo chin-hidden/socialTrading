@@ -1,13 +1,12 @@
 # coding: utf8
 
+import sqlalchemy as sql
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint, DateTime
 from sqlalchemy.orm import relationship, scoped_session
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 
-import socialtrading as s
+import socialtrading
 
 
 Base = declarative_base()
@@ -98,11 +97,11 @@ class UserDao:
 class Following(Base):
     __tablename__ = "following"
 
-    trader_id = Column(String, ForeignKey('account.username'),
+    trader_id = sql.Column(sql.String, sql.ForeignKey('account.username'),
         name='trader', primary_key=True)
-    follower_id = Column(String, ForeignKey('account.username'),
+    follower_id = sql.Column(sql.String, sql.ForeignKey('account.username'),
         name='follower', primary_key=True)
-    allocated_money = Column(Numeric)
+    allocated_money = sql.Column(sql.sql.Numeric)
     trader = relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
@@ -110,13 +109,14 @@ class Following(Base):
 class Account(Base):
     __tablename__ = "account"
 
-    account_number = Column(String)
-    username = Column(String, primary_key=True)
-    password = Column(String)
-    name = Column(String)
-    broker = Column(String)
-    cash = Column(Numeric)
-    account_type = Column(String)
+    account_number = sql.Column(sql.String)
+    username = sql.Column(sql.String, primary_key=True)
+    password = sql.Column(sql.String)
+    name = sql.Column(sql.String)
+    broker = sql.Column(sql.String)
+    cash = sql.Column(sql.Numeric)
+    account_type = sql.Column(sql.String)
+    initialized = sql.Column(sql.Boolean)
 
     trader_assocs = relationship("Following",
         backref="follower",
@@ -148,8 +148,8 @@ class Account(Base):
 
 class Follower(Account):
     __tablename__ = "followerinfo"
-    username = Column(String, ForeignKey('account.username'), primary_key=True)
-    risk_factor = Column(Integer)
+    username = sql.Column(sql.String, sql.ForeignKey('account.username'), primary_key=True)
+    risk_factor = sql.Column(sql.Integer)
 
     __mapper_args__ = {
         'polymorphic_identity': 'FOLLOWER',
@@ -167,8 +167,8 @@ class Follower(Account):
 
 class Trader(Account):
     __tablename__ = "traderinfo"
-    username = Column(String, ForeignKey('account.username'), primary_key=True)
-    description = Column(String)
+    username = sql.Column(sql.String, sql.ForeignKey('account.username'), primary_key=True)
+    description = sql.Column(sql.String)
 
     @property
     def total_allocated_money(self):
@@ -192,20 +192,20 @@ class Trader(Account):
 class Position(Base):
     __tablename__ = "position"
 
-    username = Column(String)
-    mimicking_username = Column(String)
-    symbol = Column(String)
-    quantity = Column(String)
-    buying_price = Column(Numeric)
-    buying_date = Column(DateTime)  # FIXME: Check if we have timezone issue here.
+    username = sql.Column(sql.String)
+    mimicking_username = sql.Column(sql.String)
+    symbol = sql.Column(sql.String)
+    quantity = sql.Column(sql.String)
+    buying_price = sql.Column(sql.Numeric)
+    buying_date = sql.Column(sql.DateTime)  # FIXME: Check if we have timezone issue here.
 
     __table_args__ = (
-        ForeignKeyConstraint(['username', 'mimicking_username'],
+        sql.ForeignKeyConstraint(['username', 'mimicking_username'],
                              ['following.follower', 'following.trader']),
-        PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
+        sql.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
     )
 
 
 # engine = create_engine("postgresql://localhost/duber", echo=True)
-engine = create_engine("postgresql+pg8000://localhost/duber", echo=s.app.config['DEBUG'])
+engine = sql.create_engine(socialtrading.app.config['DATABASE_CONNECTION'], echo=socialtrading.app.config['DEBUG'])
 db_session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
