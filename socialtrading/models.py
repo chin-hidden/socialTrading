@@ -101,7 +101,7 @@ class Following(Base):
         name='trader', primary_key=True)
     follower_id = sql.Column(sql.String, sql.ForeignKey('account.username'),
         name='follower', primary_key=True)
-    allocated_money = sql.Column(sql.sql.Numeric)
+    allocated_money = sql.Column(sql.Numeric)
     trader = relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
