@@ -9,8 +9,6 @@ from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 import os
 
-
-
 app = Flask(__name__)
 
 
@@ -32,25 +30,33 @@ logging.basicConfig(level=level)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-login_manager.login_message = u"Xin hãy đăng nhập hoặc tạo tài khoản để xem trang này!"
+login_manager.login_message = u"Mời quý khách đăng nhập sử dụng tài khoản của VNDIRECT để có thể sử dụng trang này!"
+
+
+from . import models
 
 
 @login_manager.user_loader
 def load_user(userid):
-    # dao = UserDao()
-    # return dao.get_user_by_username(userid)
-    user = UserMixin()
-    return user
+    # FIXME: Not sure what this function is for. But if we uncomment
+    # the next line, the login process will run very slowly.
+
+    return models.UserDao.get_user_by_username(userid)
+    return UserMixin()
 
 
 @app.context_processor
 def inject_user():
     """Inject the 'user' object into the template context"""
     if "user_id" in session:
-        from . import models
         user = models.UserDao.get_user_by_username(session["user_id"])
         return dict(user=user)
     return {}
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    models.db_session.remove()
 
 
 # Use Redis to store sessions

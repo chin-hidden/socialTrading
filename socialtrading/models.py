@@ -2,7 +2,7 @@
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, ForeignKeyConstraint, PrimaryKeyConstraint, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -208,5 +208,4 @@ class Position(Base):
 
 # engine = create_engine("postgresql://localhost/duber", echo=True)
 engine = create_engine("postgresql+pg8000://localhost/duber", echo=s.app.config['DEBUG'])
-Session = sessionmaker(bind=engine)
-db_session = Session()
+db_session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))
