@@ -1,5 +1,7 @@
 import RiskSlider from "RiskSlider";
 import {me, traders} from "common";
+import {formatCurrency, getMarketInfo, formatPercent} from "utils";
+
 
 export var WizardScreen = React.createClass({
     componentDidMount: function() {
@@ -208,15 +210,15 @@ var TraderLine = React.createClass({
 
               <div className="block">
                 <span className="text-label">NAV</span><br/>
-                <strong className="text-success">{this.props.trader.get("cash")} VND</strong><br/>
+                <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
 
                 <span className="text-label">Số người copy</span><br/>
-                <strong className="text-success">{Math.floor(Math.random() * 1000)}</strong><br/>
+                <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
               </div>
 
               <div className="block">
                 <span className="text-label">ROI</span><br/>
-                <strong className="text-success">{(Math.random() * 100).toFixed(2)}%</strong>
+                <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
               </div>
             </div>
         );
