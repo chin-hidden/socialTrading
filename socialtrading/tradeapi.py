@@ -1,4 +1,5 @@
 import requests
+from enum import Enum
 
 
 class FakeVndirectTradeApiClient:
@@ -40,6 +41,79 @@ class FakeVndirectTradeApiClient:
                 u'customerId': u'0001728170'
             }
         }
+
+
+class OrderType(Enum):
+    ATO = ("ATO", '1', '2')
+    LO  = ("LO",  '2', '0')
+    ATC = ("ATC", '1', '7')
+    MP  = ("MP",  '1', '0')
+    MOK = ("MOK", '1', '4')
+    MAK = ("MAK", '1', '3')
+    MTL = ("MTL", '1', '0')
+
+    @property
+    def numeric_order_type(self):
+        return self.value[1]
+
+    @property
+    def time_in_force(self):
+        return self.value[2]
+
+
+class OrderSide(Enum):
+    NORMAL_SELL = "NS"
+    NORMAL_BUY = "NB"
+    MARGIN_SELL = "MS"
+
+
+
+class VndirectOrsClient:
+    ORS_HOST = "http://10.26.1.112:8088/"
+    # This class is mostly a reverse engineering effort from the official Java ORS client.
+    # https://ivnd.vndirect.com.vn/pages/viewpage.action?pageId=160202776
+
+    def __init__(self, host):
+        self.ors_host = host
+        self.client_id = 0
+
+    def place_order(self,
+                    account: str,
+                    side: OrderSide,
+                    order_type: OrderType,
+                    symbol: str,
+                    price: float,
+                    quantity: int):
+        """\
+        Place an order using VNDirect's ORS subsystem.
+        """
+        params = {
+            "msgType": "D",
+            "clOrdId": self._generate_client_id(),
+            "account": account,
+            "side": side,
+            "ordType": order_type.numeric_order_type,
+            "timeInForce": order_type.time_in_force,
+            "symbol": symbol,
+            "price": price,
+            "quantity": quantity,
+        }
+        res = requests.get(self.ors_host + "/order/executePlaceOrder", params=params)
+        return res.json()
+
+    def _generate_client_id(self):
+        self.client_id += 1
+        return self.client_id
+
+    def _generate_fix_side(side):
+        # Java code:
+        # return (char)(!side.equals("NS") && !side.equals("MS")?(side.equals("NB")?'1':'0'):'2')
+        if side == "NB":
+            return '0'
+        elif side == "NS" or side == "MS":
+            return '1'
+        else:
+            return '2'
 
 
 class VndirectTradeApiClient:
