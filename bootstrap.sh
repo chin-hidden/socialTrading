@@ -12,7 +12,7 @@ curl -sL https://rpm.nodesource.com/setup | bash -
 $YUM install nodejs python34 python34-devel redis
 
 
-npm install -g bower npm-css
+npm install -g bower npm-css babel
 
 # Install  pip
 wget https://bootstrap.pypa.io/get-pip.py
