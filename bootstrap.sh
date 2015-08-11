@@ -9,11 +9,10 @@ $YUM groupinstall 'Development Tools'
 
 
 curl -sL https://rpm.nodesource.com/setup | bash -
-$YUM install nodejs python3.4 redis
+$YUM install nodejs python34 python34-devel redis
 
 
-npm install -g bower
-
+npm install -g bower npm-css
 
 # Install  pip
 wget https://bootstrap.pypa.io/get-pip.py
@@ -39,13 +38,19 @@ chkconfig rabbitmq-server on
 /sbin/service rabbitmq-server start
 
 
-$YUM install postgresql-server postgresql-contrib
+$YUM install postgresql-server postgresql-contrib postgresql-devel
+postgresql-setup initdb
 systemctl enable postgresql.service
 systemctl start postgresql.service
 
 sudo -u postgres createuser --superuser vagrant
 dropdb duber
 createdb duber
+
+
+# Start Redis at startup
+systemctl enable redis
+systemctl start redis
 
 
 # Misc tools

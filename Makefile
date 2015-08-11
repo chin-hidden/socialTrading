@@ -4,7 +4,7 @@ dependencies:
 
 # Launch the server
 launch:
-	python launcher.py
+	./launcher.py
 
 launch-production:
 	CONFIG_FILE=$(PWD)/production_configs.py python launcher.py

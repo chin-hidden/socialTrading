@@ -11,16 +11,16 @@ import logging
 import time
 
 from . import models as m
+import socialtrading
 
 
 
 logger = logging.getLogger(__name__)
 
 
-
 def run_order_processor():
     logger.info("starting listener")
-    with kombu.Connection('amqp://guest:guest@localhost:5672//') as conn:
+    with kombu.Connection(socialtrading.app.config['NOTICENTER_CONNECTION']) as conn:
         listener = OrderListener(conn)
         listener.run()
 
@@ -33,8 +33,11 @@ class OrderListener(kombu.mixins.ConsumerMixin):
         self.connection = connection
 
     def get_consumers(self, Consumer, channel):
-        executed_exchange = kombu.Exchange('executed')
-        executed_queue = kombu.Queue('executed', exchange=executed_exchange)
+        exch_name = socialtrading.app.config["NOTICENTER_EXECUTED_EXCHANGE"]
+        executed_exchange = kombu.Exchange(exch_name, durable=False, type="fanout")
+        executed_queue = kombu.Queue('SocialTrading.Queue.ExecutedOrder',
+            exchange=executed_exchange,
+            durable=False)
 
         return [Consumer(queues=[executed_queue],
                          accept=['json'],
@@ -85,20 +88,23 @@ def clone_trader_order(trader, order):
     Args:
         order: a dict with the following fields
             {
-               "orderId": "0068060415001087",
-               "account": "000103232",
-               "transactTime": 1428285620000,
-               "side": "2",
-               "symbol": "DCM",
-               "tradeDate": "20150406-09:00:20",
-               "type": "2",
-               "qty": 100,
-               "price": 13400,
-               "eventName": "SENT"
+                'tradeDate': '20150811-14:18:12',
+                'orderId': '0068110815013830',
+                'side': '1',    # 1 = buy, 2 = sell
+                'transactTime': 1439277492000,
+                'matchedPrice': 10400.0,
+                'qty': 700.0,
+                'symbol': 'ITQ',
+                'price': 10400.0,
+                'matchedQty': 700.0,
+                'account': '0101010862',
+                'eventName': 'EXECUTED'
             }
 
     Returns:
         A list of similar orders.
+
+    Refers: https://ivnd.vndirect.com.vn/display/RD/NotiCenter
     """
     # FIXME distinguish selling/buying orders
 
