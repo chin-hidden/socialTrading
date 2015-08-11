@@ -55,13 +55,13 @@ export var WizardScreen = React.createClass({
 
             <div className="panel-body">
               <div className="step">
-                <h3>Bước 1: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
-                <RiskSlider style={styles.slider} ref="riskSlider"/>
+                <h3>Bước 1: Chọn chiến lược</h3>
+                <TraderCarousel traders={traders} ref="traderSelector"/>
               </div>
 
               <div className="step">
-                <h3>Bước 2: Chọn chiến lược</h3>
-                <TraderCarousel traders={traders} ref="traderSelector"/>
+                <h3>Bước 2: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
+                <RiskSlider style={styles.slider} ref="riskSlider"/>
               </div>
 
               <div className="step">
