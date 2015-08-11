@@ -15,7 +15,7 @@ CREATE TABLE account (
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
 	account_type text,                  -- The account FOLLOWER | TRADER
-	initialized boolean NOT NULL DEFAULT TRUE
+	initialized boolean NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE followerInfo (
