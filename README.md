@@ -18,9 +18,11 @@ Run a `redis-server`, then:
 
 ```
 make launch
+```
 
-# or
+In production, copy `socialtrading/default_configs.py` to `production_configs.py`, change the necessary config keys and run:
 
+```
 make launch-production
 ```
 

@@ -6,3 +6,5 @@
 \#*\#
 *.pyc
 socialtrading/static
+/.idea
+/production_configs.py
