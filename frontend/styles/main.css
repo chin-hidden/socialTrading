@@ -1,3 +1,10 @@
+/*
+
+  VNDIRECT orange: #FF9900;
+  VNDIRECT gray: #F2F2F2;
+
+*/
+
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-weight: bold;
@@ -21,6 +28,14 @@ body {
 
 header, footer {
   width: 100%;
+}
+
+::selection {
+  background: #FF9900;
+}
+
+::-moz-selection {
+  background: #FF9900;
 }
 
 
