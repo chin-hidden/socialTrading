@@ -100,6 +100,8 @@ def clone_trader_order(trader, order):
     Returns:
         A list of similar orders.
     """
+    # FIXME distinguish selling/buying orders
+
     cloned_orders = []
     for follower_assoc in trader.follower_assocs:
         follower = follower_assoc.follower
