@@ -33,11 +33,15 @@ export var WizardScreen = React.createClass({
         me.set("riskFactor", riskFactor);
         me.save();
 
-        this.props.onCompletion();
+        this.returnToAccountScreen();
     },
 
     cancel: function() {
-        this.props.onCompletion();
+        this.returnToAccountScreen();
+    },
+
+    returnToAccountScreen: function() {
+        window.location.replace("/account");
     },
 
     render: function() {
@@ -177,20 +181,6 @@ var TraderCarousel = React.createClass({
 
 
 var TraderLine = React.createClass({
-    followBtnToggled: function() {
-        // if (me.isFollowing(this.props.trader)) {
-        //     dispatcher.dispatch({
-        //         type: "ask_to_unfollow_trader",
-        //         trader: this.props.trader
-        //     });
-        // } else {
-        //     dispatcher.dispatch({
-        //         type: "ask_to_follow_trader",
-        //         trader: this.props.trader
-        //     });
-        // }
-    },
-
     render: function() {
         var followBtnClasses = "btn ";
         if (me.isFollowing(this.props.trader)) {
@@ -227,9 +217,6 @@ var TraderLine = React.createClass({
               <div className="block">
                 <span className="text-label">ROI</span><br/>
                 <strong className="text-success">{(Math.random() * 100).toFixed(2)}%</strong>
-                {/* <button type="submit"
-                   className={followBtnClasses}
-                   onClick={this.followBtnToggled}>{{followButtonText}}</button> */}
               </div>
             </div>
         );
