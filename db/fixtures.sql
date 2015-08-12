@@ -37,3 +37,7 @@ INSERT INTO traderInfo (username, description) VALUES
 -- for now, we only allow single following relationship
 INSERT INTO following (follower, trader, allocated_money) VALUES
 	('thangnt.nhtck47', 'trader01', 100000000);
+
+INSERT INTO position VALUES
+       ('thangnt.nhtck47', 'trader01', 'VND', 100, 14000, 'now'),
+       ('thangnt.nhtck47', 'trader01', 'ACB', 200, 14500, 'now');
