@@ -27,7 +27,8 @@ def only_allow(account_types):
     def decorator(route):
         @functools.wraps(route)
         def decorated_function(*args, **kw_args):
-            if session['user'].account_type in account_types:
+            user = models.UserDao.get_user_by_username(session['user_id'])
+            if user.account_type in account_types:
                 return route(*args, **kw_args)
             else:
                 return render_template('noservice.jinja.html')
@@ -57,7 +58,6 @@ def login():
             login_user(user)
 
             session["tradeapi-client"] = client
-            session["user"] = user
 
             _next = flask.request.args.get('next')
             return flask.redirect(_next or flask.url_for('index'))

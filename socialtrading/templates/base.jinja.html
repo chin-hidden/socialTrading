@@ -67,9 +67,10 @@
     </div>  <!-- .top-container -->
 
 
-    {% if session.user %}
+    {% if session.user_id %}
     <script type="text/javascript">
       var USERNAME = "{{ user.username }}";
+      var TOKEN = "{{ session['tradeapi-client'].token }}";
     </script>
     {% endif %}
 
