@@ -3,6 +3,20 @@ import {me, traders} from "common";
 import {formatCurrency, getMarketInfo, formatPercent} from "utils";
 
 
+class Slider extends  React.Component {
+    componentDidMount() {
+        var slider = this.refs.nouiSlider.getDOMNode();
+        var _this = this;
+
+        $(slider).noUiSlider(this.props.config);
+    }
+
+    render() {
+        return (<div ref="nouiSlider"></div>);
+    }
+}
+
+
 export var WizardScreen = React.createClass({
     componentDidMount: function() {
     },
@@ -12,17 +26,17 @@ export var WizardScreen = React.createClass({
         var riskFactor = parseInt($(innerRiskSlider).val());
         var selectedTrader = this.refs.traderSelector.selectedTrader();
 
-        var allocatedMoneyNode = this.refs.allocatedMoney.getDOMNode();
-        if (allocatedMoneyNode.value === "") {
-            var allocatedMoney = allocatedMoneyNode.placeholder;
-        } else {
-            var allocatedMoney = allocatedMoneyNode.value;
-        }
+        // var allocatedMoneyNode = this.refs.allocatedMoney.getDOMNode();
+        // if (allocatedMoneyNode.value === "") {
+        //     var allocatedMoney = allocatedMoneyNode.placeholder;
+        // } else {
+        //     var allocatedMoney = allocatedMoneyNode.value;
+        // }
 
-        var value = parseInt(allocatedMoney);
-        if (value === NaN || value < 0) {
-            alert("Số tiền phải là số dương!");
-        }
+        // var value = parseInt(allocatedMoney);
+        // if (value === NaN || value < 0) {
+        //     alert("Số tiền phải là số dương!");
+        // }
 
         // FIXME riskFactor is not used yet
         // FIXME Handle the error case
@@ -53,6 +67,15 @@ export var WizardScreen = React.createClass({
             }
         };
 
+        var moneySliderConfig = {
+            start: [ me.get("cash") / 2 ],
+            connect: "lower",
+            range: {
+                'min': [0],
+                'max': [ me.get("cash") ]
+            }
+        };
+
         return (
           <div className="panel panel-default wizard">
             <div className="panel-heading">
@@ -62,7 +85,9 @@ export var WizardScreen = React.createClass({
             <div className="panel-body">
               <div className="step">
                 <h3>Bước 1: Chọn số tiền bạn muốn dùng để đầu tư</h3>
-                <input type="number" min="1" placeholder="1" ref="allocatedMoney"/> triệu VND
+
+                <p>Tổng số tiền bạn có thể đầu tư: {formatCurrency(me.get("cash"))}</p>
+                <Slider config={moneySliderConfig}/>
               </div>
 
               <div className="step">
@@ -181,18 +206,23 @@ var TraderLine = React.createClass({
 
         var imgSrc = "/static/img/trader1.jpg";
         return (
-            <div className="traderLine">
-              <img src={imgSrc} className="img-thumbnail"/>
+            <div className="trader-line">
+              <div className="trader-avatar">
+                <img src={imgSrc} className="img-thumbnail"/>
+              </div>
 
-              <p style={{fontWeight: "bold"}}>{this.props.trader.get("name")}</p>
+              <div style={{}}>
+                  <p style={{fontWeight: "bold", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{this.props.trader.get("name")}</p>
 
-              <span className="text-label">NAV</span><br/>
-              <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
+                  <span className="text-label">NAV: </span>
+                  <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
 
-              <span className="text-label">Số người copy</span><br/>
-              <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
-              <span className="text-label">ROI</span><br/>
-              <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
+                  <span className="text-label">Số người copy: </span>
+                  <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
+
+                  <span className="text-label">ROI: </span>
+                  <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
+              </div>
             </div>
         );
     }
