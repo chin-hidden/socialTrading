@@ -192,7 +192,7 @@ var PositionPanel = React.createClass({
         var posByTrader = positions.groupBy("mimicking_username");
         var result = _.map(posByTrader, function (positions, traderAccount) {
             var rowsForThisTrader = _.map(positions, function (pos) {
-                var marketPrice = self.state.marketPrices[pos.get("stock")];
+                var marketPrice = 23000; // self.state.marketPrices[pos.get("symbol")];
                 var totalCost = pos.get("buying_price") * pos.get("quantity");
                 var totalValue = marketPrice * pos.get("quantity");
                 var gain = totalValue - totalCost;
@@ -243,7 +243,7 @@ var PositionPanel = React.createClass({
             var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
                                          add);
 
-            var marketPrice = self.state.marketPrices[stockSymbol];
+            var marketPrice = 23000; // self.state.marketPrices[stockSymbol];
             var totalValue = marketPrice * totalQuantity;
             var gain = totalValue - totalCost;
             var roi = (gain / totalCost * 100).toFixed(2);
