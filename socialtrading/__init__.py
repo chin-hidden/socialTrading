@@ -7,6 +7,7 @@ from flask import Flask, session
 from flask.ext.login import LoginManager, UserMixin
 from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
+import flask_debugtoolbar
 import os
 
 app = Flask(__name__)
@@ -17,6 +18,7 @@ app.config.from_object('socialtrading.default_configs')
 if 'CONFIG_FILE' in os.environ:
     app.config.from_envvar('CONFIG_FILE')
 
+flask_debugtoolbar.DebugToolbarExtension(app)
 
 # Setup logging
 if app.config['DEBUG']:
