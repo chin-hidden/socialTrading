@@ -215,12 +215,12 @@ var TraderLine = React.createClass({
                   <p style={{fontWeight: "bold", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{this.props.trader.get("name")}</p>
 
                   <span className="text-label">NAV: </span>
-                  <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
+                  <strong className="text-success">{formatCurrency(this.props.trader.get("nav"))}</strong><br/>
 
-                  <span className="text-label">Số người copy: </span>
+                  <span className="text-label">Số người theo dõi: </span>
                   <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
 
-                  <span className="text-label">ROI: </span>
+                  <span className="text-label">Lãi dự kiến: </span>
                   <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
               </div>
             </div>
