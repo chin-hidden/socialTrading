@@ -85,10 +85,11 @@ def follower(username):
     if request.method == "PUT":
         user.name = request.json['name']
         user.risk_factor = request.json['risk_factor']
+        user.initialized = True
         models.db_session.add(user)
         models.db_session.commit()
 
-    fields = ['id', 'username', 'account_number', 'name', 'broker', 'cash', 'account_type']
+    fields = ['id', 'username', 'account_number', 'name', 'broker', 'cash', 'account_type', 'initialized']
     if isinstance(user, models.Follower):
         fields.append('risk_factor')
 

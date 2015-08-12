@@ -95,6 +95,9 @@ def index():
 @app.route("/account")
 @login_required
 def account():
+    user = models.UserDao.get_user_by_username(session['user_id'])
+    if not user.initialized:
+        return redirect(url_for('.wizard'))
     return render_template("account.jinja.html")
 
 
