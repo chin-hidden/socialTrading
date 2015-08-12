@@ -46,16 +46,11 @@ export var AccountScreen = React.createClass({
                     Danh mục đầu tư
                   </a>
                 </li>
-                <li className={active['solenh']}>
+                {/*<li className={active['solenh']}>
                   <a href="#" onClick={this.switchTab.bind(this, "solenh")}>
                     Sổ lệnh trong ngày
                   </a>
-                </li>
-                <li className={active['lichsugd']}>
-                  <a href="#" onClick={this.switchTab.bind(this, "lichsugd")}>
-                    Lịch sử giao dịch
-                  </a>
-                </li>
+                </li>*/}
               </ul>
 
               {tabContent}
