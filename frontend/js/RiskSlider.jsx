@@ -11,7 +11,7 @@ export default class RiskSlider extends React.Component {
         // FIXME: we are calling `me` directly
         var tmp = $(slider).noUiSlider({
             start: [ me.get("risk_factor") ],
-            step: 10,
+            step: 20,
             connect: "lower",
             range: {
                 'min': [0],
@@ -26,9 +26,9 @@ export default class RiskSlider extends React.Component {
         if (!this.props.withoutPips) {
             tmp.noUiSlider_pips({
                 mode: "positions",
-                stepped: true,
-                values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                densitiy: 4
+                // stepped: true,
+                values: [0, 20, 40, 60, 80, 100],
+                densitiy: 1
             });
         }
     }

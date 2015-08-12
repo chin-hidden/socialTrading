@@ -56,23 +56,23 @@ export var WizardScreen = React.createClass({
         return (
           <div className="panel panel-default wizard">
             <div className="panel-heading">
-              <h2 className="panel-title">Cài đặt Tài khoản của bạn</h2>
+              <h2 className="panel-title">Cài đặt Tài khoản</h2>
             </div>
 
             <div className="panel-body">
               <div className="step">
-                <h3>Bước 1: Chọn chiến lược</h3>
+                <h3>Bước 1: Chọn số tiền bạn muốn dùng để đầu tư</h3>
+                <input type="number" min="1" placeholder="1" ref="allocatedMoney"/> triệu VND
+              </div>
+
+              <div className="step">
+                <h3>Bước 2: Chọn chiến lược</h3>
                 <TraderCarousel traders={traders} ref="traderSelector"/>
               </div>
 
               <div className="step">
-                <h3>Bước 2: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
+                <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
                 <RiskSlider style={styles.slider} ref="riskSlider"/>
-              </div>
-
-              <div className="step">
-                <h3>Bước 3: Chọn số tiền đặt cho Nhà đầu tư bạn vừa chọn</h3>
-                <input type="number" min="1" placeholder="1" ref="allocatedMoney"/> triệu VND
               </div>
 
               <div className="button-row clearfix">
@@ -96,11 +96,12 @@ var TraderCarousel = React.createClass({
     },
 
     componentDidMount: function() {
+        var _this = this;
         var thumb = this.refs.thumbSlider.getDOMNode();
-        var detail = this.refs.detailSlider.getDOMNode();
+        // var detail = this.refs.detailSlider.getDOMNode();
 
         $(thumb).slick({
-            asNavFor: $(detail),
+            // asNavFor: $(detail),
             slidesToShow: 3,
             slidesToScroll: 1,
             centerMode: true,
@@ -110,20 +111,12 @@ var TraderCarousel = React.createClass({
             prevArrow: this.refs.btnPrev.getDOMNode(),
         });
 
-        $(detail).slick({
-            asNavFor: $(thumb),
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-        });
-
-        var _this = this;
-        $(detail).on("afterChange", function(event, slick, currentSlide) {
-            _this.setState({
-                selectedTrader: traders.models[currentSlide],
-                currentSlide: currentSlide
-            });
-        });
+        // $(detail).on("afterChange", function(event, slick, currentSlide) {
+        //     _this.setState({
+        //         selectedTrader: traders.models[currentSlide],
+        //         currentSlide: currentSlide
+        //     });
+        // });
     },
 
     selectedTrader: function() {
@@ -140,7 +133,7 @@ var TraderCarousel = React.createClass({
                 top: 0,
                 width: 30,
                 height: '100%',
-                backgroundColor: '#EEE',
+                backgroundColor: '#BBB',
                 border: "none"
         };
 
@@ -161,16 +154,9 @@ var TraderCarousel = React.createClass({
 
         return (
             <div>
-              <div ref="detailSlider" style={styles.detail}>
-                {traderNodes}
-              </div>
-
               <div style={styles.thumbSlider}>
                 <div ref="thumbSlider" className="trader-thumb-slider">
-                  <div><img className="img-thumbnail" src="/static/img/trader1.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/static/img/trader2.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/static/img/trader3.jpg"/></div>
-                  <div><img className="img-thumbnail" src="/static/img/trader4.jpg"/></div>
+                  {traderNodes}
                 </div>
 
                 <button style={styles.next} ref="btnNext">&#9654;</button>
@@ -193,33 +179,20 @@ var TraderLine = React.createClass({
             followBtnClasses += "btn-primary";
         }
 
-        var imgSrc = "/static/img/trader" + this.props.index + ".jpg";
+        var imgSrc = "/static/img/trader1.jpg";
         return (
-            <div className="traderLine clearfix">
-              <div className="block">
-                <img src={imgSrc} className="img-thumbnail"/>
-              </div>
+            <div className="traderLine">
+              <img src={imgSrc} className="img-thumbnail"/>
 
-              <div className="block basic-info">
-                <h2>{this.props.trader.get("name")}</h2>
-                <p className="text-muted">
-                  {this.props.trader.get("id")}
-                  {this.props.trader.get("description")}
-                </p>
-              </div>
+              <p style={{fontWeight: "bold"}}>{this.props.trader.get("name")}</p>
 
-              <div className="block">
-                <span className="text-label">NAV</span><br/>
-                <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
+              <span className="text-label">NAV</span><br/>
+              <strong className="text-success">{formatCurrency(this.props.trader.get("cash"))}</strong><br/>
 
-                <span className="text-label">Số người copy</span><br/>
-                <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
-              </div>
-
-              <div className="block">
-                <span className="text-label">ROI</span><br/>
-                <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
-              </div>
+              <span className="text-label">Số người copy</span><br/>
+              <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
+              <span className="text-label">ROI</span><br/>
+              <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
             </div>
         );
     }

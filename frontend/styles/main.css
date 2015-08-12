@@ -2,7 +2,7 @@
 
   VNDIRECT orange: #FF9900;
   VNDIRECT gray: #F2F2F2;
-
+  dark gray: #5E5E5E;
 */
 
 h1, h2, h3, h4, h5, h6 {
@@ -50,9 +50,9 @@ header, footer {
   flex: 1;
 }
 
-.container {
+/*.container {
   width: 1120px;
-}
+}*/
 
 .ui-label-strong {
   font-size: 1.2em;
@@ -64,8 +64,11 @@ header, footer {
 }
 
 .traderLine {
-  padding: 10px;
-  border: 1px solid black;
+  padding: 1rem;
+  border: 1px solid transparent;
+  border-color: #DDD;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  border-radius: 4px;
 }
 
 .traderLine .basic-info {
@@ -225,6 +228,9 @@ span.accent {
   margin-left: 10px;
 }
 
+.trader-thumb-slider {
+  background-color: #F2F2F2;
+}
 
 .trader-thumb-slider img {
     margin: 10px auto;
@@ -233,6 +239,8 @@ span.accent {
 
 .trader-thumb-slider .slick-slide {
     transition: 300ms ease 0s;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .trader-thumb-slider .slick-center {
