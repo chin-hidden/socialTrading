@@ -4,6 +4,7 @@ flask_failsafe
 flask-menu
 requests
 flask-debugtoolbar
+flask-sqlalchemy
 
 # For RabbitMQ listening
 kombu

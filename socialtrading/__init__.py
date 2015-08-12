@@ -5,6 +5,7 @@ import logging
 import redis
 from flask import Flask, session
 from flask.ext.login import LoginManager, UserMixin
+from flask.ext.sqlalchemy import SQLAlchemy
 from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 import flask_debugtoolbar
@@ -18,6 +19,10 @@ app.config.from_object('socialtrading.default_configs')
 if 'CONFIG_FILE' in os.environ:
     app.config.from_envvar('CONFIG_FILE')
 
+# Setup the database
+db = SQLAlchemy(app)
+
+# Debugging stuff
 flask_debugtoolbar.DebugToolbarExtension(app)
 
 # Setup logging
@@ -54,11 +59,6 @@ def inject_user():
         user = models.UserDao.get_user_by_username(session["user_id"])
         return dict(user=user)
     return {}
-
-
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    models.db_session.remove()
 
 
 # Use Redis to store sessions

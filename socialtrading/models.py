@@ -1,16 +1,6 @@
 # coding: utf8
 
-import sqlalchemy as sql
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, scoped_session
-from sqlalchemy.orm import sessionmaker
-
-
-import socialtrading
-
-
-Base = declarative_base()
-
+from socialtrading import db
 
 
 class Stock:
@@ -60,7 +50,7 @@ class UserDao:
 
     @classmethod
     def get_user_by_username(cls, username):
-        user = db_session.query(Account).get(username)
+        user = Account.query.get(username)
         try:
             # Triggers SQLAlchemy to load this property
             # FIXME: Configure SQLAlchemy to always eagerly load risk_factor
@@ -91,34 +81,34 @@ class UserDao:
 
     @classmethod
     def get_user_by_account_number(cls, account_number, broker):
-        return db_session.query(Account).filter(Account.account_number==account_number).first()
+        return Account.query.filter(Account.account_number==account_number).first()
 
 
-class Following(Base):
+class Following(db.Model):
     __tablename__ = "following"
 
-    trader_id = sql.Column(sql.String, sql.ForeignKey('account.username'),
+    trader_id = db.Column(db.String, db.ForeignKey('account.username'),
         name='trader', primary_key=True)
-    follower_id = sql.Column(sql.String, sql.ForeignKey('account.username'),
+    follower_id = db.Column(db.String, db.ForeignKey('account.username'),
         name='follower', primary_key=True)
-    allocated_money = sql.Column(sql.Numeric)
-    trader = relationship("Account", backref="follower_assocs",
+    allocated_money = db.Column(db.Numeric)
+    trader = db.relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
 
-class Account(Base):
+class Account(db.Model):
     __tablename__ = "account"
 
-    account_number = sql.Column(sql.String)
-    username = sql.Column(sql.String, primary_key=True)
-    password = sql.Column(sql.String)
-    name = sql.Column(sql.String)
-    broker = sql.Column(sql.String)
-    cash = sql.Column(sql.Numeric)
-    account_type = sql.Column(sql.String)
-    initialized = sql.Column(sql.Boolean)
+    account_number = db.Column(db.String)
+    username = db.Column(db.String, primary_key=True)
+    password = db.Column(db.String)
+    name = db.Column(db.String)
+    broker = db.Column(db.String)
+    cash = db.Column(db.Numeric)
+    account_type = db.Column(db.String)
+    initialized = db.Column(db.Boolean)
 
-    trader_assocs = relationship("Following",
+    trader_assocs = db.relationship("Following",
         backref="follower",
         foreign_keys=[Following.follower_id])
 
@@ -145,11 +135,24 @@ class Account(Base):
     def get_id(self):
         return self.username
 
+    @property
+    def nav(self):
+        return self.cash + self.gross_stock_value
+
+    @property
+    def gross_stock_value(self):
+        Position.query.filter(Position.username==self.username)
+        return 400
+
+    @property
+    def gross_profit(self):
+        return 500
+
 
 class Follower(Account):
     __tablename__ = "followerinfo"
-    username = sql.Column(sql.String, sql.ForeignKey('account.username'), primary_key=True)
-    risk_factor = sql.Column(sql.Integer)
+    username = db.Column(db.String, db.ForeignKey('account.username'), primary_key=True)
+    risk_factor = db.Column(db.Integer)
 
     __mapper_args__ = {
         'polymorphic_identity': 'FOLLOWER',
@@ -167,8 +170,8 @@ class Follower(Account):
 
 class Trader(Account):
     __tablename__ = "traderinfo"
-    username = sql.Column(sql.String, sql.ForeignKey('account.username'), primary_key=True)
-    description = sql.Column(sql.String)
+    username = db.Column(db.String, db.ForeignKey('account.username'), primary_key=True)
+    description = db.Column(db.String)
 
     @property
     def total_allocated_money(self):
@@ -189,23 +192,18 @@ class Trader(Account):
     }
 
 
-class Position(Base):
+class Position(db.Model):
     __tablename__ = "position"
 
-    username = sql.Column(sql.String)
-    mimicking_username = sql.Column(sql.String)
-    symbol = sql.Column(sql.String)
-    quantity = sql.Column(sql.String)
-    buying_price = sql.Column(sql.Numeric)
-    buying_date = sql.Column(sql.DateTime)  # FIXME: Check if we have timezone issue here.
+    username = db.Column(db.String)
+    mimicking_username = db.Column(db.String)
+    symbol = db.Column(db.String)
+    quantity = db.Column(db.String)
+    buying_price = db.Column(db.Numeric)
+    buying_date = db.Column(db.DateTime)  # FIXME: Check if we have timezone issue here.
 
     __table_args__ = (
-        sql.ForeignKeyConstraint(['username', 'mimicking_username'],
+        db.ForeignKeyConstraint(['username', 'mimicking_username'],
                              ['following.follower', 'following.trader']),
-        sql.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
+        db.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
     )
-
-
-# engine = create_engine("postgresql://localhost/duber", echo=True)
-engine = sql.create_engine(socialtrading.app.config['DATABASE_CONNECTION'], echo=socialtrading.app.config['DEBUG'])
-db_session = scoped_session(sessionmaker(bind=engine, autocommit=False, autoflush=False))

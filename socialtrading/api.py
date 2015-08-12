@@ -6,6 +6,7 @@ from flask import jsonify, session, request
 from flask.ext.login import login_required
 
 from . import models
+from socialtrading import db
 
 api_blueprint = flask.Blueprint('api', __name__)
 
@@ -86,10 +87,12 @@ def follower(username):
         user.name = request.json['name']
         user.risk_factor = request.json['risk_factor']
         user.initialized = True
-        models.db_session.add(user)
-        models.db_session.commit()
+        db.session.add(user)
+        db.session.commit()
 
-    fields = ['id', 'username', 'account_number', 'name', 'broker', 'cash', 'account_type', 'initialized']
+    fields = ['id', 'username', 'account_number',
+              'name', 'broker', 'cash', 'account_type',
+              'initialized', 'nav', 'gross_stock_value', 'gross_profit']
     if isinstance(user, models.Follower):
         fields.append('risk_factor')
 
@@ -116,7 +119,7 @@ def following_relationships(username):
 @login_required
 @rest_endpoint
 def follower_positions(username):
-    positions = models.db_session.query(models.Position).filter(models.Position.username==username).all()
+    positions = models.Position.query.filter(models.Position.username==username).all()
 
     fields = ['username', 'mimicking_username', 'symbol', 'quantity', 'buying_price', 'buying_date']
 
@@ -131,6 +134,6 @@ def get_all_traders():
     """
     fields = ['id', 'name', 'username', 'account_type', 'account_number', 'description', 'cash', 'people_following', 'roi']
 
-    traders = models.db_session.query(models.Trader).all()
+    traders = models.Trader.query.all()
 
     return map(make_serializer(fields), traders)

@@ -4,7 +4,7 @@ DEBUG = True
 # CHANGE THIS!!!!
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
-DATABASE_CONNECTION = "postgresql://@/duber"
+SQLALCHEMY_DATABASE_URI = "postgresql://@/duber"
 
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 5000
