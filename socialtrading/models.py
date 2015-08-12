@@ -51,12 +51,6 @@ class UserDao:
     @classmethod
     def get_user_by_username(cls, username):
         user = Account.query.get(username)
-        try:
-            # Triggers SQLAlchemy to load this property
-            # FIXME: Configure SQLAlchemy to always eagerly load risk_factor
-            user.risk_factor
-        except:
-            pass
 
         # user = Account()
         # user.username = username
