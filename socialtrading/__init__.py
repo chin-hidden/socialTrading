@@ -10,6 +10,8 @@ from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 import flask_debugtoolbar
 import os
+import threading
+
 
 app = Flask(__name__)
 
@@ -70,6 +72,13 @@ KVSessionExtension(store, app)
 # Register the API handlers
 from . import api
 app.register_blueprint(api.api_blueprint, url_prefix="/api/v1")
+
+
+@app.before_first_request
+def run_order_processing_thread():
+    from socialtrading import cloner
+    order_processing_thread = threading.Thread(target=cloner.run_order_processor)
+    order_processing_thread.start()
 
 # Load the view functions for their decorator side effect
 import socialtrading.views
