@@ -6,16 +6,16 @@
 
 INSERT INTO account (account_number, username, password, name, cash, account_type, broker) VALUES
        ('0001032425', 'thangnt.nhtck47', 'password', 'Nguyễn Toàn Thắng', 100000000, 'FOLLOWER', 'VNDIRECT'),
-       ('0101807860', 'trader01', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001008969', 'trader02', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0101018086', 'trader03', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001068688', 'trader04', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('3101000330', 'trader05', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001888989', 'trader06', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001569999', 'trader07', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001111987', 'trader08', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0304008739', 'trader09', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT'),
-       ('0001388888', 'trader10', 'password', 'Nguyễn Hoàng Giang', 4500000, 'TRADER', 'VNDIRECT');
+       ('0101807860', 'trader01', 'password', 'Thuyền Trưởng Huck', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001008969', 'trader02', 'password', 'Thanh Chương Tiên Sinh', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0101018086', 'trader03', 'password', 'Bàn Tay Vàng', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001068688', 'trader04', 'password', 'Hiệp Sĩ Bóng Đêm', 4500000, 'TRADER', 'VNDIRECT'),
+       ('3101000330', 'trader05', 'password', 'Cao Thủ Lướt Sóng', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001888989', 'trader06', 'password', 'Chiến Binh Thép', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001569999', 'trader07', 'password', 'Vô Thần', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001111987', 'trader08', 'password', 'Cả Trái Đất', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0304008739', 'trader09', 'password', 'Đông Phương Bất Bại', 4500000, 'TRADER', 'VNDIRECT'),
+       ('0001388888', 'trader10', 'password', 'Đánh Là Thắng', 4500000, 'TRADER', 'VNDIRECT');
 
 
 INSERT INTO followerInfo (username, risk_factor) VALUES
