@@ -64,7 +64,7 @@ def login():
         except:
             logger.exception("Cannot login")
             # Fallthrough to the GET case
-            flask.flash("Sai tên người dùng hoặc mật khẩu!")
+            flask.flash("Sai tên người dùng hoặc mật khẩu!", 'error')
 
     return render_template("login.jinja.html")
 

@@ -1,23 +1,47 @@
 {% extends "base.jinja.html" %}
+{% from "flash.jinja.html" import flash %}
 
 {% block content %}
 <div class="container-login">
   <style scoped>
     form {
-      width: 20em;
+      width: 400px;
       margin-left: auto;
       margin-right: auto;
+      margin-top: 60px;
     }
 
     input {
       margin-bottom: 0.5em;
     }
+
+    #btn-submit {
+      float: right;
+    }
   </style>
 
   <form method="post">
-    <input name="username" type="text" class="form-control" placeholder="Tên tài khoản">
-    <input name="password" type="password" class="form-control" placeholder="Mật khẩu">
-    <input type="submit" class="btn btn-primary" value="Đăng nhập">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Đăng nhập</h3>
+      </div>
+
+      <div class="panel-body">
+        <p>Mời quý khách đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để có thể sử dụng dịch vụ này.</p>
+
+        {{ flash() }}
+
+        <div class="form-group">
+          <label for="username">Tên tài khoản</label>
+          <input name="username" type="text" class="form-control" placeholder="nguyen_van_a">
+        </div>
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input name="password" type="password" class="form-control" placeholder="mat_khau_cua_toi">
+        </div>
+        <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
+      </div>
+    </div>
   </form>
 </div>
 {% endblock %}

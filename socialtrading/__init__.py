@@ -39,7 +39,7 @@ logging.basicConfig(level=level)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-login_manager.login_message = u"Mời quý khách đăng nhập sử dụng tài khoản của VNDIRECT để có thể sử dụng trang này!"
+login_manager.login_message = None  # u"Mời quý khách đăng nhập sử dụng tài khoản của VNDIRECT để có thể sử dụng trang này!"
 
 
 from . import models
