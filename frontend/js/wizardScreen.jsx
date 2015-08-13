@@ -46,7 +46,7 @@ export var WizardScreen = React.createClass({
         //     allocatedMoney: allocatedMoney
         // });
 
-        me.set("riskFactor", riskFactor);
+        me.set("risk_factor", riskFactor);
         me.save();
 
         this.returnToAccountScreen();
