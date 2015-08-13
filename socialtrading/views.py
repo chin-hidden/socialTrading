@@ -54,7 +54,7 @@ def login():
 
         try:
             client = tradeapi.VndirectTradeApiClient()
-            client.login(request.form["username"], request.form["password"])
+            client.login(user.username, request.form["password"])
             login_user(user)
 
             session["tradeapi-client"] = client
