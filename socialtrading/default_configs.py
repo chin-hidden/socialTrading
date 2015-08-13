@@ -1,5 +1,6 @@
 # MUST be set to False for production.
 DEBUG = True
+DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 # CHANGE THIS!!!!
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
