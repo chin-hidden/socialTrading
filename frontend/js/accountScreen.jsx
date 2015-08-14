@@ -1,6 +1,6 @@
 import {me, traders} from "common";
 import {formatCurrency, getMarketInfo, formatPercent} from "utils";
-import RiskSlider from "RiskSlider";
+import {RiskSlider} from "Slider";
 
 
 export var AccountScreen = React.createClass({
@@ -93,13 +93,19 @@ var InfoBox = React.createClass({
             accountInfoRow: {
                 marginBottom: "1em"
             },
-            riskSlider: {
-                marginLeft: 10,
-                marginRight: 10
-            },
             label: {
                 marginRight: "1em"
             },
+        };
+
+        var riskSliderConfig = {
+            start: [ me.get("risk_factor") ],
+            connect: "lower",
+            step: 1,
+            range: {
+                'min': [0],
+                'max': [100]
+            }
         };
 
         return (
@@ -141,10 +147,7 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-12">
                       <h4>Tốc độ đầu tư:</h4>
-                      <RiskSlider ref="riskSlider"
-                                  onChange={this.riskSliderChanged}
-                                  style={styles.riskSlider}
-                                  withoutPips={true}/>
+                      <RiskSlider ref="riskSlider" onChange={this.riskSliderChanged} config={riskSliderConfig}/>
                     </div>
                   </div>
                 </div>

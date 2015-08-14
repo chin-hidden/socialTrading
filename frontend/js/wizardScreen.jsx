@@ -1,20 +1,6 @@
-import RiskSlider from "RiskSlider";
 import {me, traders} from "common";
 import {formatCurrency, getMarketInfo, formatPercent} from "utils";
-
-
-class Slider extends  React.Component {
-    componentDidMount() {
-        var slider = this.refs.nouiSlider.getDOMNode();
-        var _this = this;
-
-        $(slider).noUiSlider(this.props.config);
-    }
-
-    render() {
-        return (<div ref="nouiSlider"></div>);
-    }
-}
+import {RiskSlider, MoneySlider} from "Slider";
 
 
 export var WizardScreen = React.createClass({
@@ -22,7 +8,7 @@ export var WizardScreen = React.createClass({
     },
 
     btnFinishClicked: function() {
-        var innerRiskSlider = this.refs.riskSlider.refs.riskSlider.getDOMNode();
+        var innerRiskSlider = this.refs.riskSlider.refs.slider.getDOMNode();
         var riskFactor = parseInt($(innerRiskSlider).val());
         var selectedTrader = this.refs.traderSelector.selectedTrader();
 
@@ -69,10 +55,21 @@ export var WizardScreen = React.createClass({
 
         var moneySliderConfig = {
             start: [ me.get("cash") / 2 ],
+            step: 1000000,
             connect: "lower",
             range: {
                 'min': [0],
                 'max': [ me.get("cash") ]
+            }
+        };
+
+        var riskSliderConfig = {
+            start: [ me.get("risk_factor") ],
+            step: 1,
+            connect: "lower",
+            range: {
+                'min': [0],
+                'max': [100]
             }
         };
 
@@ -87,7 +84,8 @@ export var WizardScreen = React.createClass({
                 <h3>Bước 1: Chọn số tiền bạn muốn dùng để đầu tư</h3>
 
                 <p>Tổng số tiền bạn có thể đầu tư: {formatCurrency(me.get("cash"))}</p>
-                <Slider config={moneySliderConfig}/>
+
+                <MoneySlider config={moneySliderConfig}/>
               </div>
 
               <div className="step">
@@ -97,7 +95,7 @@ export var WizardScreen = React.createClass({
 
               <div className="step">
                 <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
-                <RiskSlider style={styles.slider} ref="riskSlider"/>
+                <RiskSlider config={riskSliderConfig}/>
               </div>
 
               <div className="button-row clearfix">
