@@ -5,6 +5,7 @@ flask-menu
 requests
 flask-debugtoolbar
 flask-sqlalchemy
+sockjs-tornado
 
 # For RabbitMQ listening
 kombu

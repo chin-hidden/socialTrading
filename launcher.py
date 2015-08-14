@@ -3,6 +3,17 @@
 from flask_failsafe import failsafe
 import socialtrading
 
+from tornado import autoreload
+from tornado.wsgi import WSGIContainer
+from tornado.ioloop import IOLoop
+from tornado.web import Application, FallbackHandler
+from sockjs.tornado import SockJSRouter, SockJSConnection
+
+
+class EchoConnection(SockJSConnection):
+    def on_message(self, msg):
+        self.send(msg)
+
 
 @failsafe
 def create_app():
@@ -12,4 +23,17 @@ def create_app():
 if __name__ == "__main__":
     host = socialtrading.app.config["SERVER_HOST"]
     port = socialtrading.app.config["SERVER_PORT"]
-    create_app().run(host=host, port=port)
+
+
+    EchoRouter = SockJSRouter(EchoConnection, '/echo')
+    print(EchoRouter.urls)
+
+    container = WSGIContainer(create_app())
+    server = Application(EchoRouter.urls + [
+        (r'.*', FallbackHandler, dict(fallback=container))
+    ])
+
+    server.listen(port)
+    ioloop = IOLoop.instance()
+    autoreload.start(ioloop)
+    ioloop.start()
