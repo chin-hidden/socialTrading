@@ -244,6 +244,30 @@ span.accent {
     width: 100px;
 }
 
+.money-slider .noUi-connect {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,37b700+100 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(left, #ffffff 0%, #37b700 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,#37b700)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ffffff 0%,#37b700 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #ffffff 0%,#37b700 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #ffffff 0%,#37b700 100%); /* IE10+ */
+  background: linear-gradient(to right, #ffffff 0%,#37b700 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#37b700',GradientType=1 ); /* IE6-9 */
+}
+
+.risk-slider .noUi-connect {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ff1a00+100 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(left, #ffffff 0%, #ff1a00 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,#ff1a00)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* IE10+ */
+  background: linear-gradient(to right, #ffffff 0%,#ff1a00 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ff1a00',GradientType=1 ); /* IE6-9 */
+}
+
 .trader-thumb-slider .slick-slide {
     transition: 300ms ease 0s;
     padding-top: 1em;
@@ -360,3 +384,23 @@ ul.nav-tabs > li > a {
 ul.nav-tabs > li {
   margin-right: 1em;
 }
+
+.slider-tooltip {
+  display: block;
+  position: absolute;
+  border: 1px solid #D9D9D9;
+  font: 400 12px/12px Arial;
+  border-radius: 3px;
+  background: #fff;
+  top: -2.5em;
+  padding: 5px;
+  left: -9px;
+  text-align: center;
+  /*width: 50px;*/
+}
+
+.slider-tooltip strong {
+  display: block;
+  padding: 2px;
+}
+
