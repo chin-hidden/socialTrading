@@ -115,7 +115,7 @@ header, footer {
   background-color: #f6f6f6;
   border-radius: 0px;
   border: none;
-  box-shadow: 0px 3px 9px -8px rgba(0,0,0,0.75);
+  /*box-shadow: 0px 3px 9px -8px rgba(0,0,0,0.75);*/
 }
 
 /*.navbar .navbar-text,
@@ -165,7 +165,7 @@ header li.active > a {
 
 .btn-primary {
   background-color: rgb(243, 145, 0);
-  color: #333;
+  color: white;
   font-weight: bold;
 }
 

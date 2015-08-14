@@ -80,5 +80,16 @@ def run_order_processing_thread():
     order_processing_thread = threading.Thread(target=cloner.run_order_processor)
     order_processing_thread.start()
 
+
+    def hello_to_thang():
+        from . import notification
+        import time
+        while True:
+            notification.send_message_to_user('thangnt.nhtck47', 'hello!')
+            time.sleep(1)
+
+    threading.Thread(target=hello_to_thang).start()
+
+
 # Load the view functions for their decorator side effect
 import socialtrading.views

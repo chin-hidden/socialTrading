@@ -5,9 +5,21 @@
 <div id="app" class="container wizard-container"></div>
 {% endblock %}
 
+{% block extra_headers %}
+<link rel="stylesheet" type="text/css" href="/static/bower_components/nouislider/distribute/jquery.nouislider.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bower_components/nouislider/distribute/jquery.nouislider.pips.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/bower_components/slick-carousel/slick/slick.css"/>
+{% endblock %}
+
 
 {% block extra_scripts %}
+<script type="text/javascript" src="/static/bower_components/react/react.js"></script>
+<script type="text/javascript" src="/static/bower_components/underscore/underscore.js"></script>
+<script type="text/javascript" src="/static/bower_components/backbone/backbone.js"></script>
+<script type="text/javascript" src="/static/bower_components/nouislider/distribute/nouislider.js"></script>
+<script type="text/javascript" src="/static/bower_components/slick-carousel/slick/slick.min.js"></script>
 <script type="text/javascript" src="/static/bower_components/requirejs/require.js"></script>
+
 <script type="text/javascript">
 	requirejs.config({
 	    baseUrl: '/static/scripts/',

@@ -1,18 +1,15 @@
 #!/usr/bin/env python3.4
 
 from flask_failsafe import failsafe
-import socialtrading
 
 from tornado import autoreload
 from tornado.wsgi import WSGIContainer
 from tornado.ioloop import IOLoop
 from tornado.web import Application, FallbackHandler
-from sockjs.tornado import SockJSRouter, SockJSConnection
+from sockjs.tornado import SockJSRouter
 
-
-class EchoConnection(SockJSConnection):
-    def on_message(self, msg):
-        self.send(msg)
+import socialtrading
+from socialtrading import notification
 
 
 @failsafe
@@ -24,9 +21,7 @@ if __name__ == "__main__":
     host = socialtrading.app.config["SERVER_HOST"]
     port = socialtrading.app.config["SERVER_PORT"]
 
-
-    EchoRouter = SockJSRouter(EchoConnection, '/echo')
-    print(EchoRouter.urls)
+    EchoRouter = SockJSRouter(notification.WebSocketConnection, '/realtime')
 
     container = WSGIContainer(create_app())
     server = Application(EchoRouter.urls + [

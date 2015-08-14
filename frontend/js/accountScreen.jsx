@@ -90,9 +90,6 @@ var InfoBox = React.createClass({
                 borderLeft: "1px solid #DDD",
                 paddingLeft: spacing
             },
-            accountInfoRow: {
-                marginBottom: "1em"
-            },
             label: {
                 marginRight: "1em"
             },
@@ -125,7 +122,7 @@ var InfoBox = React.createClass({
                 </div>
 
                 <div ref="accountInfo" style={styles.accountInfo}>
-                  <div className="row" style={styles.accountInfoRow}>
+                  <div className="row">
                     <div className="col-md-3">
                       <span className="ui-label">Lợi nhuận</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("gross_profit"))}</strong>
@@ -144,7 +141,7 @@ var InfoBox = React.createClass({
                     </div>
                   </div>
 
-                  <div className="row" style={styles.accountInfoRow}>
+                  <div className="row">
                     <div className="col-md-12">
                       <span className="ui-label">Tốc độ đầu tư:</span>
                       <RiskSlider ref="riskSlider" onChange={this.riskSliderChanged} config={riskSliderConfig}/>
