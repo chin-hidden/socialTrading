@@ -81,21 +81,25 @@ export var WizardScreen = React.createClass({
 
             <div className="panel-body">
               <div className="step">
-                <h3>Bước 1: Chọn số tiền bạn muốn dùng để đầu tư</h3>
+                <h3>Bước 1: Đặt khoản tiền đầu tư của bạn tại Autotrade:</h3>
 
-                <p>Tổng số tiền bạn có thể đầu tư: {formatCurrency(me.get("cash"))}</p>
+                <p>Số tiền tối đa có thể đặt: {formatCurrency(me.get("cash"))}</p>
 
                 <MoneySlider config={moneySliderConfig}/>
               </div>
 
               <div className="step">
-                <h3>Bước 2: Chọn chiến lược</h3>
+                <h3>Bước 2: Lựa chọn chiến lược gia bạn muốn sao chép:</h3>
                 <TraderCarousel traders={traders} ref="traderSelector"/>
               </div>
 
               <div className="step">
-                <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
+                <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận:</h3>
                 <RiskSlider ref="riskSlider" config={riskSliderConfig}/>
+                <p>
+                Mức độ rủi ro được sử dụng để tính lại mức giá giao dịch của mỗi tín hiệu từ Chiến lược gia bạn đang theo dõi. Với mức rủi ro 50%, tài khoản của bạn sẽ đặt lệnh tại mức giá gần ngang bằng giá đặt lệnh của Chiến lược gia. 
+                </p>
+                <p><strong>Lưu ý:</strong> Mức độ rủi ro cao có thể mang lại cho bạn khoản lãi lớn hơn nhưng nguy cơ lỗ cũng cao hơn.</p>
               </div>
 
               <div className="button-row clearfix">
