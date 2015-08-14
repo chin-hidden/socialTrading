@@ -128,15 +128,15 @@ var InfoBox = React.createClass({
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-3">
                       <span>Lợi nhuận</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("profit"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("gross_profit"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tài sản</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("total_current_value"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("nav"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Chứng khoán</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("stock_value"))}</strong>
+                      <strong className="text-success">{formatCurrency(me.get("gross_stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span>Tiền mặt</span><br/>
