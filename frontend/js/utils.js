@@ -1,4 +1,7 @@
 export function formatCurrency(amount) {
+    if (amount === undefined) {
+        amount = NaN;
+    }
     return amount.toLocaleString("vi", {
         style: "currency",
         currency: "VND",
@@ -6,9 +9,15 @@ export function formatCurrency(amount) {
 }
 
 export function formatAmount(amount) {
-	return amount.toLocaleString("vi");
+    if (amount === undefined) {
+        amount = NaN;
+    }
+    return amount.toLocaleString("vi");
 }
 
 export function formatPercent(amount) {
-	return amount.toLocaleString("vi", {style: "percent"});
+    if (amount === undefined) {
+        amount = NaN;
+    }
+    return amount.toLocaleString("vi", {style: "percent"});
 }
