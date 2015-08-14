@@ -26,11 +26,15 @@ html {
 body {
   margin: 0 auto;
   font-size: 16px;
-  color: #535551;
+  color: rgb(88, 89, 91);
 }
 
 header, footer {
   width: 100%;
+}
+
+.ui-label {
+  font-variant: all-small-caps;
 }
 
 .flex-row {
@@ -108,26 +112,27 @@ header, footer {
 }
 
 .navbar {
-  background-color: #5E5E5E;
+  background-color: #f6f6f6;
   border-radius: 0px;
   border: none;
-  box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
+  box-shadow: 0px 3px 9px -8px rgba(0,0,0,0.75);
 }
 
-.navbar .navbar-text,
+/*.navbar .navbar-text,
 .navbar .navbar-brand {
   color: white;
-}
+}*/
 
-.navbar .navbar-brand {
-  font-size: 40px;
+header .navbar-brand {
+  font-size: 28px;
   font-weight: bold;
 }
 
-.navbar .navbar-brand:hover,
+/*.navbar .navbar-brand:hover,
 .navbar .navbar-brand:focus {
   color: white;
 }
+*/
 
 .navbar-right .navbar-btn {
   margin-left: 10px;
@@ -141,7 +146,16 @@ header, footer {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   background: none;
-  color: #FF9900;
+  color: rgb(243, 145, 0);
+}
+
+header .navbar {
+  border-bottom: 3px rgb(243, 145, 0) solid;
+}
+
+header li.active > a {
+  background-color: rgb(243, 145, 0) !important;
+  color: white !important;
 }
 
 .btn {
@@ -150,7 +164,7 @@ header, footer {
 }
 
 .btn-primary {
-  background-color: #FF9900;
+  background-color: rgb(243, 145, 0);
   color: #333;
   font-weight: bold;
 }
@@ -170,12 +184,12 @@ header, footer {
   padding-left: 59px;
   padding-right: 59px;
 
-  background-image: url("../img/adwaita-lock.jpg");
+  /*background-image: url("../img/adwaita-lock.jpg");*/
+  background-image: url("../img/triangles_2-wallpaper-1920x1080.jpg");
   background-size: cover;
-  color: white;
 
   box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
-
+  color: white;
 }
 
 .hero p {
@@ -193,6 +207,17 @@ header, footer {
 .hero img {
   margin-left: -27px;
   margin-bottom: 25px;
+}
+
+.hero .btn-primary {
+  color: white;
+  background-color: rgb(88, 89, 91);
+}
+
+.hero .btn-primary:hover,
+.hero .btn-primary:active {
+  color: rgb(88, 89, 91);
+  background-color: white;
 }
 
 .features {
@@ -218,7 +243,7 @@ footer {
 }
 
 span.accent {
-  color: #FF9900;
+  color: rgb(243, 145, 0);
 }
 
 .wizard {
@@ -244,28 +269,16 @@ span.accent {
     width: 100px;
 }
 
-.money-slider .noUi-connect {
+.noUi-connect {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,37b700+100 */
   background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(left, #ffffff 0%, #37b700 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,#37b700)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #ffffff 0%,#37b700 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #ffffff 0%,#37b700 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #ffffff 0%,#37b700 100%); /* IE10+ */
-  background: linear-gradient(to right, #ffffff 0%,#37b700 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#37b700',GradientType=1 ); /* IE6-9 */
-}
-
-.risk-slider .noUi-connect {
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ff1a00+100 */
-  background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(left, #ffffff 0%, #ff1a00 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,#ff1a00)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #ffffff 0%,#ff1a00 100%); /* IE10+ */
-  background: linear-gradient(to right, #ffffff 0%,#ff1a00 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ff1a00',GradientType=1 ); /* IE6-9 */
+  background: -moz-linear-gradient(left, #ffffff 0%, rgb(243, 145, 0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,rgb(243, 145, 0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* IE10+ */
+  background: linear-gradient(to right, #ffffff 0%,rgb(243, 145, 0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='rgb(243, 145, 0)',GradientType=1 ); /* IE6-9 */
 }
 
 .trader-thumb-slider .slick-slide {
@@ -287,13 +300,9 @@ span.accent {
   margin-right: 1em;
 }
 
-.noUi-connect {
-  background-color: rgb(254, 247, 190);;
-}
-
 .highlight-label {
   color: white;
-  background-color: #FF9900;
+  background-color: rgb(243, 145, 0);
   padding: 5px 10px;
   font-weight: bold;
   display: inline-block;
@@ -351,8 +360,8 @@ table.table th {
 }
 
 ul.nav-tabs > li.active > a {
-  color: #FF9900;
-  /*border-top: 3px solid #FF9900;*/
+  color: rgb(243, 145, 0);
+  /*border-top: 3px solid rgb(243, 145, 0);*/
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
@@ -365,7 +374,7 @@ ul.nav-tabs > li.active::before {
   position: absolute;
   left: 0px;
   top: 0px;
-  background-color: #FF9900;
+  background-color: rgb(243, 145, 0);
   width: 100%;
   height: 3px;
   content: " ";
@@ -388,10 +397,8 @@ ul.nav-tabs > li {
 .slider-tooltip {
   display: block;
   position: absolute;
-  border: 1px solid #D9D9D9;
-  font: 400 12px/12px Arial;
+  border: 1px solid #DDD;
   border-radius: 3px;
-  background: #fff;
   top: -2.5em;
   padding: 5px;
   left: -9px;
@@ -404,3 +411,15 @@ ul.nav-tabs > li {
   padding: 2px;
 }
 
+
+.panel-vndirect {
+  border-color: rgb(243, 145, 0);
+}
+
+.panel-vndirect .panel-heading {
+  background-color: rgb(243, 145, 0);
+}
+
+.panel-vndirect .panel-title {
+  color: white;
+}

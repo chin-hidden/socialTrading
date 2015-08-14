@@ -9,7 +9,7 @@ export var WizardScreen = React.createClass({
 
     btnFinishClicked: function() {
         var innerRiskSlider = this.refs.riskSlider.refs.slider.getDOMNode();
-        var riskFactor = parseInt($(innerRiskSlider).val());
+        var riskFactor = parseInt(innerRiskSlider.noUiSlider.get());
         var selectedTrader = this.refs.traderSelector.selectedTrader();
 
         // var allocatedMoneyNode = this.refs.allocatedMoney.getDOMNode();
@@ -74,7 +74,7 @@ export var WizardScreen = React.createClass({
         };
 
         return (
-          <div className="panel panel-default wizard">
+          <div className="panel panel-vndirect wizard">
             <div className="panel-heading">
               <h2 className="panel-title">Cài đặt Tài khoản</h2>
             </div>
@@ -95,7 +95,7 @@ export var WizardScreen = React.createClass({
 
               <div className="step">
                 <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận</h3>
-                <RiskSlider config={riskSliderConfig}/>
+                <RiskSlider ref="riskSlider" config={riskSliderConfig}/>
               </div>
 
               <div className="button-row clearfix">
@@ -152,12 +152,12 @@ var TraderCarousel = React.createClass({
         });
 
         var buttonStyle = {
-                position: 'absolute',
-                top: 0,
-                width: 30,
-                height: '100%',
-                backgroundColor: '#BBB',
-                border: "none"
+            position: 'absolute',
+            top: 0,
+            width: 30,
+            height: '100%',
+            backgroundColor: '#DDD',
+            border: "none"
         };
 
         var styles = {

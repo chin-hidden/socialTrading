@@ -120,33 +120,33 @@ var InfoBox = React.createClass({
 
                   <div>
                   {me.get("id")}<br/>
-                  TK: {me.get("account_number")}
+                  <span className="ui-label">TK:</span> {me.get("account_number")}
                   </div>
                 </div>
 
                 <div ref="accountInfo" style={styles.accountInfo}>
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-3">
-                      <span>Lợi nhuận</span><br/>
+                      <span className="ui-label">Lợi nhuận</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("gross_profit"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span>Tài sản</span><br/>
+                      <span className="ui-label">Tài sản</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("nav"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span>Chứng khoán</span><br/>
+                      <span className="ui-label">Chứng khoán</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("gross_stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span>Tiền mặt</span><br/>
+                      <span className="ui-label">Tiền mặt</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                   </div>
 
                   <div className="row" style={styles.accountInfoRow}>
                     <div className="col-md-12">
-                      <h4>Tốc độ đầu tư:</h4>
+                      <span className="ui-label">Tốc độ đầu tư:</span>
                       <RiskSlider ref="riskSlider" onChange={this.riskSliderChanged} config={riskSliderConfig}/>
                     </div>
                   </div>
