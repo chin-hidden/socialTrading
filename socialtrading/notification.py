@@ -1,23 +1,10 @@
 from sockjs.tornado import SockJSConnection
-import socialtrading
+from socialtrading import app
 
 
 # Map from user_id to a list of sessions made by that user
 sockjs_clients = {}
 
-
-class FakeCookieCollection:
-    def __init__(self, cookies):
-        self._cookies = cookies
-
-    def get(self, name, duh):
-        return self._cookies.get(name).value
-
-
-class FakeRequest:
-    def __init__(self, request):
-        self._request = request
-        self.cookies = FakeCookieCollection(request.cookies)
 
 
 class WebSocketConnection(SockJSConnection):
@@ -27,9 +14,25 @@ class WebSocketConnection(SockJSConnection):
     def on_message(self, msg):
         self.send(msg)
 
+    # Classes to adapt sockjs' request object to Flask-KVSession's
+    # session_interface.open_session()'s expectation.
+
+    class _FakeCookieCollection:
+        def __init__(self, cookies):
+            self._cookies = cookies
+
+        def get(self, name, _):
+            return self._cookies.get(name).value
+
+    class _FakeRequest:
+        def __init__(self, request):
+            self.cookies = WebSocketConnection._FakeCookieCollection(request.cookies)
+
     def on_open(self, request):
-        with socialtrading.app.app_context():
-            flask_session = socialtrading.app.session_interface.open_session(socialtrading.app, FakeRequest(request))
+        with app.app_context():
+            # Get the user_id from the Flask session.
+            flask_session = app.session_interface.open_session(
+                app, WebSocketConnection._FakeRequest(request))
             user_id = flask_session['user_id']
             self._user_id = user_id
 
@@ -42,11 +45,11 @@ class WebSocketConnection(SockJSConnection):
         sockjs_clients[self.user_id].remove(self)
 
     @property
-    def user_id(self):
+    def user_id(self) -> str:
         return self._user_id
 
 
-def send_message_to_user(user_id, message):
+def send_message_to_user(user_id: str, message: str):
     """\
     Send a message to all open sessions made by a user.
     """
