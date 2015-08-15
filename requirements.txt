@@ -1,3 +1,6 @@
+# for static typing support
+mypy-lang
+
 flask
 flask_login
 flask_failsafe
