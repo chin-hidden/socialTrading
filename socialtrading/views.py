@@ -50,11 +50,33 @@ def login():
     """
     if request.method == "POST":
         # FIXME Use Flask-WTF to validate the form format
-        user = models.UserDao.get_user_by_username(request.form["username"])
+        username = request.form["username"]
+        client = tradeapi.VndirectTradeApiClient()
+
+        def create_user():
+            # Create the user if they're not on our system yet.
+            user = models.Follower()
+            user.username = username
+            user.broker = "VNDIRECT"
+            user.account_type = "FOLLOWER"
+
+            user_detail = client.get_user_detail()
+            user.name = user_detail.customer_name
+            user.account_number = user_detail.accounts[0].account_number
+
+            account_detail = client.get_account_detail(user.account_number)
+            user.cash = account_detail.cash
+
+            models.UserDao.save_user(user)
+
+            return user
 
         try:
-            client = tradeapi.VndirectTradeApiClient()
-            client.login(user.username, request.form["password"])
+            client.login(username, request.form["password"])
+
+            user = models.UserDao.get_user_by_username(username)
+            if user is None:
+                user = create_user()
             login_user(user)
 
             session["tradeapi-client"] = client

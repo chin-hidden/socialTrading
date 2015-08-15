@@ -77,6 +77,11 @@ class UserDao:
     def get_user_by_account_number(cls, account_number, broker):
         return Account.query.filter(Account.account_number==account_number).first()
 
+    @classmethod
+    def save_user(cls, user):
+        db.session.add(user)
+        db.session.commit()
+
 
 class Following(db.Model):
     __tablename__ = "following"
