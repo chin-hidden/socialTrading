@@ -41,7 +41,7 @@ class Stock:
                 return stock
 
 
-
+# FIXME: Refactor not to use classmethod
 class UserDao:
     def sync_user_with_tradeapi(self, username, tradeapi_token):
         """\
