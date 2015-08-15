@@ -105,7 +105,7 @@ class Account(db.Model):
     broker = db.Column(db.String)
     cash = db.Column(db.Numeric)
     account_type = db.Column(db.String)
-    initialized = db.Column(db.Boolean)
+    initialized = db.Column(db.Boolean, default=False)
 
     trader_assocs = db.relationship("Following",
         backref="follower",
@@ -151,7 +151,7 @@ class Account(db.Model):
 class Follower(Account):
     __tablename__ = "followerinfo"
     username = db.Column(db.String, db.ForeignKey('account.username'), primary_key=True)
-    risk_factor = db.Column(db.Integer)
+    risk_factor = db.Column(db.Integer, default=50)
 
     __mapper_args__ = {
         'polymorphic_identity': 'FOLLOWER',

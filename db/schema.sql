@@ -9,12 +9,12 @@ create schema public;
 
 CREATE TABLE account (
 	username text PRIMARY KEY,
-	password text NOT NULL,
+	password text,
 	account_number text NOT NULL,       -- VNDIRECT's internal account number
 	broker text NOT NULL,               -- VNDIRECT, SSI, BAOVIET
 	name text NOT NULL,
 	cash numeric(19,2) NOT NULL,        -- The cash on hand
-	account_type text,                  -- The account FOLLOWER | TRADER
+	account_type text NOT NULL,         -- The account FOLLOWER | TRADER
 	initialized boolean NOT NULL DEFAULT FALSE
 );
 
