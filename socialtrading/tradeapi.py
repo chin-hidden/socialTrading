@@ -30,13 +30,13 @@ class OrderSide(Enum):
 
 
 class VndirectOrsClient:
-    ORS_HOST = "http://10.26.1.112:8088/"
     # This class is mostly a reverse engineering effort from the official Java ORS client.
     # https://ivnd.vndirect.com.vn/pages/viewpage.action?pageId=160202776
 
-    def __init__(self, host):
-        self.ors_host = host
-        self.client_id = 0
+    # trung.ngo: I'm not sure what client_id is for, probably for debugging purpose?
+    def __init__(self, ors_base: str = "http://10.26.1.112:8088/", client_id: int = 0):
+        self.ors_host = ors_base
+        self.client_id = client_id
 
     def place_order(self,
                     account: str,
@@ -197,8 +197,11 @@ class VndirectTradeApiClient:
     # FIXME: Refactor to use requests.Session() so that we don't have
     #        to litter `headers=headers` everyf*ckingwhere.
 
-    AUTH_URL = "https://api.vndirect.com.vn/auth"
-    API_URL = "https://api.vndirect.com.vn/trade"
+    def __init__(self,
+                 auth_base_url="https://auth-api.vndirect.com.vn/",
+                 tradeapi_base_url="https://trade-api.vndirect.com.vn/"):
+        self.AUTH_URL = auth_base_url
+        self.API_URL = tradeapi_base_url
 
     def login(self, username: str, password: str) -> str:
         """\
@@ -225,7 +228,7 @@ class VndirectTradeApiClient:
         return requests.get(self.AUTH_URL + "/vtos",
                             headers=headers).json()['challenges']
 
-    def login_vtos(self, v1: str, v2: str, v3: str):
+    def login_vtos(self, v1: str, v2: str, v3: str) -> str:
         """
         Second phase login.
 

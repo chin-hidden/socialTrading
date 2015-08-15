@@ -36,6 +36,17 @@ def only_allow(account_types):
     return decorator
 
 
+def create_tradeapi_client():
+    """\
+    Create a TradeAPI client with base URLs injected from the config file.
+    """
+    AUTH_BASE = app.config['BROKERS']['VNDIRECT']['AUTH_BASE']
+    TRADEAPI_BASE = app.config['BROKERS']['VNDIRECT']['TRADEAPI_BASE']
+
+    return tradeapi.VndirectTradeApiClient(
+        auth_base_url=AUTH_BASE, tradeapi_base_url=TRADEAPI_BASE)
+
+
 # FIXME Disable this route on production mode
 @app.route("/__debug__")
 def debug():
@@ -51,7 +62,7 @@ def login():
     if request.method == "POST":
         # FIXME Use Flask-WTF to validate the form format
         username = request.form["username"]
-        client = tradeapi.VndirectTradeApiClient()
+        client = create_tradeapi_client()
 
         def create_user():
             # Create the user if they're not on our system yet.

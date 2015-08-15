@@ -12,3 +12,11 @@ SERVER_PORT = 5000
 
 NOTICENTER_CONNECTION = 'amqp://guest:guest@localhost:5672/'
 NOTICENTER_EXECUTED_EXCHANGE = "NotiCenter.Exchange.ExecutedOrder"
+
+BROKERS = {
+    'VNDIRECT': {
+        "TRADEAPI_BASE": "https://trade-api.vndirect.com.vn",
+        "AUTH_BASE": "https://auth-api.vndirect.com.vn",
+        "ORS_BASE": "http://10.26.1.112:8088"
+    }
+}
