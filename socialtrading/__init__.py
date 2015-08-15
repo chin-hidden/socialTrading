@@ -85,7 +85,7 @@ def run_order_processing_thread():
         from . import notification
         import time
         while True:
-            notification.send_message_to_user('thangnt.nhtck47', 'hello!')
+            notification.message_router.send_message_to_user('thangnt.nhtck47', 'hello!')
             time.sleep(1)
 
     threading.Thread(target=hello_to_thang).start()

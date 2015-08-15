@@ -1,16 +1,10 @@
+import collections
 from sockjs.tornado import SockJSConnection
 from socialtrading import app
 
 
-# Map from user_id to a list of sessions made by that user
-sockjs_clients = {}
-
-
 
 class WebSocketConnection(SockJSConnection):
-    def __init__(self, *args):
-        super().__init__(*args)
-
     def on_message(self, msg):
         self.send(msg)
 
@@ -36,22 +30,34 @@ class WebSocketConnection(SockJSConnection):
             user_id = flask_session['user_id']
             self._user_id = user_id
 
-            if user_id not in sockjs_clients:
-                sockjs_clients[user_id] = []
-
-            sockjs_clients[user_id].append(self)
+            message_router.add_client(self)
 
     def on_close(self):
-        sockjs_clients[self.user_id].remove(self)
+        message_router.remove_client(self)
 
     @property
     def user_id(self) -> str:
         return self._user_id
 
 
-def send_message_to_user(user_id: str, message: str):
-    """\
-    Send a message to all open sessions made by a user.
-    """
-    if user_id in sockjs_clients and sockjs_clients[user_id]:
-        sockjs_clients[user_id][0].broadcast(sockjs_clients[user_id], message)
+class MessageRouter:
+    def __init__(self):
+        # Map from user_id to a list of sessions made by that user
+        self._clients = collections.defaultdict(list)
+
+    def add_client(self, client: WebSocketConnection):
+        self._clients[client.user_id].append(client)
+
+    def remove_client(self, client: WebSocketConnection):
+        # FIXME: this remove operation might be slow.
+        self._clients[client.user_id].remove(client)
+
+    def send_message_to_user(self, user_id: str, message: str):
+        """\
+        Send a message to all open sessions made by a user.
+        """
+        if user_id in self._clients and self._clients[user_id]:
+            self._clients[user_id][0].broadcast(self._clients[user_id], message)
+
+
+message_router = MessageRouter()
