@@ -52,7 +52,7 @@ class VndirectOrsClient:
             "msgType": "D",
             "clOrdId": self._generate_client_id(),
             "account": account,
-            "side": side,
+            "side": self._generate_fix_side(side),
             "ordType": order_type.numeric_order_type,
             "timeInForce": order_type.time_in_force,
             "symbol": symbol,
