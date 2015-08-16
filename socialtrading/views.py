@@ -152,3 +152,16 @@ def help():
 @login_required
 def wizard():
     return render_template("wizard.jinja.html")
+
+
+from . import notification
+
+
+@app.route("/noti")
+def noti():
+    message = {
+        "msg_type": "NEW_ORDER_PLACED"
+    }
+    notification.message_router.send_message_to_user(session['user_id'],
+                                                     "haha")
+    return "ok"
