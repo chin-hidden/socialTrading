@@ -9,3 +9,4 @@ socialtrading/static
 /.idea
 /production_configs.py
 node_modules
+jspm_packages

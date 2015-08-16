@@ -1,0 +1,35 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "make"
+  },
+  "jspm": {
+    "directories": {},
+    "dependencies": {
+      "backbone": "npm:backbone@^1.2.1",
+      "bootstrap": "github:twbs/bootstrap@^3.3.5",
+      "chart": "github:nnnick/Chart.js@^1.0.2",
+      "clean-css": "npm:clean-css@^3.3.9",
+      "css": "github:systemjs/plugin-css@^0.1.13",
+      "jquery": "github:components/jquery@^2.1.4",
+      "kenwheeler/slick": "github:kenwheeler/slick@^1.5.8",
+      "leongersen/noUiSlider": "github:leongersen/noUiSlider@^8.0.2",
+      "react": "npm:react@^0.14.0-beta3",
+      "sockjs/sockjs-client": "github:sockjs/sockjs-client@^1.0.3",
+      "underscore": "npm:underscore@^1.8.3"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
+    },
+    "overrides": {
+      "github:kenwheeler/slick@1.5.8": {
+        "format": "global"
+      }
+    }
+  },
+  "devDependencies": {
+    "jspm": "^0.15.7"
+  }
+}
