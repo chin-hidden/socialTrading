@@ -7,7 +7,7 @@ launch:
 	./launcher.py
 
 launch-production:
-	CONFIG_FILE=$(PWD)/production_configs.py python launcher.py
+	CONFIG_FILE=$(PWD)/production_configs.py ./launcher.py
 
 # Create the database
 database:
