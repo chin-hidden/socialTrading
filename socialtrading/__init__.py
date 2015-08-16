@@ -50,7 +50,7 @@ def load_user(userid):
     # FIXME: Not sure what this function is for. But if we uncomment
     # the next line, the login process will run very slowly.
 
-    return models.UserDao.get_user_by_username(userid)
+    return models.user_service.get_user_by_username(userid)
     return UserMixin()
 
 
@@ -58,7 +58,7 @@ def load_user(userid):
 def inject_user():
     """Inject the 'user' object into the template context"""
     if "user_id" in session:
-        user = models.UserDao.get_user_by_username(session["user_id"])
+        user = models.user_service.get_user_by_username(session["user_id"])
         return dict(user=user)
     return {}
 

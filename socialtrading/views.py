@@ -27,7 +27,7 @@ def only_allow(account_types):
     def decorator(route):
         @functools.wraps(route)
         def decorated_function(*args, **kw_args):
-            user = models.UserDao.get_user_by_username(session['user_id'])
+            user = models.user_service.get_user_by_username(session['user_id'])
             if user.account_type in account_types:
                 return route(*args, **kw_args)
             else:
@@ -78,14 +78,14 @@ def login():
             account_detail = client.get_account_detail(user.account_number)
             user.cash = account_detail.cash
 
-            models.UserDao.save_user(user)
+            models.user_service.save_user(user)
 
             return user
 
         try:
             client.login(username, request.form["password"])
 
-            user = models.UserDao.get_user_by_username(username)
+            user = models.user_service.get_user_by_username(username)
             if user is None:
                 user = create_user()
             login_user(user)
@@ -128,7 +128,7 @@ def index():
 @app.route("/account")
 @login_required
 def account():
-    user = models.UserDao.get_user_by_username(session['user_id'])
+    user = models.user_service.get_user_by_username(session['user_id'])
     if not user.initialized:
         return redirect(url_for('.wizard'))
     return render_template("account.jinja.html")

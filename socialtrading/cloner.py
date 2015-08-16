@@ -45,7 +45,7 @@ class OrderListener(kombu.mixins.ConsumerMixin):
 
     def process_task(self, body, message):
         try:
-            user = m.UserDao.get_user_by_account_number(
+            user = m.user_service.get_user_by_account_number(
                 account_number=body['account'], broker='VNDIRECT')
 
             if user:

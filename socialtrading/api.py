@@ -75,7 +75,7 @@ def follower(username):
 
     404 if no such user.
     """
-    user = models.UserDao.get_user_by_username(username)
+    user = models.user_service.get_user_by_username(username)
 
     if not user:
         flask.abort(404)
@@ -106,7 +106,7 @@ def following_relationships(username):
     if request.method == "POST":
         pass
 
-    user = models.UserDao.get_user_by_username(username)
+    user = models.user_service.get_user_by_username(username)
     if not user:
         flask.abort(404)
 

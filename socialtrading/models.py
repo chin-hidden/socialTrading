@@ -41,47 +41,6 @@ class Stock:
                 return stock
 
 
-# FIXME: Refactor not to use classmethod
-class UserDao:
-    def sync_user_with_tradeapi(self, username, tradeapi_token):
-        """\
-        Query TradeAPI to sync the user's full name, cash.
-        """
-
-    @classmethod
-    def get_user_by_username(cls, username):
-        user = Account.query.get(username)
-
-        # user = Account()
-        # user.username = username
-        # user.account_type = "FOLLOWER"
-        # user.account_number = "1234"
-        # user.broker = "VND"
-        # user.risk_factor = 60
-        # user.first_login = False
-
-        # # Synchronize user data with the TradeAPI.
-        # # FIXME: We are syncing on every request. VERY SLOW!!!
-        # if 'tradeapi-client' in session:
-        #     client = session['tradeapi-client']
-        #     user_detail = client.get_user_detail()
-        #     user.name = user_detail['customerName']
-
-        #     account_detail = client.get_account_detail(user_detail["accounts"][0]['accountNumber'])
-        #     user.account_number = account_detail["accountNumber"]
-        #     user.cash = account_detail["cash"]
-
-        return user
-
-    @classmethod
-    def get_user_by_account_number(cls, account_number, broker):
-        return Account.query.filter(Account.account_number==account_number).first()
-
-    @classmethod
-    def save_user(cls, user):
-        db.session.add(user)
-        db.session.commit()
-
 
 class Following(db.Model):
     __tablename__ = "following"
@@ -206,3 +165,19 @@ class Position(db.Model):
                              ['following.follower', 'following.trader']),
         db.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
     )
+
+
+class UserService:
+    def get_user_by_username(cls, username: str) -> Account:
+        return Account.query.get(username)
+
+    def get_user_by_account_number(cls, account_number: str, broker: str) -> Account:
+        return Account.query.filter(Account.account_number==account_number,
+                                    Account.broker==broker).first()
+
+    def save_user(cls, user: Account):
+        db.session.add(user)
+        db.session.commit()
+
+
+user_service = UserService()
