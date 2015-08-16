@@ -66,6 +66,7 @@ def login():
 
         def create_user():
             # Create the user if they're not on our system yet.
+            # FIXME: Extract this into a method in the UserService.
             user = models.Follower()
             user.username = username
             user.broker = "VNDIRECT"
