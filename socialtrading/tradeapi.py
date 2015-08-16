@@ -1,7 +1,7 @@
 import typing
 import requests
 from enum import Enum
-
+from .utils import JsonWrapper
 
 
 class OrderType(Enum):
@@ -75,14 +75,6 @@ class VndirectOrsClient:
             return '1'
         else:
             return '2'
-
-
-class JsonWrapper:
-    @classmethod
-    def from_json(cls, json_blob: dict):
-        obj = cls()
-        obj._json = json_blob
-        return obj
 
 
 class Account(JsonWrapper):

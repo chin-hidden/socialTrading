@@ -1,20 +1,38 @@
 # coding: utf8
 
+from enum import Enum
 from socialtrading import db
+from .utils import JsonWrapper
 
 
-class Stock:
-    @classmethod
-    def get_stock_detail_by_symbol(cls, symbol):
+class Exchange(Enum):
+    HOSE = 0
+    HNX = 1
+    UPCOM = 2
+
+
+class StockInfo(JsonWrapper):
+    @property
+    def symbol(self) -> str:
+        return self._json['symbol']
+
+    @property
+    def exchange(self) -> Exchange:
+        return self._json['exchange']
+
+    @property
+    def risk(self) -> int:
+        return self._json['risk']
+
+    @property
+    def name(self) -> str:
+        return self._json['name']
+
+
+class StockService:
+    def get_stock_detail_by_symbol(self, symbol: str) -> StockInfo:
         """\
         Look up a stock detail by its symbol.
-
-        Args:
-            symbol (str): the symbol name.
-
-        Returns:
-            dict or None if no such stock is found.
-                {'symbol': 'AAA', 'risk': 60, 'name': 'Công ty nhựa An Phát', 'exchange': 02}
         """
 
         stocks = [{'symbol': 'FPT', 'risk': 30, 'name': 'Tập đoàn FPT', 'exchange': 10},
@@ -38,8 +56,7 @@ class Stock:
 
         for stock in stocks:
             if stock['symbol'] == symbol:
-                return stock
-
+                return StockInfo.from_json(stock)
 
 
 class Following(db.Model):
@@ -185,3 +202,4 @@ class UserService:
 
 
 user_service = UserService()
+stock_service = StockService()
