@@ -14,16 +14,15 @@ from . import models as m
 import socialtrading
 
 
-
 logger = logging.getLogger(__name__)
 
 
 def run_order_processor():
     logger.info("starting listener")
-    with kombu.Connection(socialtrading.app.config['NOTICENTER_CONNECTION']) as conn:
+    uri = socialtrading.app.config['NOTICENTER_CONNECTION']
+    with kombu.Connection(uri) as conn:
         listener = OrderListener(conn)
         listener.run()
-
 
 
 class OrderListener(kombu.mixins.ConsumerMixin):
@@ -34,10 +33,12 @@ class OrderListener(kombu.mixins.ConsumerMixin):
 
     def get_consumers(self, Consumer, channel):
         exch_name = socialtrading.app.config["NOTICENTER_EXECUTED_EXCHANGE"]
-        executed_exchange = kombu.Exchange(exch_name, durable=False, type="fanout")
+        executed_exchange = kombu.Exchange(exch_name,
+                                           durable=False,
+                                           type="fanout")
         executed_queue = kombu.Queue('SocialTrading.Queue.ExecutedOrder',
-            exchange=executed_exchange,
-            durable=False)
+                                     exchange=executed_exchange,
+                                     durable=False)
 
         return [Consumer(queues=[executed_queue],
                          accept=['json'],
@@ -68,7 +69,8 @@ def process_trader_message(trader, message):
         # using that session's trade api client.
         print("cloned: ", order)
 
-        # FIXME: Blocking operation. Should leverage some kind of async capability.
+        # FIXME: Blocking operation. Should leverage some kind of
+        # async capability.
         time.sleep(1)
 
         # After placing the order, open a transaction with that
@@ -78,7 +80,6 @@ def process_trader_message(trader, message):
 def process_follower_message(follower, message):
     # Is this an executed notification for an order we placed?
     pass
-
 
 
 def clone_trader_order(trader, order):

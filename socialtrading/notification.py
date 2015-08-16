@@ -3,7 +3,6 @@ from sockjs.tornado import SockJSConnection
 from socialtrading import app
 
 
-
 class WebSocketConnection(SockJSConnection):
     def on_message(self, msg):
         self.send(msg)
@@ -20,7 +19,8 @@ class WebSocketConnection(SockJSConnection):
 
     class _FakeRequest:
         def __init__(self, request):
-            self.cookies = WebSocketConnection._FakeCookieCollection(request.cookies)
+            self.cookies = WebSocketConnection._FakeCookieCollection(
+                request.cookies)
 
     def on_open(self, request):
         with app.app_context():
@@ -57,7 +57,8 @@ class MessageRouter:
         Send a message to all open sessions made by a user.
         """
         if user_id in self._clients and self._clients[user_id]:
-            self._clients[user_id][0].broadcast(self._clients[user_id], message)
+            self._clients[user_id][0].broadcast(self._clients[user_id],
+                                                message)
 
 
 message_router = MessageRouter()

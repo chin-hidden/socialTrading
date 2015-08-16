@@ -179,24 +179,27 @@ class Position(db.Model):
     symbol = db.Column(db.String)
     quantity = db.Column(db.String)
     buying_price = db.Column(db.Numeric)
-    buying_date = db.Column(db.DateTime)  # FIXME: Check if we have timezone issue here.
+    buying_date = db.Column(db.DateTime)  # FIXME: Check if we have
+                                          # timezone issue here.
 
     __table_args__ = (
         db.ForeignKeyConstraint(['username', 'mimicking_username'],
-                             ['following.follower', 'following.trader']),
+                                ['following.follower', 'following.trader']),
         db.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
     )
 
 
 class UserService:
-    def get_user_by_username(cls, username: str) -> Account:
+    def get_user_by_username(self, username: str) -> Account:
         return Account.query.get(username)
 
-    def get_user_by_account_number(cls, account_number: str, broker: str) -> Account:
-        return Account.query.filter(Account.account_number==account_number,
-                                    Account.broker==broker).first()
+    def get_user_by_account_number(self,
+                                   account_number: str,
+                                   broker: str) -> Account:
+        return Account.query.filter(Account.account_number == account_number,
+                                    Account.broker == broker).first()
 
-    def save_user(cls, user: Account):
+    def save_user(self, user: Account):
         db.session.add(user)
         db.session.commit()
 

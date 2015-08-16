@@ -28,13 +28,16 @@ class OrderSide(Enum):
     MARGIN_SELL = "MS"
 
 
-
 class VndirectOrsClient:
-    # This class is mostly a reverse engineering effort from the official Java ORS client.
+    # This class is mostly a reverse engineering effort from the
+    # official Java ORS client.
     # https://ivnd.vndirect.com.vn/pages/viewpage.action?pageId=160202776
 
-    # trung.ngo: I'm not sure what client_id is for, probably for debugging purpose?
-    def __init__(self, ors_base: str = "http://10.26.1.112:8088/", client_id: int = 0):
+    # trung.ngo: I'm not sure what client_id is for, probably for
+    # debugging purpose?
+    def __init__(self,
+                 ors_base: str = "http://10.26.1.112:8088/",
+                 client_id: int = 0):
         self.ors_host = ors_base
         self.client_id = client_id
 
@@ -59,7 +62,8 @@ class VndirectOrsClient:
             "price": price,
             "quantity": quantity,
         }
-        res = requests.get(self.ors_host + "/order/executePlaceOrder", params=params)
+        res = requests.get(self.ors_host + "/order/executePlaceOrder",
+                           params=params)
         return res.json()
 
     def _generate_client_id(self):
@@ -250,7 +254,8 @@ class VndirectTradeApiClient:
 
     def get_account_detail(self, account_nr: str) -> AccountDetail:
         """\
-        Get the details of an account. It is the consolidation of the following API endpoints:
+        Get the details of an account. It is the consolidation of the
+        following API endpoints:
 
         - GET /accounts, then extract out the relevant account
         - GET /accounts/<account_nr>/portfolio
@@ -258,7 +263,7 @@ class VndirectTradeApiClient:
         headers = {"X-AUTH-TOKEN": self.token}
 
         res = requests.get(self.API_URL + "/accounts",
-            headers=headers)
+                           headers=headers)
         accounts = res.json()["accounts"]
 
         account = {}
