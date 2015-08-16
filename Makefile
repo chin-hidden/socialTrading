@@ -19,3 +19,6 @@ test:
 
 test-continuously:
 	PYTHONPATH=. py.test --looponfail
+
+
+.PHONY: deps launch launch-production db test test-continuously
