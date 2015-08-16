@@ -110,7 +110,7 @@ def following_relationships(username):
     if not user:
         flask.abort(404)
 
-    fields = ['trader_id', 'follower_id', 'allocated_money']
+    fields = ['trader_id', 'follower_id', 'allocated_money', 'profit']
 
     return map(make_serializer(fields), user.trader_assocs)
 

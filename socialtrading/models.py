@@ -53,6 +53,10 @@ class Following(db.Model):
     trader = db.relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
+    @property
+    def profit(self) -> float:
+        return 5000000
+
 
 class Account(db.Model):
     __tablename__ = "account"
