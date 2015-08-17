@@ -103,7 +103,6 @@ def login():
     return render_template("login.jinja.html")
 
 
-
 def is_logged_in():
     return "user_id" in session
 
@@ -115,7 +114,27 @@ def is_logged_in():
 def logout():
     logout_user()
     session.clear()
-    return redirect(url_for("index"))
+    return redirect(url_for(".index"))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    context = {
+        "error": 404,
+        "description": "Không tìm thấy trang này. <br/>Quý khách vui xem lại đường dẫn hoặc liên hệ số **** để được hỗ trợ."
+    }
+
+    return flask.render_template('error.jinja.html', **context), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    context = {
+        "error": 500,
+        "description": """Đã có chuyện gì đó xảy ra ở phía máy chủ. <br/>\
+                          Quý khách tải lại hoặc liên hệ số **** để được hỗ trợ."""
+    }
+    return flask.render_template('error.jinja.html', **context), 500
 
 
 @app.route("/")
