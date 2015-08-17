@@ -11,8 +11,10 @@
     {%- block extra_headers %}
     {% endblock %}
 
-    <link rel="stylesheet" href="/static/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/styles/main.css">
+    {% assets output="dist/bundle.css",
+              "styles/bootstrap.min.css", "styles/main.css" %}
+      <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
   </head>
   <body>
 

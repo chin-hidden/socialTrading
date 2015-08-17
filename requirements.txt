@@ -9,6 +9,7 @@ requests
 flask-debugtoolbar
 flask-sqlalchemy
 sockjs-tornado
+flask-assets
 
 # For RabbitMQ listening
 kombu

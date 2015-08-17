@@ -18,6 +18,8 @@
   System.import("scripts/wizardapp");
 </script>
 {% else %}
-<script src="/static/dist/wizard.bundle.js"></script>
+{% assets output="dist/wizard.bundle.js", "dist/wizard.bundle.js" %}
+  <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
 {% endif %}
 {% endblock %}

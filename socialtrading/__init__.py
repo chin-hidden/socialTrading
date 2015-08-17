@@ -6,6 +6,7 @@ import redis
 from flask import Flask, session
 from flask.ext.login import LoginManager, UserMixin
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.assets import Environment
 from flask_kvsession import KVSessionExtension
 from simplekv.memory.redisstore import RedisStore
 import flask_debugtoolbar
@@ -23,6 +24,9 @@ if 'CONFIG_FILE' in os.environ:
 
 # Setup the database
 db = SQLAlchemy(app)
+
+# Flask-Assets
+assets = Environment(app)
 
 # Debugging stuff
 flask_debugtoolbar.DebugToolbarExtension(app)

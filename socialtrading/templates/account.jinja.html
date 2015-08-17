@@ -16,6 +16,8 @@
   System.import("scripts/accountapp");
 </script>
 {% else %}
-<script src="/static/dist/account.bundle.js"></script>
+{% assets output="dist/account.bundle.js", "dist/account.bundle.js" %}
+  <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
 {% endif %}
 {% endblock %}
