@@ -5,9 +5,10 @@ import _ from "underscore";
 import $ from "jquery";
 import slick from "kenwheeler/slick";
 import "kenwheeler/slick/slick/slick.css!";
-import {me, traders} from "./common";
-import {formatCurrency, getMarketInfo, formatPercent} from "./utils";
-import {RiskSlider, MoneySlider} from "./Slider";
+import {me, traders} from "../common";
+import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
+import RiskSlider from "./RiskSlider.jsx";
+import MoneySlider from "./MoneySlider.jsx";
 
 
 export var WizardScreen = React.createClass({
@@ -19,26 +20,6 @@ export var WizardScreen = React.createClass({
         var riskFactor = parseInt(innerRiskSlider.noUiSlider.get());
         var selectedTraders = this.refs.traderSelector.selectedTraders();
 
-        // var allocatedMoneyNode = this.refs.allocatedMoney.getDOMNode();
-        // if (allocatedMoneyNode.value === "") {
-        //     var allocatedMoney = allocatedMoneyNode.placeholder;
-        // } else {
-        //     var allocatedMoney = allocatedMoneyNode.value;
-        // }
-
-        // var value = parseInt(allocatedMoney);
-        // if (value === NaN || value < 0) {
-        //     alert("Số tiền phải là số dương!");
-        // }
-
-        // FIXME riskFactor is not used yet
-        // FIXME Handle the error case
-        // dispatcher.dispatch({
-        //     type: "ask_to_follow_trader",
-        //     trader: selectedTrader,
-        //     allocatedMoney: allocatedMoney
-        // });
-
         me.set("risk_factor", riskFactor);
         var followings = me.get("following_traders");
 
@@ -48,10 +29,10 @@ export var WizardScreen = React.createClass({
                 "trader_id": trader.id
             });
         });
-        
+
         me.save();
 
-        // this.returnToAccountScreen();
+        this.returnToAccountScreen();
     },
 
     cancel: function() {
@@ -92,7 +73,7 @@ export var WizardScreen = React.createClass({
         return (
           <div className="panel panel-vndirect wizard">
             <div className="panel-heading">
-                <h2 className="panel-title"> 
+                <h2 className="panel-title">
                 Xin chào {me.get('name')}. Trước hết bạn cần thiết lập tài khoản của mình.
                 </h2>
             </div>
@@ -115,7 +96,7 @@ export var WizardScreen = React.createClass({
                 <h3>Bước 3: Đặt mức độ rủi ro bạn sẵn sàng chấp nhận:</h3>
                 <RiskSlider ref="riskSlider" config={riskSliderConfig}/>
                 <p>
-                Mức độ rủi ro được sử dụng để tính lại mức giá giao dịch của mỗi tín hiệu từ Chiến lược gia bạn đang theo dõi. Với mức rủi ro 50%, tài khoản của bạn sẽ đặt lệnh tại mức giá gần ngang bằng giá đặt lệnh của Chiến lược gia. 
+                Mức độ rủi ro được sử dụng để tính lại mức giá giao dịch của mỗi tín hiệu từ Chiến lược gia bạn đang theo dõi. Với mức rủi ro 50%, tài khoản của bạn sẽ đặt lệnh tại mức giá gần ngang bằng giá đặt lệnh của Chiến lược gia.
                 </p>
                 <p><strong>Lưu ý:</strong> Mức độ rủi ro cao có thể mang lại cho bạn khoản lãi lớn hơn nhưng nguy cơ lỗ cũng cao hơn.</p>
               </div>

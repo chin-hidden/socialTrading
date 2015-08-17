@@ -1,7 +1,7 @@
-import "./csrf";
 import React from "react";
-import {AccountScreen} from "./accountScreen";
+import {AccountScreen} from "./components/AccountScreen.jsx";
 import {loadData} from "./common";
+import "./csrf";
 
 loadData().then(function() {
     React.render(

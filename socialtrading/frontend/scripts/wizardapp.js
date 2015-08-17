@@ -1,6 +1,6 @@
 import "./csrf";
 
-import {WizardScreen} from "./wizardScreen";
+import {WizardScreen} from "./components/WizardScreen.jsx";
 import {loadData} from "./common";
 import React from "react";
 

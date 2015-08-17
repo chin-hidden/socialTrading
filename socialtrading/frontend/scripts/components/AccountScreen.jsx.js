@@ -1,9 +1,9 @@
 import React from "react";
-import {me, traders} from "./common";
-import {formatCurrency, getMarketInfo, formatPercent} from "./utils";
-import {RiskSlider} from "./Slider";
 import Chart from "chart";
 import _ from "underscore";
+import {me, traders} from "../common";
+import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
+import RiskSlider from "./RiskSlider.jsx";
 
 
 export var AccountScreen = React.createClass({
