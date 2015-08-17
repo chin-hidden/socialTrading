@@ -83,7 +83,9 @@ export var WizardScreen = React.createClass({
         return (
           <div className="panel panel-vndirect wizard">
             <div className="panel-heading">
-              <h2 className="panel-title">Cài đặt Tài khoản</h2>
+                <h2 className="panel-title"> 
+                Xin chào {me.get('name')}. Trước hết bạn cần thiết lập tài khoản của mình.
+                </h2>
             </div>
 
             <div className="panel-body">
