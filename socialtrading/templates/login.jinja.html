@@ -5,7 +5,7 @@
 <div class="container-login">
   <style scoped>
     form {
-      width: 400px;
+      width: 600px;
       margin-left: auto;
       margin-right: auto;
       margin-top: 60px;
@@ -18,6 +18,32 @@
     #btn-submit {
       float: right;
     }
+
+    .panel-body {
+      display: flex;
+      position: relative;
+    }
+
+    .panel-body > div {
+      width: 50%;
+    }
+
+    .panel-body > div:first-child {
+      border-right: 1px #DDD solid;
+      padding-right: 15px;
+    }
+
+    .panel-body > div:nth-child(2) {
+      padding-left: 15px;
+    }
+
+    .demo-login-box input {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+    }
+
+
   </style>
 
   <form method="post">
@@ -27,19 +53,28 @@
       </div>
 
       <div class="panel-body">
-        <p>Mời quý khách đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để có thể sử dụng dịch vụ này.</p>
+        <div class="real-login-box">
+          <p>Mời quý khách đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để có thể sử dụng dịch vụ này.</p>
 
-        {{ flash() }}
+          {{ flash() }}
 
-        <div class="form-group">
-          <label for="username">Tên người dùng</label>
-          <input name="username" type="text" class="form-control" placeholder="nguyen_van_a">
+          <div class="form-group">
+            <label for="username">Tên người dùng</label>
+            <input name="username" type="text" class="form-control" placeholder="nguyen_van_a">
+          </div>
+          <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input name="password" type="password" class="form-control" placeholder="mat_khau_cua_toi">
+          </div>
+          <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
         </div>
-        <div class="form-group">
-          <label for="password">Mật khẩu</label>
-          <input name="password" type="password" class="form-control" placeholder="mat_khau_cua_toi">
+
+        <div class="demo-login-box">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sapien erat, aliquam nec faucibus porttitor, varius quis dolor. Quisque quis odio ut justo bibendum elementum. Morbi hendrerit sagittis nibh, vitae vehicula nisl tempus et. Phasellus quis dolor dignissim, vestibulum felis sed, eleifend risus.
+          </p>
+          <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập bằng tài khoản demo">
         </div>
-        <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
       </div>
     </div>
   </form>
