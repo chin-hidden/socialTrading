@@ -51,6 +51,10 @@ header, footer {
   background: rgb(254, 247, 190);
 }
 
+.panel-title {
+  font-size: 20px;
+}
+
 
 /* Sticky bottom footer */
 .top-container {
