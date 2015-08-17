@@ -16,7 +16,6 @@ from socialtrading import notification
 def create_app():
     return socialtrading.app
 
-
 if __name__ == "__main__":
     host = socialtrading.app.config["SERVER_HOST"]
     port = socialtrading.app.config["SERVER_PORT"]
