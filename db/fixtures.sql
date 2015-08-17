@@ -5,6 +5,7 @@
 
 
 INSERT INTO account (account_number, username, password, name, cash, account_type, broker) VALUES
+       ('0001234567', 'demo.user', 'password', 'Người sử dụng Demo', 100000000, 'FOLLOWER', 'VNDIRECT'),
        ('0001032425', 'thangnt.nhtck47', 'password', 'Nguyễn Toàn Thắng', 100000000, 'FOLLOWER', 'VNDIRECT'),
        ('0101807860', 'trader01', 'password', 'Thuyền Trưởng Huck', 4500000, 'TRADER', 'VNDIRECT'),
        ('0001008969', 'trader02', 'password', 'Thanh Tiên Sinh', 4500000, 'TRADER', 'VNDIRECT'),
