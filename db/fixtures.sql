@@ -19,8 +19,12 @@ INSERT INTO account (account_number, username, password, name, cash, account_typ
        ('0001388888', 'trader10', 'password', 'Đánh Là Thắng', 4500000, 'TRADER', 'VNDIRECT');
 
 
+UPDATE account SET is_demo_account = TRUE WHERE username = 'demo.user';
+
+
 INSERT INTO followerInfo (username, risk_factor) VALUES
-       ('thangnt.nhtck47', 60);
+       ('thangnt.nhtck47', 50),
+       ('demo.user', 50);
 
 INSERT INTO traderInfo (username, description) VALUES
        ('trader01', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis sapien a nisl mollis iaculis.'),

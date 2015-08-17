@@ -86,6 +86,7 @@ class Account(db.Model):
     cash = db.Column(db.Numeric)
     account_type = db.Column(db.String)
     initialized = db.Column(db.Boolean, default=False)
+    is_demo_account = db.Column(db.Boolean, default=False)
 
     trader_assocs = db.relationship("Following",
         backref="follower",
