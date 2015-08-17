@@ -238,11 +238,10 @@ var TraderLine = React.createClass({
             followBtnClasses += "btn-primary";
         }
 
-        var imgSrc = "/static/img/trader1.jpg";
         return (
             <div className="trader-line">
               <div className="trader-avatar">
-                <img src={imgSrc} className="img-thumbnail"/>
+                <img src={this.props.trader.getAvatar()} className="img-thumbnail"/>
               </div>
 
               <div style={{}}>

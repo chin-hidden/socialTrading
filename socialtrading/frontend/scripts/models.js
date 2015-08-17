@@ -8,6 +8,12 @@ import Backbone from "backbone";
 export var Traders = Backbone.Collection.extend({
     url: "/api/v1/traders",
 
+    model: Backbone.Model.extend({
+        getAvatar: function() {
+            return `https://sigil.cupcake.io/${this.id}?w=144`;
+        }
+    }),
+
     comparator: function(item) {
         return item.get('id');
     },
@@ -83,5 +89,9 @@ export var Follower = Backbone.Model.extend({
 
     isFollowing: function(trader) {
         return this.get("following_traders").get(trader.id) !== undefined;
+    },
+
+    getAvatar: function() {
+        return `https://sigil.cupcake.io/${this.id}?w=144`;
     }
 });
