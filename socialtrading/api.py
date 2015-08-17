@@ -104,7 +104,13 @@ def follower(username):
 @rest_endpoint
 def following_relationships(username):
     if request.method == "POST":
-        pass
+        following = models.Following()
+        following.follower_id = request.json['follower_id']
+        following.trader_id = request.json['trader_id']
+        # FIXME: Auto divide the allocated money
+        following.allocated_money = 1000000
+        db.session.add(following)
+        db.session.commit()
 
     user = models.user_service.get_user_by_username(username)
     if not user:

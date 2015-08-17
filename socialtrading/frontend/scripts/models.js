@@ -18,9 +18,6 @@ export var Traders = Backbone.Collection.extend({
 });
 
 export var FollowingRels = Backbone.Collection.extend({
-    model: Backbone.Model.extend({
-        idAttribute: "trader_id"
-    }),
     parse: function(data) {
         return data.result;
     }
@@ -85,6 +82,6 @@ export var Follower = Backbone.Model.extend({
     },
 
     isFollowing: function(trader) {
-        return this.get("following_traders").get(trader.get("id")) !== undefined;
+        return this.get("following_traders").get(trader.id) !== undefined;
     }
 });

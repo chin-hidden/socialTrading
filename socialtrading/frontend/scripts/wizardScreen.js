@@ -17,7 +17,7 @@ export var WizardScreen = React.createClass({
     btnFinishClicked: function() {
         var innerRiskSlider = this.refs.riskSlider.refs.slider.getDOMNode();
         var riskFactor = parseInt(innerRiskSlider.noUiSlider.get());
-        var selectedTrader = this.refs.traderSelector.selectedTrader();
+        var selectedTraders = this.refs.traderSelector.selectedTraders();
 
         // var allocatedMoneyNode = this.refs.allocatedMoney.getDOMNode();
         // if (allocatedMoneyNode.value === "") {
@@ -40,9 +40,18 @@ export var WizardScreen = React.createClass({
         // });
 
         me.set("risk_factor", riskFactor);
+        var followings = me.get("following_traders");
+
+        _.each(selectedTraders, (trader) => {
+            followings.create({
+                "follower_id": me.id,
+                "trader_id": trader.id
+            });
+        });
+        
         me.save();
 
-        this.returnToAccountScreen();
+        // this.returnToAccountScreen();
     },
 
     cancel: function() {
@@ -126,9 +135,9 @@ export var WizardScreen = React.createClass({
 var TraderCarousel = React.createClass({
     getInitialState: function() {
         return {
-            selectedTrader: traders.models[0],
+            selectedTraders: [],
             currentSlide: 0
-        }
+        };
     },
 
     componentDidMount: function() {
@@ -143,8 +152,8 @@ var TraderCarousel = React.createClass({
             centerMode: true,
             centerPadding: '60px',
             focusOnSelect: true,
-            nextArrow: this.refs.btnNext.getDOMNode(),
-            prevArrow: this.refs.btnPrev.getDOMNode(),
+            nextArrow: this.refs.btnNext,
+            prevArrow: this.refs.btnPrev
         });
 
         // $(detail).on("afterChange", function(event, slick, currentSlide) {
@@ -155,13 +164,27 @@ var TraderCarousel = React.createClass({
         // });
     },
 
-    selectedTrader: function() {
-        return this.state.selectedTrader;
+    selectedTraders: function() {
+        return this.state.selectedTraders;
+    },
+
+    traderSelected: function(trader, event) {
+        var traders = this.state.selectedTraders;
+        if (event.target.checked) {
+            traders.push(trader);
+        } else {
+            var index = traders.indexOf(trader);
+            traders.splice(index, 1);
+        }
+
+        console.log(traders, event);
     },
 
     render: function() {
-        var traderNodes = traders.map(function(trader, index) {
-            return <TraderLine trader={trader} index={index + 1} />;
+        var traderNodes = traders.map((trader, index) => {
+            return <TraderLine key={trader.id}
+            onSelected={this.traderSelected.bind(null, trader)}
+            trader={trader} index={index + 1} />;
         });
 
         var buttonStyle = {
@@ -232,7 +255,11 @@ var TraderLine = React.createClass({
                   <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
 
                   <span className="text-label">Lãi dự kiến: </span>
-                  <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong>
+                  <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong><br/>
+
+                  <hr/>
+
+                <input onChange={this.props.onSelected} type="checkbox"/> Chọn chiến lược này
               </div>
             </div>
         );
