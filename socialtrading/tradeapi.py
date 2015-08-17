@@ -27,6 +27,14 @@ class OrderSide(Enum):
     NORMAL_BUY = "NB"
     MARGIN_SELL = "MS"
 
+    @classmethod
+    def from_int(cls, code):
+        return {
+            1: OrderSide.NORMAL_BUY,
+            2: OrderSide.NORMAL_SELL,
+            5: OrderSide.MARGIN_SELL
+        }[code]
+
 
 class VndirectOrsClient:
     # This class is mostly a reverse engineering effort from the
