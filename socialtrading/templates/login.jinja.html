@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container-login">
   <style scoped>
-    form {
+    .panel {
       width: 600px;
       margin-left: auto;
       margin-right: auto;
@@ -19,16 +19,16 @@
       display: flex;
     }
 
-    .bottom-row > div {
+    .bottom-row > form {
       width: 50%;
     }
 
-    .bottom-row > div:first-child {
+    .bottom-row > form:first-child {
       border-right: 1px #DDD solid;
       padding-right: 15px;
     }
 
-    .bottom-row > div:nth-child(2) {
+    .bottom-row > form:nth-child(2) {
       padding-left: 15px;
     }
 
@@ -44,47 +44,47 @@
 
   </style>
 
-  <form method="post">
-    <div class="panel panel-vndirect">
-      <div class="panel-heading">
-        <h3 class="panel-title">Đăng nhập</h3>
-      </div>
+  <div class="panel panel-vndirect">
+    <div class="panel-heading">
+      <h3 class="panel-title">Đăng nhập</h3>
+    </div>
 
-      <div class="panel-body">
-        <p>
-          Quý khách vui lòng đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để sử dụng dịch vụ này.
-          Nếu chưa có tài khoản VNDIRECT, quý khách có thể đăng ký tài khoản mới
-          <a href="https://www.vndirect.com.vn/portal/mo-tai-khoan-nha-dau-tu.shtml">tại đây</a>.
-        </p>
+    <div class="panel-body">
+      <p>
+        Quý khách vui lòng đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để sử dụng dịch vụ này.
+        Nếu chưa có tài khoản VNDIRECT, quý khách có thể đăng ký tài khoản mới
+        <a href="https://www.vndirect.com.vn/portal/mo-tai-khoan-nha-dau-tu.shtml">tại đây</a>.
+      </p>
 
-        {{ flash() }}
+      {{ flash() }}
 
-        <div class="bottom-row">
-          <div class="real-login-box">
-            <div>
-              <div class="form-group">
-                <!-- <label for="username">Tên người dùng</label> -->
-                <input name="username" type="text" class="form-control" placeholder="Tên người dùng">
-              </div>
-
-              <div class="form-group">
-                <!-- <label for="password">Mật khẩu</label> -->
-                <input name="password" type="password" class="form-control" placeholder="Mật khẩu">
-              </div>
+      <div class="bottom-row">
+        <form method="post" class="real-login-box">
+          <div>
+            <div class="form-group">
+              <!-- <label for="username">Tên người dùng</label> -->
+              <input name="username" type="text" class="form-control" placeholder="Tên người dùng">
             </div>
 
-            <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
+            <div class="form-group">
+              <!-- <label for="password">Mật khẩu</label> -->
+              <input name="password" type="password" class="form-control" placeholder="Mật khẩu">
+            </div>
           </div>
 
-          <div class="demo-login-box">
-            <p>
-              Quý khách cũng có thể lựa chọn <strong>Tài khoản dùng thử</strong> để trải nghiệm dịch vụ <strong><span class="accent">Autotrade</span></strong>. Với tài khoản này, quý khách được sử dụng toàn bộ tính năng như tài khoản thật.
-            </p>
-            <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập bằng tài khoản dùng thử">
-          </div>
-        </div>
+          <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
+        </form>
+
+        <form method="post" class="demo-login-box">
+          <p>
+            Quý khách cũng có thể lựa chọn <strong>Tài khoản dùng thử</strong> để trải nghiệm dịch vụ <strong><span class="accent">Autotrade</span></strong>. Với tài khoản này, quý khách được sử dụng toàn bộ tính năng như tài khoản thật.
+          </p>
+          <input name="username" type="hidden" value="demo.user">
+          <input name="password" type="hidden" value="password">
+          <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập bằng tài khoản dùng thử">
+        </form>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 {% endblock %}
