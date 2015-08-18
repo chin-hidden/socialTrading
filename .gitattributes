@@ -17,3 +17,4 @@
 *.RTF	 diff=astextplain
 
 bootstrap.sh text eol=lf
+launcher.py text eol=lf
