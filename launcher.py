@@ -14,7 +14,13 @@ from socialtrading import notification
 
 @failsafe
 def create_app():
-    return socialtrading.app
+    app = socialtrading.app
+
+    if app.config['DEBUG']:
+        from werkzeug.debug import DebuggedApplication
+        app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
+
+    return app
 
 if __name__ == "__main__":
     host = socialtrading.app.config["SERVER_HOST"]
