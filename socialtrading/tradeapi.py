@@ -1,39 +1,7 @@
 import typing
 import requests
-from enum import Enum
 from .utils import JsonWrapper
-
-
-class OrderType(Enum):
-    ATO = ("ATO", 1, 2)
-    LO  = ("LO",  2, 0)
-    ATC = ("ATC", 1, 7)
-    MP  = ("MP",  1, 0)
-    MOK = ("MOK", 1, 4)
-    MAK = ("MAK", 1, 3)
-    MTL = ("MTL", 1, 0)
-
-    @property
-    def numeric_order_type(self) -> int:
-        return self.value[1]
-
-    @property
-    def time_in_force(self) -> int:
-        return self.value[2]
-
-
-class OrderSide(Enum):
-    NORMAL_SELL = "NS"
-    NORMAL_BUY = "NB"
-    MARGIN_SELL = "MS"
-
-    @classmethod
-    def from_int(cls, code):
-        return {
-            1: OrderSide.NORMAL_BUY,
-            2: OrderSide.NORMAL_SELL,
-            5: OrderSide.MARGIN_SELL
-        }[code]
+from .models import OrderSide, OrderType
 
 
 class VndirectOrsClient:

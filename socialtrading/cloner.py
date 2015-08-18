@@ -15,7 +15,7 @@ import typing
 
 from . import models
 import socialtrading
-from .tradeapi import OrderSide, OrderType
+from .models import OrderSide, OrderType
 from . import notification
 
 
@@ -82,6 +82,7 @@ class OrderProcessor:
 
     def process_follower_message(self, follower, message):
         # FIXME: Is this an executed notification for an order we placed?
+
 
         # Notification
         self.message_router.send_message_to_user(
