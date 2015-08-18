@@ -173,14 +173,21 @@ def wizard():
     return render_template("wizard.jinja.html")
 
 
-from . import notification
-
-
 @app.route("/noti")
 def noti():
-    message = {
-        "msg_type": "NEW_ORDER_PLACED"
-    }
-    notification.message_router.send_message_to_user(session['user_id'],
-                                                     "haha")
+    from . import cloner
+
+    trader01 = models.user_service.get_user_by_username('trader01')
+    cloner.order_processor.process_trader_message(trader01, {
+        'orderId': "12312",
+        'account': "13223",
+        'transactTime': 123213,
+        'tradeDate': "12323",
+        'side': 1,
+        'symbol': "VND",
+        'qty': 100,
+        'price': 121313,
+        'matchedQty': 1312,
+        'matchedPrice': 343432,
+        })
     return "ok"

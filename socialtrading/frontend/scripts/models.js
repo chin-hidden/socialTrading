@@ -1,4 +1,5 @@
 import Backbone from "backbone";
+import {DISPATCHER} from "./common";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -39,42 +40,13 @@ var FollowerPositions = Backbone.Collection.extend({
 export var Follower = Backbone.Model.extend({
     defaults: {
         following_traders: new FollowingRels(),
-        positions: new FollowerPositions(),
-        first_login: true,
-        risk_factor: 0,
-        cash: 0,
-        profit: 0,
-        total_current_value: 0,
-        stock_value: 0,
+        positions: new FollowerPositions()
     },
 
     initialize: function() {
-        var _this = this;
-
-        // dispatcher.register(function(message) {
-        //     switch (message.type) {
-        //         case "ask_to_follow_trader":
-        //             $.post("/api/v1/follower/" + _this.id + "/following", {
-        //                 traderid: message.trader.id,
-        //                 money: message.allocatedMoney,
-        //                 maxopen: 3
-        //             }).then(function() {
-        //                 _this.fetch();
-        //                 traders.fetch();
-        //             });
-        //             break;
-        //         case "ask_to_unfollow_trader":
-        //             $.ajax({
-        //                 url: "/api/v1/follower/" + _this.id + "/following/" + message.trader.id,
-        //                 method: "DELETE",
-        //                 success: function() {
-        //                     _this.fetch();
-        //                     traders.fetch();
-        //                 }
-        //             });
-        //             break;
-        //     }
-        // });
+        DISPATCHER.on("noti:order_executed", () => {
+            this.get("positions").fetch();
+        });
     },
 
     parse: function(data) {

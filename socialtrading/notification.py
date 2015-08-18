@@ -52,10 +52,17 @@ class MessageRouter:
         # FIXME: this remove operation might be slow.
         self._clients[client.user_id].remove(client)
 
-    def send_message_to_user(self, user_id: str, message: str):
+    def send_message_to_user(self, user_id: str, topic, payload: dict):
         """\
         Send a message to all open sessions made by a user.
         """
+
+        message = {
+            "headers": {
+            "topic": topic
+            },
+            "payload": payload
+        }
         if user_id in self._clients and self._clients[user_id]:
             self._clients[user_id][0].broadcast(self._clients[user_id],
                                                 message)

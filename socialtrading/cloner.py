@@ -22,14 +22,6 @@ from . import notification
 logger = logging.getLogger(__name__)
 
 
-def run_order_processor():
-    logger.info("starting listener")
-    uri = socialtrading.app.config['NOTICENTER_CONNECTION']
-    with kombu.Connection(uri) as conn:
-        listener = OrderListener(conn)
-        listener.run()
-
-
 ExecutedOrderResponse = typing.NamedTuple('ExecutedOrderResponse',
     [('orderId', str),
      ('account', str),
@@ -83,15 +75,19 @@ class OrderProcessor:
 
             # FIXME: Blocking operation. Should leverage some kind of
             # async capability.
-            time.sleep(1)
+            time.sleep(0.5)
 
             # After placing the order, open a transaction with that
             # order for further order notifications.
 
     def process_follower_message(self, follower, message):
         # FIXME: Is this an executed notification for an order we placed?
+
         # Notification
-        self.message_router.send_message_to_user(follower.username, message)
+        self.message_router.send_message_to_user(
+            follower.username,
+            "order_executed",
+            message)
 
     def clone_trader_order(self,
                            trader: models.Trader,
@@ -168,3 +164,12 @@ class OrderListener(kombu.mixins.ConsumerMixin):
 order_processor = OrderProcessor(
     message_router=notification.message_router,
     user_service=models.user_service)
+
+
+
+def run_order_processor():
+    logger.info("starting listener")
+    uri = socialtrading.app.config['NOTICENTER_CONNECTION']
+    with kombu.Connection(uri) as conn:
+        listener = OrderListener(conn, order_processor)
+        listener.run()
