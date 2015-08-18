@@ -1,6 +1,6 @@
 # Install dependencies
 deps:
-	env python3 -m pip install -r requirements.txt
+	env python3.4 -m pip install -r requirements.txt
 
 # Launch the server
 launch:
