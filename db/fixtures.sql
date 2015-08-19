@@ -5,7 +5,7 @@
 
 
 INSERT INTO account (account_number, username, password, name, cash, account_type, broker) VALUES
-       ('0001234567', 'demo.user', 'password', 'Người sử dụng Demo', 100000000, 'FOLLOWER', '__DEMO__'),
+       ('0001234567', 'demo_user', 'password', 'Người sử dụng Demo', 100000000, 'FOLLOWER', '__DEMO__'),
        ('0001032425', 'thangnt.nhtck47', 'password', 'Nguyễn Toàn Thắng', 100000000, 'FOLLOWER', 'VNDIRECT'),
        ('0101807860', 'trader01', 'password', 'Xin Một Lần Thua', 4500000, 'TRADER', 'VNDIRECT'),
        ('0001008969', 'trader02', 'password', 'Lỗ Là Gì', 4500000, 'TRADER', 'VNDIRECT'),
@@ -19,12 +19,9 @@ INSERT INTO account (account_number, username, password, name, cash, account_typ
        ('0001388888', 'trader10', 'password', 'Đánh Là Thắng', 4500000, 'TRADER', 'VNDIRECT');
 
 
-UPDATE account SET is_demo_account = TRUE WHERE username = 'demo.user';
-
-
 INSERT INTO followerInfo (username, risk_factor) VALUES
        ('thangnt.nhtck47', 50),
-       ('demo.user', 50);
+       ('demo_user', 50);
 
 INSERT INTO traderInfo (username, description) VALUES
        ('trader01', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sagittis sapien a nisl mollis iaculis.'),
@@ -41,11 +38,11 @@ INSERT INTO traderInfo (username, description) VALUES
 
 -- for now, we only allow single following relationship
 INSERT INTO following (follower, trader, allocated_money) VALUES
-	('demo.user', 'trader01', 100000000);
+	('demo_user', 'trader01', 100000000);
 
 
 INSERT INTO transaction VALUES
-       ('123123', 'demo.user', 'trader01', 'VND', 123, 1232, 'now', 'NB', 'MP', NULL, NULL);
+       ('123123', 'demo_user', 'trader01', 'VND', 123, 1232, 'now', 'NB', 'MP', NULL, NULL);
 
 INSERT INTO deal (buying_order_id) VALUES
        ('123123');
