@@ -279,9 +279,15 @@ class UserService:
         db.session.add(user)
         db.session.commit()
 
+
+class DealService:
     def get_deals_by_username(self, username):
         return Deal.query.join(Transaction, Transaction.order_id == Deal.buying_order_id).filter(Transaction.username == username).all()
+
+    def get_deal_by_order_id(self, order_id):
+        return Deal.query.join(Transaction, Transaction.order_id == Deal.buying_order_id).filter(Transaction.order_id == order_id).first()
 
 
 user_service = UserService()
 stock_service = StockService()
+deal_service = DealService()

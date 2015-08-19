@@ -125,7 +125,7 @@ def following_relationships(username):
 @login_required
 @rest_endpoint
 def follower_positions(username):
-    deals = models.user_service.get_deals_by_username(username)
+    deals = models.deal_service.get_deals_by_username(username)
 
     return map(make_serializer(["id", "username", "mimicking_username",
         "buying_price", "quantity", "status", "buying_date", "symbol"]), deals)
