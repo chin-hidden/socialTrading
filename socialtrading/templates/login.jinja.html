@@ -52,8 +52,6 @@
     <div class="panel-body">
       <p>
         Quý khách vui lòng đăng nhập bằng tài khoản <strong>VNDIRECT</strong> để sử dụng dịch vụ này.
-        Nếu chưa có tài khoản VNDIRECT, quý khách có thể đăng ký tài khoản mới
-        <a href="https://www.vndirect.com.vn/portal/mo-tai-khoan-nha-dau-tu.shtml">tại đây</a>.
       </p>
 
       {{ flash() }}
@@ -72,6 +70,8 @@
             </div>
           </div>
 
+          <p><small><a href="https://www.vndirect.com.vn/portal/mo-tai-khoan-nha-dau-tu.shtml" target="_id">Đăng ký mới.</a></small></p>
+
           <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập">
         </form>
 
@@ -79,7 +79,7 @@
           <p>
             Quý khách cũng có thể lựa chọn <strong>Tài khoản dùng thử</strong> để trải nghiệm dịch vụ <strong><span class="accent">Autotrade</span></strong>. Với tài khoản này, quý khách được sử dụng toàn bộ tính năng như tài khoản thật.
           </p>
-          <input name="username" type="hidden" value="demo.user">
+          <input name="username" type="hidden" value="demo_user">
           <input name="password" type="hidden" value="password">
           <input id="btn-submit" type="submit" class="btn btn-primary" value="Đăng nhập bằng tài khoản dùng thử">
         </form>
