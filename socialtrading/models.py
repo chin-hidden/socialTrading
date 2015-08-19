@@ -153,7 +153,6 @@ class Account(db.Model):
 
     @property
     def gross_stock_value(self):
-        Position.query.filter(Position.username==self.username)
         return 400
 
     @property
@@ -204,22 +203,66 @@ class Trader(Account):
     }
 
 
-class Position(db.Model):
-    __tablename__ = "position"
-
-    username = db.Column(db.String)
-    mimicking_username = db.Column(db.String)
+class Transaction(db.Model):
+    __tablename__ = "transaction"
+    order_id = db.Column(db.String, primary_key=True)
+    username = db.Column(db.String, db.ForeignKey('account.username'))
+    mimicking_username = db.Column(db.String, db.ForeignKey('account.username'))
     symbol = db.Column(db.String)
-    quantity = db.Column(db.String)
-    buying_price = db.Column(db.Numeric)
-    buying_date = db.Column(db.DateTime)  # FIXME: Check if we have
-                                          # timezone issue here.
+    quantity = db.Column(db.Integer)
+    price = db.Column(db.Numeric)
+    date = db.Column(db.DateTime)
+    side = db.Column(db.Enum("NS", "NB", "MS"))
+    type = db.Column(db.Enum("LO"))
+    matched_price = db.Column(db.Numeric)
+    matched_quantity = db.Column(db.Integer)
 
-    __table_args__ = (
-        db.ForeignKeyConstraint(['username', 'mimicking_username'],
-                                ['following.follower', 'following.trader']),
-        db.PrimaryKeyConstraint('username', 'mimicking_username', 'symbol'),
-    )
+
+class Deal(db.Model):
+    __tablename__ = "deal"
+
+    id = db.Column(db.Integer, primary_key=True)
+    buying_order_id = db.Column(db.String, db.ForeignKey('transaction.order_id'))
+    selling_order_id = db.Column(db.String, db.ForeignKey('transaction.order_id'))
+
+    buying_transaction = db.relationship("Transaction", foreign_keys=[buying_order_id])
+    selling_transaction = db.relationship("Transaction", foreign_keys=[selling_order_id])
+
+    @property
+    def username(self):
+        return self.buying_transaction.username
+
+    @property
+    def mimicking_username(self):
+        return self.buying_transaction.mimicking_username
+
+    @property
+    def buying_price(self):
+        return self.buying_transaction.matched_price or self.buying_transaction.price
+
+    @property
+    def quantity(self):
+        return self.buying_transaction.matched_quantity or self.buying_transaction.quantity
+
+    @property
+    def status(self):
+        return "BUYING"
+
+    @property
+    def symbol(self):
+        return self.buying_transaction.symbol
+
+    @property
+    def buying_date(self):
+        return self.buying_transaction.date
+
+    @property
+    def profit(self):
+        pass
+
+    @property
+    def roi(self):
+        pass
 
 
 class UserService:
@@ -235,6 +278,9 @@ class UserService:
     def save_user(self, user: Account):
         db.session.add(user)
         db.session.commit()
+
+    def get_deals_by_username(self, username):
+        return Deal.query.join(Transaction, Transaction.order_id == Deal.buying_order_id).filter(Transaction.username == username).all()
 
 
 user_service = UserService()

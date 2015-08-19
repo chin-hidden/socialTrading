@@ -31,7 +31,12 @@ export var FollowingRels = Backbone.Collection.extend({
 });
 
 
-var FollowerPositions = Backbone.Collection.extend({
+var Deals = Backbone.Collection.extend({
+    model: Backbone.Model.extend({
+        initialize: function() {
+            this.id = this.get("username") + this.get("mimicking_username") + this.get("symbol");
+        }
+    }),
     parse: function(data) {
         return data.result;
     }
@@ -40,12 +45,12 @@ var FollowerPositions = Backbone.Collection.extend({
 export var Follower = Backbone.Model.extend({
     defaults: {
         following_traders: new FollowingRels(),
-        positions: new FollowerPositions()
+        deals: new Deals()
     },
 
     initialize: function() {
         DISPATCHER.on("noti:order_executed", () => {
-            this.get("positions").fetch();
+            this.get("deals").fetch();
         });
     },
 
@@ -54,8 +59,8 @@ export var Follower = Backbone.Model.extend({
         this.get("following_traders").url = "/api/v1/follower/" + data.username + "/following";
         this.get("following_traders").fetch();
 
-        this.get("positions").url = "/api/v1/follower/" + data.username + "/positions";
-        this.get("positions").fetch();
+        this.get("deals").url = "/api/v1/follower/" + data.username + "/deals";
+        this.get("deals").fetch();
         return data;
     },
 

@@ -37,31 +37,27 @@ CREATE TABLE following (
 );
 
 
-CREATE TABLE orderlist (
+-- A deal holds the state of an order.
+CREATE TABLE transaction (
 	order_id text PRIMARY KEY,
-	by_user text NOT NULL REFERENCES account (username),
-	mimicking_user text REFERENCES account (username),   -- Can be null if this order is made by a trader
+	username text NOT NULL,
+	mimicking_username text,   -- Can be null if this order is made by a trader
 	symbol text NOT NULL,
 	quantity integer NOT NULL,
 	price numeric(19, 2) NOT NULL,
 	date timestamp with time zone NOT NULL,
 	side text NOT NULL,     -- NS/NB
 	type text NOT NULL,     -- MP, LO, etc.
-	matched_price numeric(19,2) NOT NULL,   -- These two can be 0,
-	matched_quantity integer NOT NULL       -- meaning this order has not been matched yet.
+	matched_price numeric(19,2),   -- These two can be NULL,
+	matched_quantity integer ,     -- meaning this order has not been matched yet.
+	FOREIGN KEY (username, mimicking_username) REFERENCES following (follower, trader)
 );
 
 
--- The stocks that an account is holding
-CREATE TABLE position (
-	username text NOT NULL,
-	mimicking_username text NOT NULL,
-	symbol text NOT NULL,
-	quantity integer NOT NULL,
-	buying_price numeric(19,2) NOT NULL,
-	buying_date timestamp with time zone NOT NULL,
-	PRIMARY KEY (username, mimicking_username, symbol),
-	FOREIGN KEY (username, mimicking_username) REFERENCES following (follower, trader)
+CREATE TABLE deal (
+	id serial PRIMARY KEY,
+	buying_order_id text REFERENCES transaction (order_id),
+	selling_order_id text REFERENCES transaction (order_id)
 );
 
 commit;

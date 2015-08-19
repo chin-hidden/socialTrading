@@ -170,11 +170,13 @@ var PositionPanel = React.createClass({
     },
 
     reloadPrices: function() {
-        _.map(positions.groupBy("symbol"), function (positions, stockSymbol) {});
+        _.map(deals.groupBy("symbol"), function (deals, stockSymbol) {});
     },
 
     componentDidMount: function() {
-        me.get("positions").on("change", this.render);
+        me.get("deals").on("update", () => {
+          this.forceUpdate();
+        });
     },
 
     changeViewType: function(event) {
@@ -184,23 +186,23 @@ var PositionPanel = React.createClass({
     /**
      * Get position rows, grouped by traders.
      */
-    positionRowsByTrader: function (positions) {
+    positionRowsByTrader: function (deals) {
         var self = this;
 
-        var posByTrader = positions.groupBy("mimicking_username");
-        var result = _.map(posByTrader, function (positions, traderAccount) {
-            var rowsForThisTrader = _.map(positions, function (pos) {
-                var marketPrice = 23000; // self.state.marketPrices[pos.get("symbol")];
-                var totalCost = pos.get("buying_price") * pos.get("quantity");
-                var totalValue = marketPrice * pos.get("quantity");
+        var posByTrader = deals.groupBy("mimicking_username");
+        var result = _.map(posByTrader, function (deals, traderAccount) {
+            var rowsForThisTrader = _.map(deals, function (deal) {
+                var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
+                var totalCost = deal.get("buying_price") * deal.get("quantity");
+                var totalValue = marketPrice * deal.get("quantity");
                 var gain = totalValue - totalCost;
                 var roi = (gain / totalCost * 100).toFixed(2);
                 return (
-                    <tr>
-                      <td>{pos.get("symbol")}</td>
+                    <tr key={deal.id}>
+                      <td>{deal.get("symbol")}</td>
                       <td>HOSE</td>
-                      <td>{pos.get("quantity")}</td>
-                      <td>{formatCurrency(pos.get("buying_price"))}</td>
+                      <td>{deal.get("quantity")}</td>
+                      <td>{formatCurrency(deal.get("buying_price"))}</td>
                       <td>{formatCurrency(marketPrice)}</td>
                       <td>{formatCurrency(totalCost)}</td>
                       <td>{formatCurrency(totalValue)}</td>
@@ -212,7 +214,7 @@ var PositionPanel = React.createClass({
             var traderName = traders.get(traderAccount).get("name");
 
             var headerRow = (
-                <tr style={{backgroundColor: "#cbffaf"}}>
+                <tr key={traderName} style={{backgroundColor: "#cbffaf"}}>
                   <td colSpan="7">{traderName}</td>
                   <td>{formatCurrency(25628674)} (25%)</td>
                 </tr>
@@ -227,18 +229,18 @@ var PositionPanel = React.createClass({
     /**
      * Get position rows, lumped together by stock symbol.
      */
-    positionRowsAll: function (positions) {
+    positionRowsAll: function (deals) {
         var self = this;
 
         function add(a, b) {
             return a + b;
         }
 
-        return _.map(positions.groupBy("symbol"), function (positions, stockSymbol) {
-            var totalCost = _.reduce(_.map(positions, function (pos) {
-                return pos.get("buying_price") * pos.get("quantity");
+        return _.map(deals.groupBy("symbol"), function (deals, stockSymbol) {
+            var totalCost = _.reduce(_.map(deals, function (deal) {
+                return deal.get("buying_price") * deal.get("quantity");
             }), add);
-            var totalQuantity = _.reduce(_.map(positions, function (pos) {return pos.get("quantity")}),
+            var totalQuantity = _.reduce(_.map(deals, function (deal) {return deal.get("quantity")}),
                                          add);
 
             var marketPrice = 23000; // self.state.marketPrices[stockSymbol];
@@ -246,11 +248,11 @@ var PositionPanel = React.createClass({
             var gain = totalValue - totalCost;
             var roi = (gain / totalCost * 100).toFixed(2);
 
-            // We assume that the merged positions share the same exchange.
-            var exchange = positions[0].get('exchange');
+            // We assume that the merged deals share the same exchange.
+            var exchange = deals[0].get('exchange');
 
             return  (
-                <tr>
+                <tr key={stockSymbol}>
                   <td>{stockSymbol}</td>
                   <td>{exchange}</td>
                   <td>{totalQuantity}</td>
@@ -265,11 +267,11 @@ var PositionPanel = React.createClass({
     },
 
     render: function() {
-        var positions = me.get("positions");
+        var deals = me.get("deals");
         if (this.state.viewType === "by-trader") {
-            var positionRows = this.positionRowsByTrader(positions);
+            var positionRows = this.positionRowsByTrader(deals);
         } else {
-            var positionRows = this.positionRowsAll(positions);
+            var positionRows = this.positionRowsAll(deals);
         }
 
         return (

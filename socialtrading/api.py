@@ -121,15 +121,14 @@ def following_relationships(username):
     return map(make_serializer(fields), user.trader_assocs)
 
 
-@api_blueprint.route("/follower/<username>/positions")
+@api_blueprint.route("/follower/<username>/deals")
 @login_required
 @rest_endpoint
 def follower_positions(username):
-    positions = models.Position.query.filter(models.Position.username==username).all()
+    deals = models.user_service.get_deals_by_username(username)
 
-    fields = ['username', 'mimicking_username', 'symbol', 'quantity', 'buying_price', 'buying_date']
-
-    return map(make_serializer(fields), positions)
+    return map(make_serializer(["id", "username", "mimicking_username",
+        "buying_price", "quantity", "status", "buying_date", "symbol"]), deals)
 
 
 @api_blueprint.route("/traders")
