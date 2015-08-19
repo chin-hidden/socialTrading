@@ -118,7 +118,6 @@ class Account(db.Model):
     cash = db.Column(db.Numeric)
     account_type = db.Column(db.String)
     initialized = db.Column(db.Boolean, default=False)
-    is_demo_account = db.Column(db.Boolean, default=False)
 
     trader_assocs = db.relationship("Following",
         backref="follower",
@@ -158,6 +157,10 @@ class Account(db.Model):
     @property
     def gross_profit(self):
         return 500
+
+    @property
+    def is_demo_account(self):
+        return self.broker == "__DEMO__"
 
 
 class Follower(Account):
