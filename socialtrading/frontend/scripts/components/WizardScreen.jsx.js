@@ -23,16 +23,15 @@ export var WizardScreen = React.createClass({
         me.set("risk_factor", riskFactor);
         var followings = me.get("following_traders");
 
-        _.each(selectedTraders, (trader) => {
+        // FIXME: Wrap all these in an async operation.
+        selectedTraders.forEach((trader) => {
             followings.create({
                 "follower_id": me.id,
                 "trader_id": trader.id
             });
         });
 
-        me.save();
-
-        this.returnToAccountScreen();
+        me.save().then(this.returnToAccountScreen);
     },
 
     cancel: function() {
