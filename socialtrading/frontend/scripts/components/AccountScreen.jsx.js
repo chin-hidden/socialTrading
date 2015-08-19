@@ -64,6 +64,12 @@ export var AccountScreen = React.createClass({
 
 
 var InfoBox = React.createClass({
+    componentDidMount: function() {
+        me.on("change", () => {
+            this.forceUpdate();
+        });
+    },
+
     riskSliderChanged: function(value) {
         me.set("risk_factor", Math.floor(value));
         me.save(null, {

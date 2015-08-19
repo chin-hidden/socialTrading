@@ -32,11 +32,6 @@ export var FollowingRels = Backbone.Collection.extend({
 
 
 var Deals = Backbone.Collection.extend({
-    model: Backbone.Model.extend({
-        initialize: function() {
-            this.id = this.get("username") + this.get("mimicking_username") + this.get("symbol");
-        }
-    }),
     parse: function(data) {
         return data.result;
     }
@@ -49,9 +44,13 @@ export var Follower = Backbone.Model.extend({
     },
 
     initialize: function() {
-        DISPATCHER.on("noti:order_executed", () => {
+        DISPATCHER.on("noti:deal:created noto:deal:updated", () => {
             this.get("deals").fetch();
         });
+
+        DISPATCHER.on("noti:user:updated", () => {
+            this.fetch();
+        })
     },
 
     parse: function(data) {

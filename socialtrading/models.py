@@ -152,7 +152,8 @@ class Account(db.Model):
 
     @property
     def gross_stock_value(self):
-        return 400
+        deals = deal_service.get_deals_by_username(self.username)
+        return sum(map(lambda d: d.quantity * d.buying_price, deals))
 
     @property
     def gross_profit(self):
