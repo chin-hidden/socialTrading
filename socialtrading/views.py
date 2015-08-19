@@ -84,9 +84,11 @@ def login():
             return user
 
         try:
-            client.login(username, request.form["password"])
-
             user = models.user_service.get_user_by_username(username)
+
+            if not user or user and not user.is_demo_account:
+                client.login(username, request.form["password"])
+
             if user is None:
                 user = create_user()
             login_user(user)
