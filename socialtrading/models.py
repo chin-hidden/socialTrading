@@ -152,7 +152,7 @@ class Account(db.Model):
 
     @property
     def gross_stock_value(self):
-        deals = deal_service.get_deals_by_username(self.username)
+        deals = deal_service.get_active_deals_by_username(self.username)
         return sum(map(lambda d: d.quantity * d.buying_price, deals))
 
     @property
@@ -218,8 +218,9 @@ class Transaction(db.Model):
     date = db.Column(db.DateTime)
     side = db.Column(db.Enum("NS", "NB", "MS"))
     type = db.Column(db.Enum("LO"))
-    matched_price = db.Column(db.Numeric)
-    matched_quantity = db.Column(db.Integer)
+    matched_price = db.Column(db.Numeric, default=0)
+    matched_quantity = db.Column(db.Integer, default=0)
+    status = db.Column(db.String, default="PendingNew")
 
 
 class Deal(db.Model):
@@ -242,7 +243,7 @@ class Deal(db.Model):
 
     @property
     def buying_price(self):
-        return self.buying_transaction.matched_price or self.buying_transaction.price
+        return self.buying_transaction.matched_price or 0
 
     @property
     def quantity(self):
@@ -250,7 +251,12 @@ class Deal(db.Model):
 
     @property
     def status(self):
-        return "BUYING"
+        side = "SELLING" if self.selling_transaction else "BUYING"
+        return side + ":" + self.buying_transaction.status
+
+    @property
+    def active(self):
+        return not self.status == "SELLING:Filled"
 
     @property
     def symbol(self):
@@ -286,10 +292,29 @@ class UserService:
 
 class DealService:
     def get_deals_by_username(self, username):
-        return Deal.query.join(Transaction, Transaction.order_id == Deal.buying_order_id).filter(Transaction.username == username).all()
+        return Deal.query \
+            .join(Transaction, Transaction.order_id == Deal.buying_order_id) \
+            .filter(Transaction.username == username) \
+            .all()
+
+    def get_active_deals_by_username(self, username):
+        return [deal for deal in self.get_deals_by_username(username) if deal.active]
+
+    def get_deals_by_username_and_symbol(self, username, symbol):
+        return Deal.query \
+            .join(Transaction, Transaction.order_id == Deal.buying_order_id) \
+            .filter(Transaction.username == username) \
+            .filter(Transaction.symbol == symbol) \
+            .all()
+
+    def get_active_deals_by_username_and_symbol(self, username, symbol):
+        return [deal for deal in self.get_deals_by_username_and_symbol(username, symbol) if deal.active]
 
     def get_deal_by_order_id(self, order_id):
-        return Deal.query.join(Transaction, Transaction.order_id == Deal.buying_order_id).filter(Transaction.order_id == order_id).first()
+        return Deal.query \
+            .join(Transaction, Transaction.order_id == Deal.buying_order_id) \
+            .filter(Transaction.order_id == order_id) \
+            .first()
 
 
 user_service = UserService()

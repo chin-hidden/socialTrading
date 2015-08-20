@@ -41,8 +41,8 @@ INSERT INTO following (follower, trader, allocated_money) VALUES
 	('demo_user', 'trader01', 100000000);
 
 
-INSERT INTO transaction VALUES
-       ('123123', 'demo_user', 'trader01', 'VND', 123, 1232, 'now', 'NB', 'MP', NULL, NULL);
+-- INSERT INTO transaction VALUES
+--        ('123123', 'demo_user', 'trader01', 'VND', 123, 1232, 'now', 'NB', 'MP', NULL, NULL);
 
-INSERT INTO deal (buying_order_id) VALUES
-       ('123123');
+-- INSERT INTO deal (buying_order_id) VALUES
+--        ('123123');

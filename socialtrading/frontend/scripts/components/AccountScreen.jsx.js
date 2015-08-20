@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "chart";
 import _ from "underscore";
 import {me, traders} from "../common";
-import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
+import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
 import RiskSlider from "./RiskSlider.jsx";
 
 
@@ -180,7 +180,7 @@ var PositionPanel = React.createClass({
     },
 
     componentDidMount: function() {
-        me.get("deals").on("update", () => {
+        me.get("deals").on("update change", () => {
           this.forceUpdate();
         });
     },
@@ -196,8 +196,8 @@ var PositionPanel = React.createClass({
         var self = this;
 
         var posByTrader = deals.groupBy("mimicking_username");
-        var result = _.map(posByTrader, function (deals, traderAccount) {
-            var rowsForThisTrader = _.map(deals, function (deal) {
+        var result = _.map(posByTrader, (deals, traderAccount) => {
+            var rowsForThisTrader = _.map(deals, (deal) => {
                 var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
                 var totalCost = deal.get("buying_price") * deal.get("quantity");
                 var totalValue = marketPrice * deal.get("quantity");
@@ -213,6 +213,7 @@ var PositionPanel = React.createClass({
                       <td>{formatCurrency(totalCost)}</td>
                       <td>{formatCurrency(totalValue)}</td>
                       <td><span className="text-success">{formatPercent(roi)}</span></td>
+                      <td>{dealStatusName(deal.get("status"))}</td>
                     </tr>
                 );
             });
@@ -223,6 +224,7 @@ var PositionPanel = React.createClass({
                 <tr key={traderName} style={{backgroundColor: "#cbffaf"}}>
                   <td colSpan="7">{traderName}</td>
                   <td>{formatCurrency(25628674)} (25%)</td>
+                  <td></td>
                 </tr>
             );
 
@@ -267,6 +269,7 @@ var PositionPanel = React.createClass({
                   <td>{formatCurrency(totalCost)}</td>
                   <td>{formatCurrency(totalValue)}</td>
                   <td><span className="text-success">{formatPercent(roi)}</span></td>
+                  <td></td>
                 </tr>
             );
         });
@@ -302,6 +305,7 @@ var PositionPanel = React.createClass({
                       <th>Tổng giá vốn</th>
                       <th>Tổng giá thị trường</th>
                       <th>Lợi nhuận</th>
+                      <th>Trạng thái</th>
                     </tr>
                   </thead>
 

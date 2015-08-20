@@ -54,9 +54,9 @@ export var Follower = Backbone.Model.extend({
             this.get("deals").fetch();
         });
 
-        DISPATCHER.on("noti:user:updated", () => {
+        DISPATCHER.on("noti:account:updated", () => {
             this.fetch();
-        })
+        });
     },
 
     parse: function(data) {

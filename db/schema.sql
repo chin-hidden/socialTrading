@@ -36,7 +36,7 @@ CREATE TABLE following (
 );
 
 
--- A deal holds the state of an order.
+-- A transaction holds the state of an order.
 CREATE TABLE transaction (
 	order_id text PRIMARY KEY,
 	username text NOT NULL,
@@ -49,10 +49,12 @@ CREATE TABLE transaction (
 	type text NOT NULL,     -- MP, LO, etc.
 	matched_price numeric(19,2),   -- These two can be NULL,
 	matched_quantity integer ,     -- meaning this order has not been matched yet.
+	status text NOT NULL DEFAULT 'PendingNew',  -- https://ivnd.vndirect.com.vn/pages/viewpage.action?pageId=209682456
 	FOREIGN KEY (username, mimicking_username) REFERENCES following (follower, trader)
 );
 
 
+-- A deal is a buying transaction and a matching selling transaction
 CREATE TABLE deal (
 	id serial PRIMARY KEY,
 	buying_order_id text REFERENCES transaction (order_id),

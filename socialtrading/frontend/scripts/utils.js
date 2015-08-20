@@ -21,3 +21,20 @@ export function formatPercent(amount) {
     }
     return amount.toLocaleString("vi", {style: "percent"});
 }
+
+export function dealStatusName(status) {
+    var map = {
+        "BUYING:PendingNew": "Chờ mua",
+        "BUYING:PartialFilled": "Đang mua",
+        "BUYING:Filled": "Đã mua",
+        "SELLING:PendingNew": "Chờ bán",
+        "SELLING:PartialFilled": "Đang bán",
+        "SELLING:Filled": "Đã bán",
+    };
+
+    if (status in map) {
+      return map[status];
+    } else {
+      return "Không rõ"
+    }
+}

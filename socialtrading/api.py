@@ -128,7 +128,7 @@ def follower_positions(username):
     deals = models.deal_service.get_deals_by_username(username)
 
     return map(make_serializer(["id", "username", "mimicking_username",
-        "buying_price", "quantity", "status", "buying_date", "symbol"]), deals)
+        "buying_price", "quantity", "status", "buying_date", "symbol", 'status']), deals)
 
 
 @api_blueprint.route("/traders")
