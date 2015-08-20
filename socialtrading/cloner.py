@@ -186,12 +186,15 @@ class OrderProcessor:
         if sender.broker == "__DEMO__":
             return datetime.datetime.now().__str__()
 
-    def clone_buying_order(self, trader_order, follower):
-        if follower.next_money_slot() < trader_order.price:
+    def clone_buying_order(self,
+                           trader_order: ExecutedOrderResponse,
+                           follower: models.Follower):
+        new_price = self.clone_price(follower, trader_order)
+
+        # FIXME: Maybe we should loosen up a bit here?
+        if follower.next_money_slot() < new_price:
             logger.debug("Follower doesn't have enough money.")
             return
-
-        new_price = self.clone_price(trader_order)
 
         return Order(
             username=follower.username,
@@ -207,7 +210,7 @@ class OrderProcessor:
                             trader_order: ExecutedOrderResponse,
                             follower: models.Follower,
                             buying_transaction: models.Transaction):
-        new_price = self.clone_price(trader_order)
+        new_price = self.clone_price(follower, trader_order)
         return Order(
             username=follower.username,
             account_number=follower.account_number,
@@ -218,8 +221,11 @@ class OrderProcessor:
             type=OrderType.MP
         )
 
-    def clone_price(self, trader_order: ExecutedOrderResponse) -> float:
-        return trader_order.price
+    def clone_price(self, follower: models.Follower, trader_order: ExecutedOrderResponse) -> float:
+        # Buying price = Init_price*(1 + (risk-0.5)*40%)
+        # Selling price = Init_print*(1-(risk-0.5)*40%)
+        coef = 1 if trader_order.side == OrderSide.NORMAL_BUY else -1
+        return trader_order.price * (1 + coef * (follower.risk_factor / 100 - 0.5) * 0.04)
 
     def on_follower_order_executed(self,
                                    follower: models.Follower,
