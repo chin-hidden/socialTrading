@@ -104,7 +104,27 @@ class Following(db.Model):
 
     @property
     def profit(self) -> float:
-        return 5000000
+        deals = Deal.query \
+            .join(Transaction, Transaction.order_id == Deal.buying_order_id) \
+            .filter(Transaction.username == self.follower_id) \
+            .filter(Transaction.mimicking_username == self.trader_id).all()
+
+        return sum(map(lambda deal: deal.profit, deals))
+
+    @property
+    def roi(self):
+        # The sum of the volume of the buying transactions made by this
+        # relationship that are part of a deal that is "done".
+        _investment = db.session \
+            .query(db.func.sum(Transaction.matched_price * Transaction.matched_quantity)) \
+            .join(Deal, Transaction.order_id == Deal.buying_order_id) \
+            .filter((Transaction.username == self.follower_id) & (Transaction.mimicking_username == self.trader_id)
+                & (Transaction.side == "NB")
+                & (Deal.selling_order_id.isnot(None))) \
+            .scalar()
+        investment = float(_investment)
+
+        return self.profit / investment
 
 
 class Account(db.Model):
@@ -222,6 +242,14 @@ class Transaction(db.Model):
     matched_quantity = db.Column(db.Integer, default=0)
     status = db.Column(db.String, default="PendingNew")
 
+    @property
+    def volume(self):
+        return self.price * self.quantity
+
+    @property
+    def matched_volume(self):
+        return self.matched_price * self.matched_quantity
+
 
 class Deal(db.Model):
     __tablename__ = "deal"
@@ -246,6 +274,13 @@ class Deal(db.Model):
         return self.buying_transaction.matched_price or 0
 
     @property
+    def selling_price(self):
+        if self.selling_transaction:
+            return self.selling_transaction.matched_price
+        else:
+            return 0
+
+    @property
     def quantity(self):
         return self.buying_transaction.matched_quantity or self.buying_transaction.quantity
 
@@ -268,11 +303,11 @@ class Deal(db.Model):
 
     @property
     def profit(self):
-        pass
+        return self.selling_transaction.volume - self.buying_transaction.volume if self.status == "SELLING:Filled" else 0
 
     @property
     def roi(self):
-        pass
+        return self.profit / self.buying_transaction.volume if self.status == "SELLING:Filled" else 0
 
 
 class UserService:

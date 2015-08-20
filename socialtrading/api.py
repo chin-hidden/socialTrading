@@ -116,7 +116,7 @@ def following_relationships(username):
     if not user:
         flask.abort(404)
 
-    fields = ['trader_id', 'follower_id', 'allocated_money', 'profit']
+    fields = ['trader_id', 'follower_id', 'allocated_money', 'profit', 'roi']
 
     return map(make_serializer(fields), user.trader_assocs)
 
@@ -128,7 +128,7 @@ def follower_positions(username):
     deals = models.deal_service.get_deals_by_username(username)
 
     return map(make_serializer(["id", "username", "mimicking_username",
-        "buying_price", "quantity", "status", "buying_date", "symbol", 'status']), deals)
+        "buying_price", "selling_price", "quantity", "status", "buying_date", "symbol", 'profit', 'roi']), deals)
 
 
 @api_blueprint.route("/traders")
