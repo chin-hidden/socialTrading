@@ -98,7 +98,7 @@ class Following(db.Model):
         name='trader', primary_key=True)
     follower_id = db.Column(db.String, db.ForeignKey('account.username'),
         name='follower', primary_key=True)
-    allocated_money = db.Column(db.Numeric)
+    allocated_money = db.Column(db.Float)
     trader = db.relationship("Account", backref="follower_assocs",
         foreign_keys=[trader_id])
 
@@ -115,7 +115,7 @@ class Account(db.Model):
     password = db.Column(db.String)
     name = db.Column(db.String)
     broker = db.Column(db.String)
-    cash = db.Column(db.Numeric)
+    cash = db.Column(db.Float)
     account_type = db.Column(db.String)
     initialized = db.Column(db.Boolean, default=False)
 
@@ -214,11 +214,11 @@ class Transaction(db.Model):
     mimicking_username = db.Column(db.String, db.ForeignKey('account.username'))
     symbol = db.Column(db.String)
     quantity = db.Column(db.Integer)
-    price = db.Column(db.Numeric)
+    price = db.Column(db.Float)
     date = db.Column(db.DateTime)
     side = db.Column(db.Enum("NS", "NB", "MS"))
     type = db.Column(db.Enum("LO"))
-    matched_price = db.Column(db.Numeric, default=0)
+    matched_price = db.Column(db.Float, default=0)
     matched_quantity = db.Column(db.Integer, default=0)
     status = db.Column(db.String, default="PendingNew")
 
