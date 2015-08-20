@@ -88,8 +88,8 @@ class OrderProcessor:
         trans.symbol = cloned_order.symbol
         trans.price = cloned_order.price
         trans.quantity = cloned_order.quantity
-        trans.side = cloned_order.side.value[0]
-        trans.type = cloned_order.type.value
+        trans.side = cloned_order.side.value
+        trans.type = cloned_order.type.value[0]
         trans.date = datetime.datetime.now()
 
         deal = models.Deal()
@@ -151,8 +151,8 @@ class OrderProcessor:
             trans.quantity = cloned_order.quantity
             trans.price = cloned_order.price
             trans.date = datetime.datetime.now()
-            trans.side = cloned_order.side.value[0][0]
-            trans.type = cloned_order.type.value
+            trans.side = cloned_order.side.value
+            trans.type = cloned_order.type.value[0]
 
             deal.selling_transaction = trans
 
