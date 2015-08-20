@@ -436,3 +436,98 @@ ul.nav-tabs > li {
 .panel-vndirect .panel-title {
   color: white;
 }
+
+
+/* HELP PAGE */
+.container-help dt {
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+}
+
+.container-help .side-image {
+  max-width: 200px;
+}
+
+
+/* ERROR PAGE */
+.container-error {
+  display: flex;
+  justify-content: center;
+  /*font-size: 24px;*/
+}
+
+.container-error h1 {
+  font-size: 96px;
+}
+
+.container-error .text {
+  border-left: 2px rgb(243, 145, 0) solid;
+  padding-left: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.container-error .bubble {
+  margin-left: -250px;
+  margin-bottom: -20px;
+  display: inline-block;
+  position: relative;
+}
+
+.container-error .bubble img {
+  width: 400px;
+}
+
+.container-error .bubble span {
+  font-size: 96px;
+  font-weight: bold;
+  position: absolute;
+  left: 60px;
+  top: 80px;
+}
+
+
+/* LOGIN PAGE */
+.container-login .panel {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
+}
+
+.container-login input {
+  margin-bottom: 0.5em;
+}
+
+.container-login .bottom-row {
+  display: flex;
+}
+
+.container-login .bottom-row > form {
+  width: 50%;
+}
+
+.container-login .bottom-row > form:first-child {
+  border-right: 1px #DDD solid;
+  padding-right: 15px;
+}
+
+.container-login .bottom-row > form:nth-child(2) {
+  padding-left: 15px;
+}
+
+.container-login .real-login-box, .demo-login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container-login .demo-login-box input {
+  background-color: #25c400;
+}
+
+
+/* ACCOUNT PAGE */
+.container-account canvas {
+  width: 100%;
+}

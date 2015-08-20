@@ -350,18 +350,8 @@ var OverviewPanel = React.createClass({
         });
     },
     render: function () {
-        var style = "\
-        canvas {\
-            width: 100%;\
-        };";
-
         return (
             <div className="panel panel-default panel-overview panel-tabbed">
-
-                <style scoped={true}>
-                {style}
-                </style>
-
               <div className="panel-body">
                 <div className="info-pane">
                 <img src={me.getAvatar()} className="img-thumbnail"/>

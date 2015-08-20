@@ -2,20 +2,7 @@
 
 {% block content %}
 
-<div class="container">
-
-<style scoped>
-	dt {
-		margin-top: 1em;
-		margin-bottom: 0.2em;
-	}
-
-	dd {
-		/*margin-left: 1em;*/
-	}
-</style>
-
-
+<div class="container container-help">
 <div class="row">
 <dl class="col-md-8">
 	<h1>Những câu hỏi thường gặp</h1>
@@ -70,7 +57,7 @@
 </dl>
 
 <div class="col-md-4">
-<img src="{{ url_for('static', filename='img/error_bubble.png') }}" style="transform: scaleX(-1);">
+<img class="side-image" src="{{ url_for('static', filename='img/question.png') }}">
 </div>
 </div>
 
