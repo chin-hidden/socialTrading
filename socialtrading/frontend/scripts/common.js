@@ -3,14 +3,8 @@
 import Backbone from "backbone";
 import _ from "underscore";
 import SockJS from "sockjs-client";
-import {Traders, Follower} from "./models";
-
-
-export var DISPATCHER = {};
-_.extend(DISPATCHER, Backbone.Events);
-DISPATCHER.on("all", (eventName) => {
-	console.log(eventName);
-});
+import DISPATCHER from "./dispatcher";
+import * as models from "./models";
 
 
 class NotificationStore {
@@ -44,10 +38,10 @@ class NotificationStore {
 var notificationStore = new NotificationStore("/realtime", DISPATCHER);
 
 // A collection of all traders
-export var traders = new Traders();
+export var traders = new models.Traders();
 
 // me is the global object representing the logged in user.
-export var me = new Follower();
+export var me = new models.Follower();
 me.url = "/api/v1/follower/" + USERNAME;
 
 export function loadData() {

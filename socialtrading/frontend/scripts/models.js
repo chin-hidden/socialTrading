@@ -1,5 +1,5 @@
 import Backbone from "backbone";
-import {DISPATCHER} from "./common";
+import DISPATCHER from "./dispatcher";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -31,6 +31,18 @@ export var Traders = Backbone.Collection.extend({
 });
 
 export var FollowingRels = Backbone.Collection.extend({
+    model: Backbone.Model.extend({
+        initialize: function() {
+            this.set("id", this.get("follower_id") + this.get("trader_id"));
+        }
+    }),
+
+    initialize: function() {
+        DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
+            this.fetch();
+        });
+    },
+
     parse: function(data) {
         return data.result;
     }
@@ -50,7 +62,7 @@ export var Follower = Backbone.Model.extend({
     },
 
     initialize: function() {
-        DISPATCHER.on("noti:deal:created noto:deal:updated", () => {
+        DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
             this.get("deals").fetch();
         });
 

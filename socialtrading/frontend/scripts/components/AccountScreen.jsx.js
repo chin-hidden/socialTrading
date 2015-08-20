@@ -183,6 +183,10 @@ var PositionPanel = React.createClass({
         me.get("deals").on("update change", () => {
           this.forceUpdate();
         });
+
+        me.get("following_traders").on("update change", () => {
+          this.forceUpdate();
+        });
     },
 
     changeViewType: function(event) {
@@ -220,10 +224,12 @@ var PositionPanel = React.createClass({
 
             var traderName = traders.get(traderAccount).get("name");
 
+            var rel = me.get("following_traders").get(me.id + traderAccount);
+
             var headerRow = (
                 <tr key={traderName} style={{backgroundColor: "#cbffaf"}}>
                   <td colSpan="7">{traderName}</td>
-                  <td>{formatCurrency(25628674)} (25%)</td>
+                  <td>{formatCurrency(rel.get("profit"))} ({formatPercent(rel.get("roi"))})</td>
                   <td></td>
                 </tr>
             );
