@@ -133,26 +133,26 @@ var InfoBox = React.createClass({
                 <div ref="accountInfo" style={styles.accountInfo}>
                   <div className="row">
                     <div className="col-md-3">
-                      <span className="ui-label">Lợi nhuận</span><br/>
+                      <span className="ui-label">lợi nhuận</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("gross_profit"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span className="ui-label">Tài sản</span><br/>
+                      <span className="ui-label">tài sản</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("nav"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span className="ui-label">Chứng khoán</span><br/>
+                      <span className="ui-label">chứng khoán</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("gross_stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
-                      <span className="ui-label">Tiền mặt</span><br/>
+                      <span className="ui-label">tiền mặt</span><br/>
                       <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
                     </div>
                   </div>
 
                   <div className="row">
                     <div className="col-md-12">
-                      <span className="ui-label">Tốc độ đầu tư:</span>
+                      <span className="ui-label">tốc độ đầu tư:</span>
                       <RiskSlider ref="riskSlider" onChange={this.riskSliderChanged} config={riskSliderConfig}/>
                     </div>
                   </div>
