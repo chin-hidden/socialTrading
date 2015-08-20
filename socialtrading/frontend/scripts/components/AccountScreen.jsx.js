@@ -118,7 +118,7 @@ var InfoBox = React.createClass({
             <div className="panel panel-default">
               <div className="panel-body clearfix">
                 <div ref="personalInfo" style={{float: "left", marginRight: spacing}}>
-                <img src={me.getAvatar()} style={{height: 120}}/>
+                <img src={me.getAvatar()} style={{height: 120}} className="img-thumbnail"/>
                 </div>
 
                 <div ref="personalInfo" style={styles.personalInfo}>
@@ -364,7 +364,7 @@ var OverviewPanel = React.createClass({
 
               <div className="panel-body">
                 <div className="info-pane">
-                <img src={me.getAvatar()} alt=""/>
+                <img src={me.getAvatar()} className="img-thumbnail"/>
                   <div>
                     <div><span className="ui-label-strong">TraderAAA</span></div>
                     <div className="second-line">
