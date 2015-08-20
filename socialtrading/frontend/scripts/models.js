@@ -5,13 +5,19 @@ import {DISPATCHER} from "./common";
 // These models are the "stores" in Facebook's Flux architecture
 // The properties of these models follow Python's snake_case convention.
 //
+function generateAvatar(username) {
+    // return `https://sigil.cupcake.io/${username}?w=144`;
+    // return `http://tinygraphs.com/isogrids/hexa16/${username}?theme=summerwarmth&numcolors=4&size=144&fmt=svg`;
+    return `http://tinygraphs.com/labs/isogrids/hexa16/${username}?theme=summerwarmth&numcolors=4&size=220&fmt=svg`;
+}
+
 
 export var Traders = Backbone.Collection.extend({
     url: "/api/v1/traders",
 
     model: Backbone.Model.extend({
         getAvatar: function() {
-            return `https://sigil.cupcake.io/${this.id}?w=144`;
+            return generateAvatar(this.id);
         }
     }),
 
@@ -68,6 +74,6 @@ export var Follower = Backbone.Model.extend({
     },
 
     getAvatar: function() {
-        return `https://sigil.cupcake.io/${this.id}?w=144`;
+        return generateAvatar(this.id);
     }
 });
