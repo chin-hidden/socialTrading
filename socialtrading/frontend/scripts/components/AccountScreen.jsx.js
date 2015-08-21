@@ -224,7 +224,8 @@ var PositionPanel = React.createClass({
 
             var traderName = traders.get(traderAccount).get("name");
 
-            var rel = me.get("following_traders").get(me.id + traderAccount);
+            // var rel = me.get("following_traders").get(me.id + traderAccount);
+            var rel = me.get("following_traders").where({follower_id: me.id, trader_id: traderAccount})[0];
 
             var headerRow = (
                 <tr key={traderName} style={{backgroundColor: "#cbffaf"}}>
