@@ -81,10 +81,6 @@ export var Follower = Backbone.Model.extend({
         return data;
     },
 
-    isFollowing: function(trader) {
-        return this.get("following_traders").get(trader.id) !== undefined;
-    },
-
     getAvatar: function() {
         return generateAvatar(this.id);
     }

@@ -209,15 +209,6 @@ var TraderCarousel = React.createClass({
 
 var TraderLine = React.createClass({
     render: function() {
-        var followBtnClasses = "btn ";
-        if (me.isFollowing(this.props.trader)) {
-            var followButtonText = "Unfollow";
-            followBtnClasses += "btn-danger";
-        } else {
-            followButtonText = "Follow";
-            followBtnClasses += "btn-primary";
-        }
-
         return (
             <div className="trader-line">
               <div className="trader-avatar">
