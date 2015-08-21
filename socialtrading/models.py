@@ -6,13 +6,13 @@ from .utils import JsonWrapper
 
 
 class OrderType(Enum):
-    ATO = ("ATO", 1, 2)
-    LO  = ("LO",  2, 0)
-    ATC = ("ATC", 1, 7)
-    MP  = ("MP",  1, 0)
-    MOK = ("MOK", 1, 4)
-    MAK = ("MAK", 1, 3)
-    MTL = ("MTL", 1, 0)
+    ATO = ("ATO", "1", "2")
+    LO  = ("LO",  "2", "0")
+    ATC = ("ATC", "1", "7")
+    MP  = ("MP",  "1", "0")
+    MOK = ("MOK", "1", "4")
+    MAK = ("MAK", "1", "3")
+    MTL = ("MTL", "1", "0")
 
     @property
     def numeric_order_type(self) -> int:
@@ -29,11 +29,11 @@ class OrderSide(Enum):
     MARGIN_SELL = "MS"
 
     @classmethod
-    def from_int(cls, code):
+    def from_int_code(cls, code):
         return {
-            1: OrderSide.NORMAL_BUY,
-            2: OrderSide.NORMAL_SELL,
-            5: OrderSide.MARGIN_SELL
+            "1": OrderSide.NORMAL_BUY,
+            "2": OrderSide.NORMAL_SELL,
+            "5": OrderSide.MARGIN_SELL
         }[code]
 
 

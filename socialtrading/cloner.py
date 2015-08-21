@@ -32,13 +32,14 @@ ExecutedOrderResponse = typing.NamedTuple('ExecutedOrderResponse',
      ('qty', int),
      ('price', float),
      ('matchedQty', int),
-     ('matchedPrice', float)])
+     ('matchedPrice', float),
+     ('eventName', str)])
 
 
 def parse_executed_order_response(blob: dict) -> ExecutedOrderResponse:
     blob = copy.copy(blob)
     blob['transactTime'] = datetime.datetime.fromtimestamp(blob['transactTime'] / 1000)
-    blob['side'] = OrderSide.from_int(blob['side'])
+    blob['side'] = OrderSide.from_int_code(blob['side'])
     return ExecutedOrderResponse(**blob)
 
 
