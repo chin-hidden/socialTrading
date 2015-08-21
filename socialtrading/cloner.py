@@ -120,6 +120,7 @@ class OrderProcessor:
                 price=cloned_order.price,
                 matchedQty=cloned_order.quantity,
                 matchedPrice=cloned_order.price,
+                eventName="EXECUTED"
             ))
 
     def sell_deal(self,
@@ -181,6 +182,7 @@ class OrderProcessor:
                     price=cloned_order.price,
                     matchedQty=cloned_order.quantity,
                     matchedPrice=cloned_order.price,
+                    eventName="EXECUTED",
                 ))
 
     def execute_order(self, sender: models.Account, order: Order):
