@@ -164,10 +164,15 @@ var InfoBox = React.createClass({
 });
 
 
+var DealViewType = {
+  ALL: 1,
+  BY_TRADER: 2
+}
+
 var PositionPanel = React.createClass({
     getInitialState: function() {
         return {
-            viewType: "all",
+            viewType: DealViewType.BY_TRADER,
             marketPrices: {
               "VND": 1234,
               "ACB": 3453
@@ -284,7 +289,7 @@ var PositionPanel = React.createClass({
 
     render: function() {
         var deals = me.get("deals");
-        if (this.state.viewType === "by-trader") {
+        if (this.state.viewType === DealViewType.BY_TRADER) {
             var positionRows = this.positionRowsByTrader(deals);
         } else {
             var positionRows = this.positionRowsAll(deals);
@@ -297,8 +302,8 @@ var PositionPanel = React.createClass({
                         value={this.state.viewType}
                         onChange={this.changeViewType}
                         style={{marginBottom: "1em"}}>
-                  <option value="all">Toàn bộ</option>
-                  <option value="by-trader">Theo chiến lược gia</option>
+                  <option value={DealViewType.ALL}>Toàn bộ</option>
+                  <option value={DealViewType.BY_TRADER}>Theo chiến lược gia</option>
                 </select>
 
                 <table className="table table-striped table-hover table-bordered" id="deal-listing">
