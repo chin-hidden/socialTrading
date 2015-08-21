@@ -122,9 +122,13 @@ class Following(db.Model):
                 & (Transaction.side == "NB")
                 & (Deal.selling_order_id.isnot(None))) \
             .scalar()
-        investment = float(_investment)
 
-        return self.profit / investment
+        try:
+            investment = float(_investment)
+            return self.profit / investment
+        except:
+            return 0
+
 
 
 class Account(db.Model):
