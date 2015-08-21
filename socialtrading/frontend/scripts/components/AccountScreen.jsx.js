@@ -130,7 +130,7 @@ var InfoBox = React.createClass({
                   </div>
                 </div>
 
-                <div ref="accountInfo" style={styles.accountInfo}>
+                <div ref="accountInfo" style={styles.accountInfo} id="accountInfo">
                   <div className="row">
                     <div className="col-md-3">
                       <span className="ui-label">lợi nhuận</span><br/>
@@ -301,7 +301,7 @@ var PositionPanel = React.createClass({
                   <option value="by-trader">Theo chiến lược gia</option>
                 </select>
 
-                <table className="table table-striped table-hover table-bordered">
+                <table className="table table-striped table-hover table-bordered" id="deal-listing">
                   <thead>
                     <tr>
                       <th>Mã CK</th>
