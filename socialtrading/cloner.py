@@ -13,10 +13,10 @@ import logging
 import datetime
 import typing
 
-from . import models
 import socialtrading
-from .models import OrderSide, OrderType
+from . import models
 from . import notification
+from .models import db, OrderSide, OrderType
 
 
 logger = logging.getLogger(__name__)
@@ -63,15 +63,23 @@ class OrderProcessor:
         self.deal_service = deal_service
 
     def on_trader_order_executed(self, trader: models.Trader, trader_order: ExecutedOrderResponse):
-        for following_rel in trader.follower_assocs:
-            follower = following_rel.follower
+        try:
+            for following_rel in trader.follower_assocs:
+                follower = following_rel.follower
 
-            # FIXME: this code is blocking so it would take a while to process
-            # 1000 followers sequentially.
-            if trader_order.side == OrderSide.NORMAL_BUY:
-                self.follow_deal(follower, trader, trader_order)
-            elif trader_order.side == OrderSide.NORMAL_SELL:
-                self.sell_deal(follower, trader, trader_order)
+                # FIXME: this code is blocking so it would take a while to process
+                # 1000 followers sequentially.
+                if trader_order.side == OrderSide.NORMAL_BUY:
+                    self.follow_deal(follower, trader, trader_order)
+                elif trader_order.side == OrderSide.NORMAL_SELL:
+                    self.sell_deal(follower, trader, trader_order)
+
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise
+        finally:
+            db.session.remove()
 
     def follow_deal(self, follower, trader, trader_order):
         cloned_order = self.clone_buying_order(trader_order, follower)
@@ -96,11 +104,9 @@ class OrderProcessor:
         deal = models.Deal()
         deal.buying_transaction = trans
 
-        # FIXME: poor db interaction.
-        models.db.session.add(trans)
-        models.db.session.add(deal)
-        models.db.session.add(follower)
-        models.db.session.commit()
+        db.session.add(trans)
+        db.session.add(deal)
+        db.session.add(follower)
 
         self.message_router.send_message_to_user(
             follower.username,
@@ -158,11 +164,9 @@ class OrderProcessor:
 
             deal.selling_transaction = trans
 
-            # FIXME: poor db interaction.
-            models.db.session.add(trans)
-            models.db.session.add(deal)
-            models.db.session.add(follower)
-            models.db.session.commit()
+            db.session.add(trans)
+            db.session.add(deal)
+            db.session.add(follower)
 
             self.message_router.send_message_to_user(
                 follower.username,
@@ -252,9 +256,8 @@ class OrderProcessor:
 
         trans.status = "Filled" if trans.quantity == trans.matched_quantity else "PartialFilled"
 
-        models.db.session.add(trans)
-        models.db.session.add(follower)
-        models.db.session.commit()
+        db.session.add(trans)
+        db.session.add(follower)
 
         # Notification
         self.message_router.send_message_to_user(
