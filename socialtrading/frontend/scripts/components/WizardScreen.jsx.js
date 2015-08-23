@@ -203,7 +203,7 @@ var TraderLine = React.createClass({
                       <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
 
                       <span className="text-label">Lãi dự kiến: </span>
-                      <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong><br/>
+                      <strong className="text-success">{formatPercent(this.props.trader.get('roi'))}</strong><br/>
 
                   </div>
                 </div>

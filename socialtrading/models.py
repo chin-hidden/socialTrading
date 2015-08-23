@@ -224,7 +224,7 @@ class Trader(Account):
 
     @property
     def roi(self):
-        return 10
+        return 0.125
 
     __mapper_args__ = {
         'polymorphic_identity': 'TRADER',
