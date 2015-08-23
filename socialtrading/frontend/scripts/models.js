@@ -1,5 +1,7 @@
 import Backbone from "backbone";
 import DISPATCHER from "./dispatcher";
+import SockJS from "sockjs-client";
+import _ from "underscore";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -10,7 +12,6 @@ function generateAvatar(username) {
     // return `http://tinygraphs.com/isogrids/hexa16/${username}?theme=summerwarmth&numcolors=4&size=144&fmt=svg`;
     return `http://tinygraphs.com/labs/isogrids/hexa16/${username}?theme=summerwarmth&numcolors=4&size=220&fmt=svg`;
 }
-
 
 export var Traders = Backbone.Collection.extend({
     url: "/api/v1/traders",
@@ -85,3 +86,39 @@ export var Follower = Backbone.Model.extend({
         return generateAvatar(this.id);
     }
 });
+
+
+class NotificationStore {
+    constructor(address, dispatcher) {
+        this.dispatcher = dispatcher;
+        this.conn = new SockJS(address);
+
+        this.conn.onopen = this.onOpen.bind(this);
+        this.conn.onmessage = this.onMessage.bind(this);
+        this.conn.onclose = this.onClose.bind(this);
+        this.conn.onError = this.onError.bind(this);
+    }
+
+    onError(e) {
+        this.dispatcher.trigger("noti:error", e);
+    }
+
+    onOpen(e) {
+        console.log("Websocket connection established!");
+        this.dispatcher.trigger("noti:open", e);
+    }
+
+    onMessage(e) {
+        this.dispatcher.trigger("noti:" + e.data.headers.topic, e.data.payload);
+    }
+
+    onClose(e) {
+        this.dispatcher.trigger("noti:close", e);
+    }
+
+    close() {
+        this.conn.close();
+    }
+}
+
+var notificationStore = new NotificationStore("/realtime", DISPATCHER);
