@@ -5,7 +5,7 @@
     Test teardown   Close all browsers
 
     *** Variables ***
-    ${BASE_ADDRESS}  http://172.28.128.3
+    ${BASE_ADDRESS}  http://localhost:8080
 
     *** Test Cases ***
     Show wizard on first login
