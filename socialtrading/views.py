@@ -53,8 +53,13 @@ def debug():
     raise Exception("Just for debugging")
 
 
+def login_arguments():
+    return {
+        "next": "/account"
+    }
+
 @app.route('/login', methods=['GET', 'POST'])
-@menu.register_menu(app, '.login', u'Đăng nhập', order=4, visible_when=lambda: not is_logged_in())
+@menu.register_menu(app, '.login', u'Đăng nhập', order=4, visible_when=lambda: not is_logged_in(), endpoint_arguments_constructor=login_arguments)
 def login():
     """\
     GET: Show the login page.
