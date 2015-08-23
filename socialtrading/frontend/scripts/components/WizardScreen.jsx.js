@@ -73,11 +73,13 @@ export var WizardScreen = React.createClass({
           <div className="panel panel-vndirect wizard">
             <div className="panel-heading">
                 <h2 className="panel-title">
-                Xin chào {me.get('name')}. Trước hết bạn cần thiết lập tài khoản của mình.
+                Xin chào {me.get('name')}!
                 </h2>
             </div>
 
             <div className="panel-body">
+                <p>Trước hết bạn cần thiết lập tài khoản của mình.
+                </p>
               <div className="step">
                 <h3>Bước 1: Khoản tiền đầu tư của bạn tại Autotrade:</h3>
 
@@ -96,7 +98,7 @@ export var WizardScreen = React.createClass({
                 <RiskSlider ref="riskSlider" config={riskSliderConfig}/>
                 <p>
                 <small>
-                Bạn mong muốn đồng hành cùng các nhà đầu tư ở tốc độ nhanh hay chậm? Tốc độ càng nhanh thì khả năng lãi của bạn càng lớn hơn nhưng độ rủi ro cho khoản đầu tư của bạn cũng cao hơn. <strong>Autotrade</strong> sẽ dựa trên tốc độ đầu tư đó để xác định lại mức giá giao dịch của mỗi tín hiệu từ nhà đầu tư bạn đang theo dõi. Với tốc độ 50, tài khoản của bạn sẽ được đặt các lệnh có giá ngang bằng với giá đặt của Nhà đầu tư. 
+                Bạn mong muốn đồng hành cùng các nhà đầu tư ở tốc độ nhanh hay chậm? Tốc độ càng nhanh thì khả năng lãi của bạn càng lớn hơn nhưng độ rủi ro cho khoản đầu tư của bạn cũng cao hơn. <strong>Autotrade</strong> sẽ dựa trên tốc độ đầu tư đó để xác định lại mức giá giao dịch của mỗi tín hiệu từ nhà đầu tư bạn đang theo dõi. Với tốc độ 50, tài khoản của bạn sẽ được đặt các lệnh có giá ngang bằng với giá đặt của Nhà đầu tư.
                 <br/>
                 <a href="">Tìm hiểu thêm</a>
 
