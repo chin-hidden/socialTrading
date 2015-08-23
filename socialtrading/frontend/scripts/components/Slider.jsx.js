@@ -5,7 +5,7 @@ import "leongersen/noUiSlider/nouislider.css!";
 
 export default class Slider extends React.Component {
     innerSlider() {
-        return this.refs.slider;
+        return this.refs.slider.getDOMNode();
     }
 
     componentDidMount() {

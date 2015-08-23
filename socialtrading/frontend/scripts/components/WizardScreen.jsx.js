@@ -3,9 +3,8 @@
 import React from "react";
 import _ from "underscore";
 import $ from "jquery";
-import slick from "kenwheeler/slick";
-import "kenwheeler/slick/slick/slick.css!";
 import {me, traders} from "../common";
+import Carousel from 'nuka-carousel';
 import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
 import RiskSlider from "./RiskSlider.jsx";
 import MoneySlider from "./MoneySlider.jsx";
@@ -120,6 +119,8 @@ export var WizardScreen = React.createClass({
 
 // FIXME Using global `traders` object
 var TraderCarousel = React.createClass({
+    mixins: [Carousel.ControllerMixin],
+
     getInitialState: function() {
         return {
             selectedTraders: [],
@@ -128,27 +129,6 @@ var TraderCarousel = React.createClass({
     },
 
     componentDidMount: function() {
-        var _this = this;
-        var thumb = this.refs.thumbSlider;
-        // var detail = this.refs.detailSlider.getDOMNode();
-
-        $(thumb).slick({
-            // asNavFor: $(detail),
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            centerMode: true,
-            centerPadding: '60px',
-            focusOnSelect: true,
-            nextArrow: this.refs.btnNext,
-            prevArrow: this.refs.btnPrev
-        });
-
-        // $(detail).on("afterChange", function(event, slick, currentSlide) {
-        //     _this.setState({
-        //         selectedTrader: traders.models[currentSlide],
-        //         currentSlide: currentSlide
-        //     });
-        // });
     },
 
     selectedTraders: function() {
@@ -170,74 +150,67 @@ var TraderCarousel = React.createClass({
     render: function() {
         var traderNodes = traders.map((trader, index) => {
             return <TraderLine key={trader.id}
-            onSelected={this.traderSelected.bind(null, trader)}
-            trader={trader} index={index + 1} />;
+                               onSelected={this.traderSelected.bind(null, trader)}
+                               trader={trader}
+                               index={index + 1} />;
         });
 
-        var buttonStyle = {
-            position: 'absolute',
-            top: 0,
-            width: 30,
-            height: '100%',
-            backgroundColor: '#DDD',
-            border: "none"
-        };
-
-        var styles = {
-            next: _.extend({
-                right: 0,
-            }, buttonStyle),
-            prev: _.extend({
-                left: 0,
-            }, buttonStyle),
-            thumbSlider: {
-                position: 'relative'
-            },
-            detail: {
-                marginBottom: 20
-            }
-        };
-
         return (
-            <div>
-              <div style={styles.thumbSlider}>
-                <div ref="thumbSlider" className="trader-thumb-slider">
-                  {traderNodes}
-                </div>
-
-                <button style={styles.next} ref="btnNext">&#9654;</button>
-                <button style={styles.prev} ref="btnPrev">&#9664;</button>
-              </div>
-            </div>
+            <Carousel slidesToShow={2} cellSpacing={20}>
+                {traderNodes}
+            </Carousel>
         );
     }
 });
 
 
 var TraderLine = React.createClass({
+    propTypes: {
+        onSelected: React.PropTypes.func
+    },
+
+    getInitialState: function() {
+        return {
+            selected: false
+        };
+    },
+
+    onSelected: function(event) {
+        this.setState({selected: event.target.checked});
+        this.props.onSelected(event);
+    },
+
     render: function() {
+        var actionRowClasses = "row-action";
+        if (this.state.selected) {
+            actionRowClasses += " checked";
+        }
+
         return (
             <div className="trader-line">
-              <div className="trader-avatar">
-                <img src={this.props.trader.getAvatar()} className="img-thumbnail"/>
-              </div>
+                <div className="row-info">
+                  <div className="avatar">
+                    <img src={this.props.trader.getAvatar()} className="img-thumbnail"/>
+                  </div>
 
-              <div style={{}}>
-                  <p style={{fontWeight: "bold", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{this.props.trader.get("name")}</p>
+                  <div>
+                      <p style={{fontWeight: "bold", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap"}}>{this.props.trader.get("name")}</p>
 
-                  <span className="text-label">NAV: </span>
-                  <strong className="text-success">{formatCurrency(this.props.trader.get("nav"))}</strong><br/>
+                      <span className="text-label">Số tiền đầu tư: </span>
+                      <strong className="text-success">{formatCurrency(this.props.trader.get("total_allocated_money"))}</strong><br/>
 
-                  <span className="text-label">Số người theo dõi: </span>
-                  <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
+                      <span className="text-label">Số người theo dõi: </span>
+                      <strong className="text-success">{this.props.trader.get("people_following")}</strong><br/>
 
-                  <span className="text-label">Lãi dự kiến: </span>
-                  <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong><br/>
+                      <span className="text-label">Lãi dự kiến: </span>
+                      <strong className="text-success">{formatPercent(this.props.trader.get('roi') / 100)}</strong><br/>
 
-                  <hr/>
+                  </div>
+                </div>
 
-                <input onChange={this.props.onSelected} type="checkbox"/> Chọn chiến lược này
-              </div>
+                <div className={actionRowClasses}>
+                    <input type="checkbox" onChange={this.onSelected}/> Lựa chọn chiến lược này
+                </div>
             </div>
         );
     }

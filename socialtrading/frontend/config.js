@@ -27,14 +27,15 @@ System.config({
     "jquery": "github:components/jquery@2.1.4",
     "kenwheeler/slick": "github:kenwheeler/slick@1.5.8",
     "leongersen/noUiSlider": "github:leongersen/noUiSlider@8.0.2",
-    "react": "npm:react@0.14.0-beta3",
+    "nuka-carousel": "npm:nuka-carousel@0.0.17",
+    "react": "npm:react@0.13.3",
     "sockjs-client": "npm:sockjs-client@1.0.3",
     "underscore": "npm:underscore@1.8.3",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
-      "buffer": "npm:buffer@3.4.2"
+      "buffer": "npm:buffer@3.4.3"
     },
     "github:jspm/nodelibs-constants@0.1.0": {
       "constants-browserify": "npm:constants-browserify@0.0.1"
@@ -165,6 +166,11 @@ System.config({
       "ieee754": "npm:ieee754@1.1.6",
       "is-array": "npm:is-array@1.0.1"
     },
+    "npm:buffer@3.4.3": {
+      "base64-js": "npm:base64-js@0.0.8",
+      "ieee754": "npm:ieee754@1.1.6",
+      "is-array": "npm:is-array@1.0.1"
+    },
     "npm:clean-css@3.3.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "commander": "npm:commander@2.8.1",
@@ -195,6 +201,11 @@ System.config({
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:core-js@1.0.1": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
+    },
+    "npm:core-js@1.1.1": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "systemjs-json": "github:systemjs/plugin-json@0.1.0"
@@ -294,7 +305,7 @@ System.config({
       "websocket-driver": "npm:websocket-driver@0.6.2"
     },
     "npm:fbjs@0.1.0-alpha.4": {
-      "core-js": "npm:core-js@1.0.1",
+      "core-js": "npm:core-js@1.1.1",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -324,6 +335,13 @@ System.config({
     "npm:miller-rabin@2.0.1": {
       "bn.js": "npm:bn.js@2.2.0",
       "brorand": "npm:brorand@1.0.5"
+    },
+    "npm:nuka-carousel@0.0.17": {
+      "exenv": "npm:exenv@1.2.0",
+      "object-assign": "npm:object-assign@2.1.1",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "react": "npm:react@0.13.3",
+      "react-tween-state": "npm:react-tween-state@0.0.5"
     },
     "npm:original@0.0.8": {
       "url-parse": "npm:url-parse@0.2.3"
@@ -373,6 +391,14 @@ System.config({
     "npm:randombytes@2.0.1": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:react-tween-state@0.0.5": {
+      "tween-functions": "npm:tween-functions@1.0.2"
+    },
+    "npm:react@0.13.3": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "envify": "npm:envify@3.4.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:react@0.14.0-beta3": {
