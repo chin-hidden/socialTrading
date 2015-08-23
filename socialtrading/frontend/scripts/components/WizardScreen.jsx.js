@@ -96,10 +96,15 @@ export var WizardScreen = React.createClass({
                 <RiskSlider ref="riskSlider" config={riskSliderConfig}/>
                 <p>
                 <small>
-                Bạn mong muốn đồng hành cùng các nhà đầu tư ở tốc độ nhanh hay chậm? Tốc độ càng nhanh thì khả năng lãi của bạn càng lớn hơn nhưng độ rủi ro cho khoản đầu tư của bạn cũng cao hơn. <strong>Autotrade</strong> sẽ dựa trên tốc độ đầu tư đó để xác định lại mức giá giao dịch của mỗi tín hiệu từ nhà đầu tư bạn đang theo dõi. Với tốc độ 50, tài khoản của bạn sẽ được đặt các lệnh có giá ngang bằng với giá đặt của Nhà đầu tư.
-                <br/>
-                <a href="">Tìm hiểu thêm</a>
+                Bạn mong muốn đồng hành cùng các nhà đầu tư ở tốc độ nhanh hay
+                chậm? Tốc độ càng nhanh thì khả năng lãi của bạn càng lớn hơn
+                nhưng độ rủi ro cho khoản đầu tư của bạn cũng cao hơn.
+                {" "}<strong>Autotrade</strong> sẽ dựa trên tốc độ đầu tư đó để xác
+                định lại mức giá giao dịch của mỗi tín hiệu từ nhà đầu tư bạn
+                đang theo dõi. Với tốc độ 50, tài khoản của bạn sẽ được đặt
+                các lệnh có giá ngang bằng với giá đặt của Nhà đầu tư.
 
+                {" "} <a href="/help">Tìm hiểu thêm.</a>
                 </small>
                 </p>
 
