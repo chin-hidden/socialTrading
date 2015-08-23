@@ -470,6 +470,10 @@ ul.nav-tabs > li {
   width: 100%;
 }
 
+.panel-deals, .panel-overview {
+  min-height: 50vh;
+}
+
 
 /* HOME PAGE */
 .container-home {

@@ -291,14 +291,21 @@ var PositionPanel = React.createClass({
 
     render: function() {
         var deals = me.get("deals");
-        if (this.state.viewType === DealViewType.BY_TRADER) {
+
+        if (deals.length === 0) {
+          var positionRows = (
+            <tr>
+              <td colSpan="9">Các chiến lược gia của bạn chưa mua cổ phiếu nào. Xin vui lòng chờ thêm.</td>
+            </tr>
+          );
+        } else if (this.state.viewType === DealViewType.BY_TRADER) {
             var positionRows = this.positionRowsByTrader(deals);
         } else {
             var positionRows = this.positionRowsAll(deals);
         }
 
         return (
-            <div className="panel panel-default panel-tabbed">
+            <div className="panel panel-default panel-tabbed panel-deals">
               <div className="panel-body">
                 <select ref="viewTypeSelector"
                         value={this.state.viewType}
