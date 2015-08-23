@@ -209,7 +209,12 @@ var PositionPanel = React.createClass({
         var posByTrader = deals.groupBy("mimicking_username");
         var result = _.map(posByTrader, (deals, traderAccount) => {
             var rowsForThisTrader = _.map(deals, (deal) => {
-                var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
+                if (deal.get("status") === "SELLING:Filled") {
+                    var marketPrice = deal.get("selling_price");
+                } else {
+                    var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
+                }
+
                 var totalCost = deal.get("buying_price") * deal.get("quantity");
                 var totalValue = marketPrice * deal.get("quantity");
                 var gain = totalValue - totalCost;
