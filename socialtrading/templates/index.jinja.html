@@ -1,50 +1,64 @@
 {% extends "base.jinja.html" %}
 
+{% block extra_headers %}
+<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% macro autotrade() %}
+  <strong><span class="accent">Auto</span>trade</strong>
+{% endmacro %}
+
 {% block content %}
+<div class="container-home">
+  <div class="hero">
 
-<div class="hero">
-
-  <div class="container">
-    <h1>Dễ hơn chơi lô,<br/> ngon hơn đánh đề!</h1>
-    <div class="row">
-      <div class="col-md-8">
-        <p>
-        <span>Mạng đầu tư <strong>Autotrade</strong> -
-        Hệ thống tự động sao chép chiến lược đầu tư lãi nhất thị trường.
-        </span>
+    <div class="container">
+      <div class="text">
+        <p class="shoutout">
+          <span class="light">Dễ hơn chơi lô,</span> <br/>
+          <strong>Ngon hơn đánh đề!</strong>
         </p>
+
+        <p>{{ autotrade() }} - Hệ thống tự động sao chép chiến lược đầu tư lãi nhất thị trường</p>
+
+        <a class="btn btn-primary btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
       </div>
-      <div class="col-md-4">
-        <a class="btn btn-lg btn-primary" href="{{ url_for('account') }}">
-        Đầu tư ngay!
-        </a>
-      </div>
+
+      <img src="{{ url_for('static', filename='img/man-riding.png') }}">
     </div>
   </div>
-</div>
 
-<div class="home-container container">
-  <div class="row features">
-    <div class="col-md-4">
-      <h3>Lãi nhất thị trường</h3>
-      <p>
-      Lựa chọn các chiến lược gia lãi nhất trên thị trường
-      và Autotrade sẽ tự động sao chép giao dịch của họ
-      vào tài khoản của bạn.
-      </p>
+  <div class="features">
+    <div class="with-the-best">
+      <div class="text">
+        <h2>Đầu tư cùng <br/> những người giỏi nhất</h2>
+        <p>Chọn nhà đầu tư bạn muốn kiếm lời cùng và Autotrade sẽ sao chép giao dịch của họ vào tài khoản của bạn.</p>
+      </div>
+
+      <img src="{{ url_for('static', filename='img/networking.png') }}">
     </div>
-    <div class="col-md-4">
-      <h3>Không tốn thời gian</h3>
-      <p>
-      Không tốn thời gian theo dõi diễn biến thị trường và phân tích dữ liệu thị trường để ra quyết định đầu tư, trong lúc bạn ngủ tiền tự đẻ ra tiền!
-      </p>
-    </div>
-    <div class="col-md-4">
-      <h3>Kết quả tức thời</h3>
-      <p>
-      Quản lý tài khoản dễ dàng, hiển thị minh bạch thông tin
-      đầu tư của bạn và Chiến lược gia bạn đang sao chép.
-      </p>
+
+    <div class="last-two-features">
+      <div class="save-time">
+        <div class="container">
+          <div class="text">
+            <h2>Tiết kiệm thời gian</h2>
+            <p>Không cần theo dõi diễn biến và phân tích thị trường 24/7 để ra quyết định đầu tư. Trong lúc bạn ngủ tiền tự đẻ ra tiền.</p>
+          </div>
+
+          <img src="{{ url_for('static', filename='img/smp_circle.png') }}">
+        </div>
+      </div>
+
+      <div class="transparency">
+        <div class="text">
+          <h2>Minh bạch thông tin</h2>
+          <p>Quản lý tài khoản dễ dàng, hiển thị minh bạch kết quả đầu tư của bạn và Nhà đầu tư bạn sao chép.</p>
+          <a class="btn btn-primary btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
+        </div>
+
+        <img src="{{ url_for('static', filename='img/transparency.png') }}" alt="">
+      </div>
     </div>
   </div>
 </div>
