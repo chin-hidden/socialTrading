@@ -54,6 +54,7 @@ def debug():
 
 
 @app.route('/login', methods=['GET', 'POST'])
+@menu.register_menu(app, '.login', u'Đăng nhập', order=4, visible_when=lambda: not is_logged_in())
 def login():
     """\
     GET: Show the login page.
