@@ -34,7 +34,6 @@
         Login to account page
         Wait until element is visible  link=Danh mục đầu tư
         Click element                  link=Danh mục đầu tư
-        Select from list               tag=select  Theo chiến lược gia
         Execute order                  {"orderId": "lol", "account": "0101807860", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
         Sleep                          1
         Table row should contain       deal-listing  1  Xin Một Lần Thua
@@ -46,7 +45,6 @@
         Login to account page
         Wait until element is visible  link=Danh mục đầu tư
         Click element                  link=Danh mục đầu tư
-        Select from list               tag=select  Theo chiến lược gia
         Execute order                  {"orderId": "lol1", "account": "account-trader-01", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
         Sleep                          1
         Execute order                  {"orderId": "lol2", "account": "account-trader-02", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
@@ -59,7 +57,6 @@
         Login to account page
         Wait until element is visible  link=Danh mục đầu tư
         Click element                  link=Danh mục đầu tư
-        Select from list               tag=select  Theo chiến lược gia
-        Execute order                  {"orderId": "lol", "account": "0101807860", "side": "2", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
+        Execute order                  {"orderId": "lol", "account": "0101807860", "side": "2", "symbol": "VND", "qty": 100, "price": 24000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
         Sleep                          1
         Table should contain           deal-listing  Đã bán

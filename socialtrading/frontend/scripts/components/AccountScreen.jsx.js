@@ -310,15 +310,16 @@ var PositionPanel = React.createClass({
         }
 
         return (
+            // FIXME: Redesign this deal listing view.
             <div className="panel panel-default panel-tabbed panel-deals">
               <div className="panel-body">
-                <select ref="viewTypeSelector"
+                {/* <select ref="viewTypeSelector"
                         value={this.state.viewType}
                         onChange={this.changeViewType}
                         style={{marginBottom: "1em"}}>
                   <option value={DealViewType.ALL}>Toàn bộ</option>
                   <option value={DealViewType.BY_TRADER}>Theo chiến lược gia</option>
-                </select>
+                </select> */}
 
                 <table className="table table-striped table-hover table-bordered" id="deal-listing">
                   <thead>
