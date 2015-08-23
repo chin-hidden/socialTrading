@@ -4,6 +4,7 @@ import _ from "underscore";
 import {me, traders} from "../common";
 import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
 import RiskSlider from "./RiskSlider.jsx";
+import $ from "jquery";
 
 
 export var AccountScreen = React.createClass({
@@ -73,12 +74,13 @@ var InfoBox = React.createClass({
     riskSliderChanged: function(value) {
         me.set("risk_factor", Math.floor(value));
         me.save(null, {
-            success: function() {
-                alert("Đã lưu!");
+            success: () => {
+                $.notify("Đã lưu");
             },
-            error: function(model, response, options) {
-                alert("Lỗi!");
-                console.log(model, response, options);
+            error: (model, response, options) => {
+                $.notify("Không thể lưu!", {
+                    className: "error"
+                });
             }
         });
     },

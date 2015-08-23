@@ -5,6 +5,10 @@ import _ from "underscore";
 import SockJS from "sockjs-client";
 import DISPATCHER from "./dispatcher";
 import * as models from "./models";
+import $ from "jquery";
+import "jpillora/notifyjs/dist/notify-combined.min";
+
+$.notify.defaults({ className: "success", position: "bottom left" });
 
 
 class NotificationStore {
@@ -15,6 +19,11 @@ class NotificationStore {
 		this.conn.onopen = this.onOpen.bind(this);
 		this.conn.onmessage = this.onMessage.bind(this);
 		this.conn.onclose = this.onClose.bind(this);
+		this.conn.onError = this.onError.bind(this);
+	}
+
+	onError(e) {
+		$.notify("Có vấn đề khi kết nối với máy chủ! Vui lòng tải lại trang.", {className: "error"});
 	}
 
 	onOpen(e) {
@@ -27,6 +36,7 @@ class NotificationStore {
 	}
 
 	onClose(e) {
+		$.notify("Mất kết nối với máy chủ! Vui lòng tải lại trang.", {className: "error"});
 		this.dispatcher.trigger("noti:close", e);
 	}
 

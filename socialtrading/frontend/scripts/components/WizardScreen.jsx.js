@@ -2,7 +2,6 @@
 
 import React from "react";
 import _ from "underscore";
-import $ from "jquery";
 import {me, traders} from "../common";
 import Carousel from 'nuka-carousel';
 import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
