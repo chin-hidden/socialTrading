@@ -3,9 +3,10 @@
 
 Vagrant.configure(2) do |config|
   config.vm.box = "chef/centos-7.0"
-  # config.vm.provider "virtualbox" do |v|
-  #   v.gui = true
-  # end
+  config.vm.provider "virtualbox" do |v|
+    #v.gui = true
+    v.memory = "256"
+  end
 
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   # config.vm.network "forwarded_port", guest: 5000, host: 5001
