@@ -167,8 +167,8 @@ var InfoBox = React.createClass({
 
 
 var DealViewType = {
-  ALL: 1,
-  BY_TRADER: 2
+  ALL: "ALL",
+  BY_TRADER: "BY_TRADER"
 }
 
 var PositionPanel = React.createClass({
