@@ -3,7 +3,7 @@ import {formatPercent} from "../utils";
 
 export default class RiskSlider extends SliderWithTooltip {
     formatTooltip(value) {
-        return formatPercent(parseFloat(value) * 10);
+        return formatPercent(parseFloat(value) / 100);
     }
 
     render() {
