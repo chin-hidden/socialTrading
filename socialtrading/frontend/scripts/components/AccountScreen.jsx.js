@@ -360,7 +360,7 @@ var OverviewPanel = React.createClass({
             ]
         };
 
-        var ctx = this.refs.overviewChart.getContext("2d");
+        var ctx = this.refs.overviewChart.getDOMNode().getContext("2d");
         var chart = new Chart(ctx).Line(data, {
             responsive: true
         });
