@@ -9,7 +9,7 @@ class CustomCommands(object):
         return location.find(pattern) == -1
 
     def execute_order(self, order, exchange='NotiCenter.Exchange.ExecutedOrder'):
-        params = pika.URLParameters("amqp://guest:guest@172.28.128.3:5672/")
+        params = pika.URLParameters("amqp://guest:guest@localhost:5673/")
         connection = pika.BlockingConnection(params)
         channel = connection.channel()
 
