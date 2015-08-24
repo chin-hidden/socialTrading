@@ -521,59 +521,67 @@ ul.nav-tabs > li {
 }
 
 .container-home .features {
-  background-color: rgb(248, 236, 219);
   margin-bottom: -40px;
   padding-bottom: 150px;
   position: relative;
 }
 
-.with-the-best {
+.with-the-best .container {
   position: relative;
-  padding-top: 50px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.with-the-best img {
+  margin-left: -400px;
 }
 
 .with-the-best .text {
   position: absolute;
-  right: 20px;
-  top: 200px;
+  left: 500px;
+  margin-top: 120px;
   width: 500px;
 }
 
 
 .save-time {
-  height: 500px;
+  background-color: rgb(248, 236, 219);
+  background-image: url("../img/waves_background.png");
 }
 
 .save-time .container {
   position: relative;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 .save-time .text {
-  width: 500px;
+  width: 50%;
   margin-top: 100px;
+  float: left;
 }
 
 .save-time img {
-  position: absolute;
-  right: -100px;
-  top: 0;
+  width: 50%;
+  float: left;
 }
 
 .transparency {
-  position: relative;
-}
-
-.transparency .text {
-  position: absolute;
-  left: 800px;
-  bottom: 0;
-  width: 400px;
+  padding-top: 100px;
+  /*background-image: url("../img/waves_background_1.png");*/
 }
 
 .transparency img {
-  margin-left: 100px;
+  float: left;
+  width: 50%;
+  margin-left: -100px;
 }
 
+.transparency .text {
+  float: left;
+  margin-left: 100px;
+  width: 50%;
+}
 
 /*
 Checkbox style
@@ -625,4 +633,39 @@ Taken from here: http://codepen.io/bbodine1/pen/novBm;
 }
 .squaredTwo input[type=checkbox]:checked + label:after {
   opacity: 1;
+}
+
+.btn-next {
+  border-radius: 3px;
+  position: relative;
+  padding-right: 46px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.btn-next:before,
+.btn-next:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.btn-next:before {
+  content: " ";
+  background-color: black;
+  opacity: 0.3;
+}
+
+.btn-next:after {
+  content: "\e072";
+  font-family: 'Glyphicons Halflings';
+  font-weight: 400;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
 }

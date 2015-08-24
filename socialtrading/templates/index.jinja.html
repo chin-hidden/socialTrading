@@ -21,7 +21,7 @@
 
         <p>{{ autotrade() }} - Hệ thống tự động sao chép chiến lược đầu tư lãi nhất thị trường</p>
 
-        <a class="btn btn-primary btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
+        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}" style="background-color: #D20D1F;">Bắt đầu</a>
       </div>
 
       <img src="{{ url_for('static', filename='img/man-riding.png') }}">
@@ -30,34 +30,39 @@
 
   <div class="features">
     <div class="with-the-best">
-      <div class="text">
-        <h2>Đầu tư cùng <br/> những người giỏi nhất</h2>
-        <p>Chọn nhà đầu tư bạn muốn kiếm lời cùng và Autotrade sẽ sao chép giao dịch của họ vào tài khoản của bạn.</p>
-      </div>
+      <div class="container">
+        <div class="text">
+          <h2>Đầu tư cùng <br/> những người giỏi nhất</h2>
+          <p>Chọn nhà đầu tư bạn muốn kiếm lời cùng và Autotrade sẽ sao chép giao dịch của họ vào tài khoản của bạn.</p>
+          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('traders') }}" style="background-color: #008A45;">
+            Danh sách nhà đầu tư
+          </a>
+        </div>
 
-      <img src="{{ url_for('static', filename='img/networking.png') }}">
+        <img src="{{ url_for('static', filename='img/networking.png') }}">
+      </div>
     </div>
 
-    <div class="last-two-features">
-      <div class="save-time">
-        <div class="container">
-          <div class="text">
-            <h2>Tiết kiệm thời gian</h2>
-            <p>Không cần theo dõi diễn biến và phân tích thị trường 24/7 để ra quyết định đầu tư. Trong lúc bạn ngủ tiền tự đẻ ra tiền.</p>
-          </div>
-
-          <img src="{{ url_for('static', filename='img/smp_circle.png') }}">
-        </div>
-      </div>
-
-      <div class="transparency">
+    <div class="save-time">
+      <div class="container">
         <div class="text">
-          <h2>Minh bạch thông tin</h2>
-          <p>Quản lý tài khoản dễ dàng, hiển thị minh bạch kết quả đầu tư của bạn và Nhà đầu tư bạn sao chép.</p>
-          <a class="btn btn-primary btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
+          <h2>Không cần kinh nghiệm <br/> Tiết kiệm thời gian</h2>
+          <p>Không cần tốn thời gian tìm hiểu và theo dõi thị trường chứng khoán, nhà đầu tư bạn tin tưởng sẽ đưa ra quyết định đầu tư giúp bạn kiếm lời.</p>
+
+          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}" style="background-color: #F95F25;">Dùng thử</a>
         </div>
 
-        <img src="{{ url_for('static', filename='img/transparency.png') }}" alt="">
+        <img src="{{ url_for('static', filename='img/trader_and_follower.png') }}">
+      </div>
+    </div>
+
+    <div class="transparency container">
+      <img src="{{ url_for('static', filename='img/transparency.png') }}" alt="">
+
+      <div class="text">
+        <h2>Minh bạch thông tin</h2>
+        <p>Quản lý tài khoản dễ dàng, hiển thị minh bạch kết quả đầu tư của bạn và Nhà đầu tư bạn sao chép.</p>
+        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
       </div>
     </div>
   </div>
