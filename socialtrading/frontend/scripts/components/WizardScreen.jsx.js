@@ -213,7 +213,7 @@ var TraderLine = React.createClass({
                 </div>
 
                 <div className={actionRowClasses}>
-                    <input type="checkbox" onChange={this.onSelected}/> Lựa chọn chiến lược này
+                    <label><input type="checkbox" onChange={this.onSelected}/> Lựa chọn chiến lược này</label>
                 </div>
             </div>
         );
