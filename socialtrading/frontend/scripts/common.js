@@ -5,7 +5,7 @@ import $ from "jquery";
 import "jpillora/notifyjs/dist/notify-combined.min";
 import "./notification";
 
-$.notify.defaults({ className: "success", position: "bottom left" });
+$.notify.defaults({ className: "success"});
 
 // A collection of all traders
 export var traders = new models.Traders();
