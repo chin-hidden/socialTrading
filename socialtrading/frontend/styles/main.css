@@ -670,3 +670,38 @@ Taken from here: http://codepen.io/bbodine1/pen/novBm;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
+
+
+.panel-overview .panel-body {
+  display: flex;
+}
+
+.panel-overview .graph {
+  flex-grow: 1;
+}
+
+.panel-overview .trader-listing {
+  padding-right: 1em;
+  margin-right: 1em;
+  border-right: 1px #AAA dashed;
+}
+
+.panel-overview .trader-listing button {
+  margin-top: 1em;
+}
+
+.trader-tab > div {
+  float: left;
+}
+
+.trader-tab .avatar {
+  width: 80px;
+  margin-right: 1em;
+}
+
+.trader-tab {
+  border-bottom: 1px #AAA dashed;
+  padding-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}

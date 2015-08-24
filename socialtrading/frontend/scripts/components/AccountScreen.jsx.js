@@ -176,7 +176,7 @@ var PositionPanel = React.createClass({
         return {
             viewType: DealViewType.BY_TRADER,
             marketPrices: {
-              "VND": 1234,
+              "ITC": 1234,
               "ACB": 3453
             },
         };
@@ -212,13 +212,30 @@ var PositionPanel = React.createClass({
                 if (deal.get("status") === "SELLING:Filled") {
                     var marketPrice = deal.get("selling_price");
                 } else {
+
+                    var prices = {
+                        "ITC": 9100,
+                        "KMR": 5400,
+                        "DCL": 26900
+                    };
+
                     var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
+
+                    if (deal.get("symbol") in prices) {
+                        marketPrice = prices[deal.get("symbol")];
+                    }
                 }
 
                 var totalCost = deal.get("buying_price") * deal.get("quantity");
                 var totalValue = marketPrice * deal.get("quantity");
                 var gain = totalValue - totalCost;
                 var roi = gain / totalCost;
+
+                var roiClassNames = "text-success";
+                if (roi < 0) {
+                    roiClassNames = "text-danger";
+                }
+
                 return (
                     <tr key={deal.id}>
                       <td>{deal.get("symbol")}</td>
@@ -228,7 +245,7 @@ var PositionPanel = React.createClass({
                       <td>{formatCurrency(marketPrice)}</td>
                       <td>{formatCurrency(totalCost)}</td>
                       <td>{formatCurrency(totalValue)}</td>
-                      <td><span className="text-success">{formatPercent(roi)}</span></td>
+                      <td><span className={roiClassNames}>{formatPercent(roi)}</span></td>
                       <td>{dealStatusName(deal.get("status"))}</td>
                     </tr>
                 );
@@ -350,27 +367,17 @@ var PositionPanel = React.createClass({
 var OverviewPanel = React.createClass({
     componentDidMount: function() {
         var data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"],
             datasets: [
                 {
-                    label: "My First dataset",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-                {
                     label: "My Second dataset",
-                    fillColor: "rgba(255, 153, 0, 0.2)",
+                    fillColor: "rgba(255, 153, 0, 0.0)",
                     strokeColor: "rgba(255, 153, 0, 1)",
                     pointColor: "rgba(255, 153, 0, 1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(255, 153, 0, 1)",
-                    data: [28, 48, 40, -22, 86, 27, 90]
+                    data: [28, 48, 40, 30, 86, 60, 90]
                 }
             ]
         };
@@ -381,31 +388,45 @@ var OverviewPanel = React.createClass({
         });
     },
     render: function () {
+        var rels = me.get("following_traders");
+
+        var traderTabs = rels.map((rel) => {
+            var trader = traders.get(rel.get("trader_id"));
+
+            return (
+                <div className="trader-tab clearfix">
+                    <div className="avatar">
+                        <img src={trader.getAvatar()} className="img-thumbnail"/>
+                    </div>
+
+                    <div>
+                      <div><span className="ui-label-strong">{trader.get("name")}</span></div>
+                      <div className="second-line">
+                        <div>
+                          <span className="ui-label">Lãi: </span>
+                          {formatCurrency(rel.get("profit"))}
+                        </div>
+                        <div>
+                          <span className="ui-label">Tỉ lệ lãi: </span>
+                          {formatPercent(rel.get("roi"))}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            );
+        });
+
+
         return (
             <div className="panel panel-default panel-overview panel-tabbed">
               <div className="panel-body">
-                <div className="info-pane">
-                <img src={me.getAvatar()} className="img-thumbnail"/>
-                  <div>
-                    <div><span className="ui-label-strong">TraderAAA</span></div>
-                    <div className="second-line">
-                      <div>
-                        <span className="ui-label-strong">Lãi hiện tại: </span>
-                          {formatCurrency(23223423)}
-                      </div>
-                      <div>
-                        <span className="ui-label-strong">Lãi thực tế: </span>
-                        {formatCurrency(23223423)}
-                      </div>
-                      <div>
-                        <span className="ui-label-strong">ROI: </span>
-                        24%
-                      </div>
-                    </div>
-                  </div>
+                <div className="trader-listing">
+                    {traderTabs}
+
+                    <button className="btn btn-primary btn-add-trader">Thêm chiến lược gia</button>
                 </div>
 
-                <div ref="graph" className="panel-overview-graph">
+                <div ref="graph" className="graph">
                   <canvas ref="overviewChart"></canvas>
                 </div>
               </div>
