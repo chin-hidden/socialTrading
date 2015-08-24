@@ -218,7 +218,7 @@ var PositionPanel = React.createClass({
                 var totalCost = deal.get("buying_price") * deal.get("quantity");
                 var totalValue = marketPrice * deal.get("quantity");
                 var gain = totalValue - totalCost;
-                var roi = (gain / totalCost * 100).toFixed(2);
+                var roi = gain / totalCost;
                 return (
                     <tr key={deal.id}>
                       <td>{deal.get("symbol")}</td>

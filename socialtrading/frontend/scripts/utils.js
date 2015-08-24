@@ -19,7 +19,7 @@ export function formatPercent(amount) {
     if (amount === undefined) {
         amount = NaN;
     }
-    return amount.toLocaleString("vi", {style: "percent"});
+    return amount.toLocaleString("vi", {style: "percent", maximumFractionDigits: 2});
 }
 
 export function dealStatusName(status) {
