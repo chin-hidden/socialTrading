@@ -208,7 +208,7 @@ class OrderProcessor:
             account_number=follower.account_number,
             price=new_price,
             symbol=trader_order.symbol,
-            quantity=follower.next_money_slot() // new_price,
+            quantity=(follower.next_money_slot() // new_price) // 10 * 10,
             side=trader_order.side,
             type=OrderType.MP
         )
