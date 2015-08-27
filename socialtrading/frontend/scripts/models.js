@@ -34,7 +34,7 @@ export var Traders = Backbone.Collection.extend({
 export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         initialize: function() {
-            this.set("id", this.get("follower_id") + this.get("trader_id"));
+            this.set("cid", this.get("follower_id") + this.get("trader_id"));
         }
     }),
 
