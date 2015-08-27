@@ -270,47 +270,6 @@ var PositionPanel = React.createClass({
         return _.flatten(result);
     },
 
-    /**
-     * Get position rows, lumped together by stock symbol.
-     */
-    positionRowsAll: function (deals) {
-        var self = this;
-
-        function add(a, b) {
-            return a + b;
-        }
-
-        return _.map(deals.groupBy("symbol"), function (deals, stockSymbol) {
-            var totalCost = _.reduce(_.map(deals, function (deal) {
-                return deal.get("buying_price") * deal.get("quantity");
-            }), add);
-            var totalQuantity = _.reduce(_.map(deals, function (deal) {return deal.get("quantity")}),
-                                         add);
-
-            var marketPrice = 23000; // self.state.marketPrices[stockSymbol];
-            var totalValue = marketPrice * totalQuantity;
-            var gain = totalValue - totalCost;
-            var roi = (gain / totalCost * 100).toFixed(2);
-
-            // We assume that the merged deals share the same exchange.
-            var exchange = deals[0].get('exchange');
-
-            return  (
-                <tr key={stockSymbol}>
-                  <td>{stockSymbol}</td>
-                  <td>{exchange}</td>
-                  <td>{totalQuantity}</td>
-                  <td>{formatCurrency(totalCost / totalQuantity)}</td>
-                  <td>{formatCurrency(marketPrice)}</td>
-                  <td>{formatCurrency(totalCost)}</td>
-                  <td>{formatCurrency(totalValue)}</td>
-                  <td><span className="text-success">{formatPercent(roi)}</span></td>
-                  <td></td>
-                </tr>
-            );
-        });
-    },
-
     render: function() {
         var deals = me.get("deals");
 
@@ -320,23 +279,14 @@ var PositionPanel = React.createClass({
               <td colSpan="9">Các chiến lược gia của bạn chưa mua cổ phiếu nào. Xin vui lòng chờ thêm.</td>
             </tr>
           );
-        } else if (this.state.viewType === DealViewType.BY_TRADER) {
-            var positionRows = this.positionRowsByTrader(deals);
         } else {
-            var positionRows = this.positionRowsAll(deals);
+            var positionRows = this.positionRowsByTrader(deals);
         }
 
         return (
             // FIXME: Redesign this deal listing view.
             <div className="panel panel-default panel-tabbed panel-deals">
               <div className="panel-body">
-                {/* <select ref="viewTypeSelector"
-                        value={this.state.viewType}
-                        onChange={this.changeViewType}
-                        style={{marginBottom: "1em"}}>
-                  <option value={DealViewType.ALL}>Toàn bộ</option>
-                  <option value={DealViewType.BY_TRADER}>Theo chiến lược gia</option>
-                </select> */}
 
                 <table className="table table-striped table-hover table-bordered" id="deal-listing">
                   <thead>
