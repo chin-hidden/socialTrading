@@ -294,8 +294,7 @@ table.table th {
   padding: 1em;
 }
 
-.table-striped>tbody>tr:nth-child(odd)>td,
-.table-striped>tbody>tr:nth-child(odd)>th {
+.table-striped>tbody>tr:nth-child(odd) {
   background: none;
 }
 
