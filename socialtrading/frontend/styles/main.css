@@ -497,7 +497,7 @@ ul.nav-tabs > li {
   position: absolute;
   left: 0;
   top: 120px;
-  width: 500px;
+  width: 520px;
 }
 
 .container-home .hero img {
@@ -508,7 +508,7 @@ ul.nav-tabs > li {
 }
 
 .shoutout {
-  font-size: 56px;
+  font-size: 48px;
 }
 
 .shoutout strong {
