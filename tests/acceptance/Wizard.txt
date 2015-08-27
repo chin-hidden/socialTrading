@@ -1,0 +1,22 @@
+*** Settings ***
+Resource  common.txt
+Test teardown   Close all browsers
+
+*** Keywords ***
+Open wizard with demo account
+    Open browser                      ${BASE_ADDRESS}/wizard  browser=chrome
+    Click element                     btn-submit-demo
+    Wait until page contains element  css=div.wizard
+
+*** Test Cases ***
+Show wizard on first login
+    Open browser                   ${BASE_ADDRESS}  browser=chrome
+
+Lưu trader sau khi chọn ở trang wizard
+    Load fixture                   save_traders.sql
+    Open wizard with demo account
+    Click element                  css=.row-action input
+    Click element                  link=Hide »
+    Click element                  css=.btn.btn-primary
+    Wait until element is visible  link=Danh mục đầu tư
+    Page should contain            Xin Một Lần Thua

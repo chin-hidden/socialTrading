@@ -1,0 +1,15 @@
+*** Settings ***
+Library         Process
+Library         Selenium2Library  timeout=10
+Library         CustomCommands.py
+
+*** Variables ***
+${ROOT}          ../..
+${BASE_ADDRESS}  http://localhost:8080/
+${USERNAME}
+${PASSWORD}
+
+*** Keywords ***
+Load fixture
+    [Arguments]   ${name}
+    Run process   vagrant ssh -c "cd /vagrant/tests/acceptance; psql duber < ${ROOT}/db/schema.sql; psql duber < ${name};"  shell=True
