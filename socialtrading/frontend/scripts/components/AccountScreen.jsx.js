@@ -1,10 +1,12 @@
 import React from "react";
 import Chart from "chart";
+import $ from "jquery";
 import _ from "underscore";
+import RiskSlider from "./RiskSlider.jsx";
+import DISPATCHER from "../dispatcher";
+import {stockStore} from "../models";
 import {me, traders} from "../common";
 import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
-import RiskSlider from "./RiskSlider.jsx";
-import $ from "jquery";
 
 
 export var AccountScreen = React.createClass({
@@ -42,7 +44,7 @@ export var AccountScreen = React.createClass({
               <ul className="nav nav-tabs">
                 <li className={active['overview']}>
                   <a href="#"  onClick={this.switchTab.bind(this, "overview")}>
-                    Tổng quan
+                    Kết quả đầu tư
                   </a>
                 </li>
                 <li className={active['danhmuc']}>
@@ -173,26 +175,20 @@ var DealViewType = {
 
 var PositionPanel = React.createClass({
     getInitialState: function() {
-        return {
-            viewType: DealViewType.BY_TRADER,
-            marketPrices: {
-              "ITC": 1234,
-              "ACB": 3453
-            },
-        };
-    },
-
-    reloadPrices: function() {
-        _.map(deals.groupBy("symbol"), function (deals, stockSymbol) {});
+        return {};
     },
 
     componentDidMount: function() {
         me.get("deals").on("update change", () => {
-          this.forceUpdate();
+            this.forceUpdate();
         });
 
         me.get("following_traders").on("update change", () => {
-          this.forceUpdate();
+            this.forceUpdate();
+        });
+
+        DISPATCHER.on("stock:changed", () => {
+            this.forceUpdate();
         });
     },
 
@@ -209,21 +205,11 @@ var PositionPanel = React.createClass({
         var posByTrader = deals.groupBy("mimicking_username");
         var result = _.map(posByTrader, (deals, traderAccount) => {
             var rowsForThisTrader = _.map(deals, (deal) => {
+                var marketPrice = 0;
                 if (deal.get("status") === "SELLING:Filled") {
-                    var marketPrice = deal.get("selling_price");
+                    marketPrice = deal.get("selling_price");
                 } else {
-
-                    var prices = {
-                        "ITC": 9100,
-                        "KMR": 5400,
-                        "DCL": 26900
-                    };
-
-                    var marketPrice = 23000; // self.state.marketPrices[deal.get("symbol")];
-
-                    if (deal.get("symbol") in prices) {
-                        marketPrice = prices[deal.get("symbol")];
-                    }
+                    marketPrice = stockStore.get(deal.get("symbol")).get("matchPrice");
                 }
 
                 var totalCost = deal.get("buying_price") * deal.get("quantity");
