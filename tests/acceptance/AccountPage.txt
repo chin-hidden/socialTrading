@@ -1,0 +1,16 @@
+*** Settings ***
+Resource  common.txt
+Test teardown   Close all browsers
+
+*** Keywords ***
+Login to account page
+    Open browser                   ${BASE_ADDRESS}/account  browser=chrome
+    Click element                  btn-submit-demo
+    Wait until page contains element  css=.account-screen
+
+*** Test Cases ***
+Nhấn vào nút "Thêm chiến lược gia" redirect về trang liệt kê chiến lược gia
+    Login to account page
+    Click element   link=Thêm chiến lược gia
+    Sleep  2
+    Location should contain  /traders

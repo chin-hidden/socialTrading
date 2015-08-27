@@ -38,28 +38,23 @@ export var AccountScreen = React.createClass({
         }
 
         return (
-            <div>
-              <InfoBox/>
+            <div className="account-screen">
+                <InfoBox/>
 
-              <ul className="nav nav-tabs">
-                <li className={active['overview']}>
-                  <a href="#"  onClick={this.switchTab.bind(this, "overview")}>
-                    Kết quả đầu tư
-                  </a>
-                </li>
-                <li className={active['danhmuc']}>
-                  <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
-                    Danh mục đầu tư
-                  </a>
-                </li>
-                {/*<li className={active['solenh']}>
-                  <a href="#" onClick={this.switchTab.bind(this, "solenh")}>
-                    Sổ lệnh trong ngày
-                  </a>
-                </li>*/}
-              </ul>
+                <ul className="nav nav-tabs">
+                    <li className={active['overview']}>
+                        <a href="#"  onClick={this.switchTab.bind(this, "overview")}>
+                            Kết quả đầu tư
+                        </a>
+                    </li>
+                    <li className={active['danhmuc']}>
+                        <a href="#" onClick={this.switchTab.bind(this, "danhmuc")}>
+                            Danh mục đầu tư
+                        </a>
+                    </li>
+                </ul>
 
-              {tabContent}
+                {tabContent}
             </div>
         );
     }
@@ -359,7 +354,7 @@ var OverviewPanel = React.createClass({
                 <div className="trader-listing">
                     {traderTabs}
 
-                    <button className="btn btn-primary btn-add-trader">Thêm chiến lược gia</button>
+                    <a className="btn btn-primary btn-add-trader" href="/traders">Thêm chiến lược gia</a>
                 </div>
 
                 <div ref="graph" className="graph">
