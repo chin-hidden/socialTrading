@@ -1,12 +1,12 @@
 /*
   VNDIRECT colors:
-
-  orange: rgb(243, 145, 0);
-  dark gray: rgb(88, 89, 91);
-  medium gray: rgb(124, 124, 124);
-  light gray: rgb(121, 121, 121);
-  milky: rgb(254, 247, 190);
 */
+
+$vnd-orange: rgb(243, 145, 0);
+$vnd-dark-gray: rgb(124, 124, 124);
+$vnd-light-gray: rgb(121, 121, 121);
+$vnd-milky: rgb(254, 247, 190);
+
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
@@ -20,7 +20,7 @@ img {
 
 html {
   background-color: #F2F2F2;
-  overflow-y: scroll;   /* Fix "jumping scrollbar" */
+  overflow-y: scroll;   /* Fix the "jumping scrollbar" bug */
 }
 
 body {
@@ -41,7 +41,14 @@ header, footer {
 }
 
 .ui-label {
-  font-variant: small-caps;
+  /*font-variant: small-caps;*/
+  font-size: 0.8em;
+  color: #9197a3;  /* Stolen from Facebook */
+}
+
+.ui-label-strong {
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .flex-row {
@@ -50,11 +57,11 @@ header, footer {
 }
 
 ::selection {
-  background: rgb(254, 247, 190);
+  background: $vnd-milky;
 }
 
 ::-moz-selection {
-  background: rgb(254, 247, 190);
+  background: $vnd-milky;
 }
 
 .panel-title {
@@ -76,11 +83,6 @@ header, footer {
 /*.container {
   width: 1120px;
 }*/
-
-.ui-label-strong {
-  font-size: 1.2em;
-  font-weight: bold;
-}
 
 .trader-list > .trader:nth-child(odd) {
   background: #EFEFEF;
@@ -186,15 +188,15 @@ header .navbar-brand {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   background: none;
-  color: rgb(243, 145, 0);
+  color: $vnd-orange;
 }
 
 header .navbar {
-  border-bottom: 3px rgb(243, 145, 0) solid;
+  border-bottom: 3px $vnd-orange solid;
 }
 
 header li.active > a {
-  background-color: rgb(243, 145, 0) !important;
+  background-color: $vnd-orange !important;
   color: white !important;
 }
 
@@ -204,7 +206,7 @@ header li.active > a {
 }
 
 .btn-primary {
-  background-color: rgb(243, 145, 0);
+  background-color: $vnd-orange;
   color: white;
   font-weight: bold;
 }
@@ -218,7 +220,7 @@ footer {
 }
 
 span.accent {
-  color: rgb(243, 145, 0);
+  color: $vnd-orange;
 }
 
 .wizard {
@@ -241,18 +243,18 @@ span.accent {
 body .noUi-connect {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,37b700+100 */
   background: #ffffff; /* Old browsers */
-  background: -moz-linear-gradient(left, #ffffff 0%, rgb(243, 145, 0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,rgb(243, 145, 0))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left, #ffffff 0%,rgb(243, 145, 0) 100%); /* IE10+ */
-  background: linear-gradient(to right, #ffffff 0%,rgb(243, 145, 0) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='rgb(243, 145, 0)',GradientType=1 ); /* IE6-9 */
+  background: -moz-linear-gradient(left, #ffffff 0%, $vnd-orange 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,$vnd-orange)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* IE10+ */
+  background: linear-gradient(to right, #ffffff 0%,$vnd-orange 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='$vnd-orange',GradientType=1 ); /* IE6-9 */
 }
 
 .highlight-label {
   color: white;
-  background-color: rgb(243, 145, 0);
+  background-color: $vnd-orange;
   padding: 5px 10px;
   font-weight: bold;
   display: inline-block;
@@ -309,8 +311,8 @@ table.table th {
 }
 
 ul.nav-tabs > li.active > a {
-  color: rgb(243, 145, 0);
-  /*border-top: 3px solid rgb(243, 145, 0);*/
+  color: $vnd-orange;
+  /*border-top: 3px solid $vnd-orange;*/
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
 }
@@ -323,7 +325,7 @@ ul.nav-tabs > li.active::before {
   position: absolute;
   left: 0px;
   top: 0px;
-  background-color: rgb(243, 145, 0);
+  background-color: $vnd-orange;
   width: 100%;
   height: 3px;
   content: " ";
@@ -363,17 +365,16 @@ ul.nav-tabs > li {
 
 
 .panel-vndirect {
-  border-color: rgb(243, 145, 0);
+  border-color: $vnd-orange;
 }
 
 .panel-vndirect .panel-heading {
-  background-color: rgb(243, 145, 0);
+  background-color: $vnd-orange;
 }
 
 .panel-vndirect .panel-title {
   color: white;
 }
-
 
 /* HELP PAGE */
 .container-help dt {
@@ -398,7 +399,7 @@ ul.nav-tabs > li {
 }
 
 .container-error .text {
-  border-left: 2px rgb(243, 145, 0) solid;
+  border-left: 2px $vnd-orange solid;
   padding-left: 15px;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -703,4 +704,85 @@ Taken from here: http://codepen.io/bbodine1/pen/novBm;
   padding-right: 1em;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+
+.rel-strip {
+  border: 1px #DDD solid;
+  border-radius: 4px;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.rel-strip .rel-overview {
+  padding: 1em;
+  background-color: #F5F5F5;
+  border-right: #DDD 1px solid;
+  text-align: center;
+}
+
+.rel-strip .rel-overview .name {
+  font-weight: bold;
+}
+
+.rel-strip .rel-overview td {
+  padding: 0.5em;
+}
+
+.rel-strip .active-deals,
+.rel-strip .old-deals {
+  display: flex;
+  flex-direction: column;
+}
+
+.rel-strip .active-deals {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.rel-strip .old-deals {
+  border-left: 1px #DDD dashed;
+}
+
+.rel-strip .old-deals .cards {
+  background-color: #EEE;
+}
+
+.rel-strip .cards {
+  display: flex;
+  flex-grow: 1;
+  padding: 1em;
+}
+
+.rel-strip .section-label {
+  padding: 0.5em;
+  border-top: 1px #DDD solid;
+  text-align: center;
+}
+
+.rel-strip .deal-card {
+  border: 2px #46b94a solid;
+  color: #006f2e;
+  margin-right: 1em;
+  padding: 0.5em;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  min-width: 6em;
+  background-image: repeating-linear-gradient(to bottom, #F5F5F5, #F5F5F5 5px, #FFF 5px, #FFF 10px);
+}
+
+.deal-card.unprofitable {
+  border: 2px #ff4e4e solid;
+  color: #ff3636;
+}
+
+.deal-card .symbol {
+  font-size: 1.5em;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

@@ -10,6 +10,7 @@ flask-debugtoolbar
 flask-sqlalchemy
 sockjs-tornado
 flask-assets
+pyscss
 
 # For RabbitMQ listening
 kombu

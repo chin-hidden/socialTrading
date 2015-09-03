@@ -13,8 +13,11 @@
     {%- block extra_headers %}
     {% endblock %}
 
-    {% assets output="dist/bundle.css",
-              "styles/bootstrap.min.css", "styles/main.css" %}
+    {% assets output="dist/vendor.css", "styles/bootstrap.min.css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+
+    {% assets filter="pyscss", output="dist/bundle.css", "styles/main.scss" %}
       <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
 
