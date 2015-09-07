@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "chart";
+import ImageLoader from 'react-imageloader';
 import $ from "jquery";
 import _ from "underscore";
 
@@ -86,24 +87,6 @@ var InfoBox = React.createClass({
 
     render: function() {
         // FIXME Decouple from `me`
-        var spacing = 20;
-
-        var styles = {
-            personalInfo: {
-                float: "left",
-                marginRight: spacing,
-                minWidth: "8em"
-            },
-            accountInfo: {
-                overflow: "hidden",
-                fontSize: "16px",
-                borderLeft: "1px solid #DDD",
-                paddingLeft: spacing
-            },
-            label: {
-                marginRight: "1em"
-            },
-        };
 
         var riskSliderConfig = {
             start: [ me.get("risk_factor") ],
@@ -116,38 +99,33 @@ var InfoBox = React.createClass({
         };
 
         return (
-            <div className="panel panel-default">
+            <div className="panel panel-default info-box">
               <div className="panel-body clearfix">
-                <div ref="personalInfo" style={{float: "left", marginRight: spacing}}>
-                <img src={me.getAvatar()} style={{height: 120}} className="img-thumbnail"/>
+                <ImageLoader src={me.getAvatar()} className="avatar"/>
+
+                <div className="personal-info">
+                    <div className="name">{me.get("name")}</div>
+                    <div className="username">{me.get("id")}</div>
+                    <span className="ui-label">TK:</span> {me.get("account_number")}
                 </div>
 
-                <div ref="personalInfo" style={styles.personalInfo}>
-                  <strong style={{fontSize: "1.5em"}}>{me.get("name")}</strong><br/>
-
-                  <div>
-                  {me.get("id")}<br/>
-                  <span className="ui-label">TK:</span> {me.get("account_number")}
-                  </div>
-                </div>
-
-                <div ref="accountInfo" style={styles.accountInfo} id="accountInfo">
+                <div className="accountStats">
                   <div className="row">
                     <div className="col-md-3">
                       <span className="ui-label">Lợi nhuận</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("gross_profit"))}</strong>
+                      <strong>{formatCurrency(me.get("gross_profit"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Tài sản</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("nav"))}</strong>
+                      <strong>{formatCurrency(me.get("nav"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Chứng khoán</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("gross_stock_value"))}</strong>
+                      <strong>{formatCurrency(me.get("gross_stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Tiền mặt</span><br/>
-                      <strong className="text-success">{formatCurrency(me.get("cash"))}</strong>
+                      <strong>{formatCurrency(me.get("cash"))}</strong>
                     </div>
                   </div>
 

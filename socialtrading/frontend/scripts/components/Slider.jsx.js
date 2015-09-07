@@ -4,6 +4,14 @@ import "leongersen/noUiSlider/nouislider.css!";
 
 
 export default class Slider extends React.Component {
+
+    /**
+     * Override this method to include more class names.
+     */
+    getClass() {
+        return "";
+    }
+
     innerSlider() {
         return this.refs.slider.getDOMNode();
     }
@@ -20,18 +28,8 @@ export default class Slider extends React.Component {
     }
 
     render() {
-        var padding = 30;
-        var styles = {
-            wrapper: {
-                paddingTop: padding,
-                paddingBottom: padding
-            }
-        };
-
         return (
-            <div style={styles["wrapper"]}>
-                <div ref="slider"></div>
-            </div>
+            <div ref="slider" className={this.getClass()}></div>
         );
     }
 }

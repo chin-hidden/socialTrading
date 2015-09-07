@@ -17,6 +17,7 @@
       "leongersen/noUiSlider": "github:leongersen/noUiSlider@^8.0.2",
       "nuka-carousel": "npm:nuka-carousel@^0.0.17",
       "react": "npm:react@0.13.3",
+      "react-imageloader": "npm:react-imageloader@^2.1.0",
       "sockjs-client": "npm:sockjs-client@^1.0.3",
       "underscore": "npm:underscore@^1.8.3"
     },
@@ -32,6 +33,7 @@
     }
   },
   "devDependencies": {
+    "eslint-plugin-react": "^3.3.0",
     "jspm": "^0.15.7"
   }
 }

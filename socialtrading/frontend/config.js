@@ -30,6 +30,7 @@ System.config({
     "leongersen/noUiSlider": "github:leongersen/noUiSlider@8.0.2",
     "nuka-carousel": "npm:nuka-carousel@0.0.17",
     "react": "npm:react@0.13.3",
+    "react-imageloader": "npm:react-imageloader@2.1.0",
     "sockjs-client": "npm:sockjs-client@1.0.3",
     "underscore": "npm:underscore@1.8.3",
     "github:jspm/nodelibs-assert@0.1.0": {
@@ -356,6 +357,9 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:react-imageloader@2.1.0": {
+      "react": "npm:react@0.13.3"
     },
     "npm:react-tween-state@0.0.5": {
       "tween-functions": "npm:tween-functions@1.0.2"

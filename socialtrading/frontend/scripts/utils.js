@@ -2,10 +2,11 @@ export function formatCurrency(amount) {
     if (amount === undefined) {
         amount = NaN;
     }
-    return amount.toLocaleString("vi", {
-        style: "currency",
-        currency: "VND",
-    });
+    return (amount / 1000).toLocaleString("vi") + "k";
+    // return amount.toLocaleString("vi", {
+    //     style: "currency",
+    //     currency: "VND",
+    // });
 }
 
 export function formatAmount(amount) {

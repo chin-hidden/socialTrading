@@ -5,6 +5,10 @@ import Slider from "./Slider.jsx";
  * their own `formatTooltip` method.
  */
 export default class SliderWithTooltip extends Slider {
+    getClass() {
+        return "slider-with-tooltip";
+    }
+
     formatTooltip(value) {
         return value;
     }
