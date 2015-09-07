@@ -1,0 +1,33 @@
+body .noUi-connect {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,37b700+100 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(left, #ffffff 0%, $vnd-orange 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ffffff), color-stop(100%,$vnd-orange)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #ffffff 0%,$vnd-orange 100%); /* IE10+ */
+  background: linear-gradient(to right, #ffffff 0%,$vnd-orange 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='$vnd-orange',GradientType=1 ); /* IE6-9 */
+}
+
+.slider-with-tooltip {
+  margin-top: 40px;
+}
+
+.slider-tooltip {
+  display: block;
+  position: absolute;
+  border: 1px solid #DDD;
+  border-radius: 3px;
+  top: -2.5em;
+  padding: 5px;
+  left: -9px;
+  text-align: center;
+  background-color: white;
+  /*width: 50px;*/
+}
+
+.slider-tooltip strong {
+  display: block;
+  padding: 2px;
+}

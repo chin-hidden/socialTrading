@@ -20,6 +20,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "backbone": "npm:backbone@1.2.1",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
+    "bootstrap-sass": "npm:bootstrap-sass@3.3.5",
     "chart": "github:nnnick/Chart.js@1.0.2",
     "clean-css": "npm:clean-css@3.3.9",
     "core-js": "npm:core-js@0.9.18",

@@ -13,17 +13,12 @@
     {%- block extra_headers %}
     {% endblock %}
 
-    {% assets output="dist/vendor.css", "styles/bootstrap.min.css" %}
-    <link rel="stylesheet" href="{{ ASSET_URL }}">
-    {% endassets %}
-
-    {% assets filter="pyscss", output="dist/bundle.css", "styles/main.scss" %}
+    {% assets filters="pyscss", output="dist/main.css", depends=('styles/*.scss', 'styles/**/*.scss'), "styles/main.scss" %}
       <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
 
   </head>
   <body>
-
     <div class="top-container">
       <header>
         <nav class="navbar navbar-default">

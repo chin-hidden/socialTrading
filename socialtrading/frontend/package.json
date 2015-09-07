@@ -8,6 +8,7 @@
     "dependencies": {
       "backbone": "npm:backbone@^1.2.1",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
+      "bootstrap-sass": "npm:bootstrap-sass@^3.3.5",
       "chart": "github:nnnick/Chart.js@^1.0.2",
       "clean-css": "npm:clean-css@^3.3.9",
       "css": "github:systemjs/plugin-css@^0.1.13",

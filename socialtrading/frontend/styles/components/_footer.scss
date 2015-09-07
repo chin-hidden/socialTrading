@@ -1,0 +1,15 @@
+footer {
+  background: #5E5E5E;
+  color: #D7D7D7;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-top: 40px;
+}
+
+
+/* Sticky bottom footer */
+.top-container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}

@@ -21,3 +21,5 @@ BROKERS = {
         "ORS_BASE": "http://10.26.1.112:8088"
     }
 }
+
+PYSCSS_LOAD_PATHS = ["../jspm_packages/npm/bootstrap-sass@3.3.5/assets/stylesheets/"]

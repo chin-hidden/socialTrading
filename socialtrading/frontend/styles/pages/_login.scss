@@ -1,0 +1,40 @@
+.container-login {
+  .panel {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+  }
+
+  input {
+    margin-bottom: 0.5em;
+  }
+
+  .bottom-row {
+    display: flex;
+  }
+
+  .bottom-row > form {
+    width: 50%;
+  }
+
+  .bottom-row > form:first-child {
+    border-right: 1px #DDD solid;
+    padding-right: 15px;
+  }
+
+  .bottom-row > form:nth-child(2) {
+    padding-left: 15px;
+  }
+
+  .real-login-box, .demo-login-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .demo-login-box input {
+    background-color: #25c400;
+  }
+
+}

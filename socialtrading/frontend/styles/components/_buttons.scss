@@ -1,0 +1,47 @@
+.btn {
+  box-shadow: 0px 3px 11px -8px rgba(0,0,0,0.75);
+  border: none;
+}
+
+.btn-primary {
+  background-color: $vnd-orange;
+  color: white;
+  font-weight: bold;
+}
+
+
+// Primary buttons with an arrow to the right
+.btn-next {
+  border-radius: 3px;
+  position: relative;
+  padding-right: 46px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.btn-next:before,
+.btn-next:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.btn-next:before {
+  content: " ";
+  background-color: black;
+  opacity: 0.3;
+}
+
+.btn-next:after {
+  content: "\e072";
+  font-family: 'Glyphicons Halflings';
+  font-weight: 400;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}

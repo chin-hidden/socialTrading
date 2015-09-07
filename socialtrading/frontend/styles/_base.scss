@@ -1,0 +1,79 @@
+$vnd-orange: rgb(243, 145, 0);
+$vnd-dark-gray: rgb(124, 124, 124);
+$vnd-light-gray: rgb(121, 121, 121);
+$vnd-milky: rgb(254, 247, 190);
+
+
+
+// Iconography $icon-font-path: "../jspm_packages/npm/bootstrap-
+// sass@3.3.5/assets/fonts/bootstrap/";
+//
+// FIXME: This is a hack as the above line doesn't work. The generated CSS
+// looks okay but the browser never loads the font files.
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot');
+  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/bootstrap/glyphicons-halflings-regular.woff2') format('woff2'),
+      url('../fonts/bootstrap/glyphicons-halflings-regular.woff') format('woff'),
+      url('../fonts/bootstrap/glyphicons-halflings-regular.ttf') format('truetype'),
+      url('../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+// Typography
+$font-family-sans-serif: "Open Sans", sans-serif;
+$font-size-base: 16px;
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: bold;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+html {
+  background-color: #F2F2F2;
+  overflow-y: scroll;   /* Fix the "jumping scrollbar" bug */
+}
+
+body {
+  margin: 0 auto;
+}
+
+header, footer {
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 940px;
+    }
+}
+
+.ui-label {
+  /*font-variant: small-caps;*/
+  font-size: 0.8em;
+  color: #9197a3;  /* Stolen from Facebook */
+}
+
+.ui-label-strong {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+@mixin ui-label {
+  font-size: 0.8em;
+  color: #9197a3;  /* Stolen from Facebook */
+}
+
+
+::selection {
+  background: $vnd-milky;
+}
+
+::-moz-selection {
+  background: $vnd-milky;
+}
