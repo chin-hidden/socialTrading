@@ -1,7 +1,11 @@
 {% extends "base.jinja.html" %}
 
 {% block content %}
-<div id="app" class="container container-account"></div>
+<div id="app" class="container container-account">
+  <div class="loader">
+    <span></span><span></span><span></span>
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_headers %}
