@@ -92,8 +92,8 @@
     }
   }
 
-  .trader-tab > div {
-    float: left;
+  .trader-tab {
+    display: flex;
   }
 
   .trader-tab .avatar {
@@ -122,6 +122,7 @@
     background-color: #F5F5F5;
     border-right: #DDD 1px solid;
     text-align: center;
+    width: 10em;
   }
 
   .rel-strip .rel-overview .name {
