@@ -24,6 +24,7 @@
     }
 
     .avatar {
+      @include image-frame;
       $side: 120px;
       width: $side;
       height: $side;
@@ -97,7 +98,10 @@
   }
 
   .trader-tab .avatar {
-    width: 80px;
+    @include image-frame;
+    $size: 80px;
+    width: $size;
+    height: $size;
     margin-right: 1em;
   }
 
