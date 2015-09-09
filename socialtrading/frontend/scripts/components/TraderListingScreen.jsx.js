@@ -66,9 +66,9 @@ var Trader = React.createClass({
         console.log(me.get("following_traders"), trader, me.isFollowing(trader));
 
         if (me.isFollowing(trader)) {
-            var btnText = "Bỏ theo đuôi";
+            var btnText = "Bỏ theo dõi";
         } else {
-            var btnText = "Theo đuôi";
+            var btnText = "Theo dõi";
         }
 
         var actionButton = (
