@@ -60,13 +60,15 @@ var Trader = React.createClass({
     },
 
     follow: function() {
-        window.confirm("Bạn có thực sự muốn theo dõi chiến lược gia này?");
-        this.props.me.follow(this.props.trader.id);
+        if (window.confirm("Bạn có thực sự muốn theo dõi chiến lược gia này?")) {
+            this.props.me.follow(this.props.trader.id);
+        }
     },
 
     unfollow: function() {
-        window.confirm("Bạn có thực sự muốn bỏ theo dõi chiến lược gia này?");
-        this.props.me.unfollow(this.props.trader.id);
+        if (window.confirm("Bạn có thực sự muốn bỏ theo dõi chiến lược gia này? Các cổ phiếu bạn đang giữ theo nhà đầu tư này sẽ được bán hết.")) {
+            this.props.me.unfollow(this.props.trader.id);
+        }
     },
 
     render: function() {
