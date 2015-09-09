@@ -64,4 +64,9 @@
     float: right;
     margin-left: 10px;
   }
+
+  // Hide the slider's dot buttons
+  .slider-decorator-2 {
+    display: none;
+  }
 }
