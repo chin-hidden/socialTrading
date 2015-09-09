@@ -14,6 +14,13 @@ Hiện nút bỏ theo đuôi nếu đã theo đuôi
     Element Should Contain    css=.trader-listing .trader:nth-child(1)    Bỏ theo đuôi
     Element Should Contain    css=.trader-listing .trader:nth-child(2)    Theo đuôi
 
+Bỏ theo đuôi khi nhấn vào nút bỏ theo đuôi
+    Load fixture    two_traders_follow_one.sql
+    Login tài khoản demo
+    Vào trang traders
+    Click element    css=.trader-listing .trader:nth-child(1) .btn-unfollow
+    Element should contain    css=.trader-listing .trader:nth-child(1)    Theo dõi
+
 *** Keywords ***
 Vào trang traders
     Go to    ${BASE_ADDRESS}/traders

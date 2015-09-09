@@ -34,9 +34,13 @@ export var Traders = Backbone.Collection.extend({
 export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         initialize: function() {
-            this.set("cid", this.get("follower_id") + this.get("trader_id"));
+            this.cid = this.get("follower_id") + this.get("trader_id");
         }
     }),
+
+    getByTraderAndFollower(followerId, traderId) {
+        return this.get(followerId + traderId);
+    },
 
     initialize: function() {
         DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
@@ -98,6 +102,21 @@ export var Follower = Backbone.Model.extend({
         return _.any(this.get("following_traders").map((rel) => {
             return rel.get("trader_id") === trader.id;
         }));
+    },
+
+    follow: function(traderId) {
+        var rels = this.get("following_traders");
+        return rels.create({
+                "follower_id": this.id,
+                "trader_id": traderId
+        });
+    },
+
+    unfollow: function(traderId) {
+        var followings = this.get("following_traders");
+        var rel = followings.getByTraderAndFollower(this.id, traderId);
+        followings.remove(rel);
+        rel.destroy();
     }
 });
 

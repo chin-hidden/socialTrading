@@ -59,23 +59,34 @@ var Trader = React.createClass({
         });
     },
 
+    follow: function() {
+        window.confirm("Bạn có thực sự muốn theo dõi chiến lược gia này?");
+        this.props.me.follow(this.props.trader.id);
+    },
+
+    unfollow: function() {
+        window.confirm("Bạn có thực sự muốn bỏ theo dõi chiến lược gia này?");
+        this.props.me.unfollow(this.props.trader.id);
+    },
+
     render: function() {
         var trader = this.props.trader;
         var me = this.props.me;
 
-        console.log(me.get("following_traders"), trader, me.isFollowing(trader));
-
         if (me.isFollowing(trader)) {
-            var btnText = "Bỏ theo dõi";
+            var actionButton = (
+                <button onClick={this.unfollow} className="btn btn-primary btn-unfollow">
+                    Bỏ theo dõi
+                </button>
+            );
         } else {
-            var btnText = "Theo dõi";
+            var actionButton = (
+                <button onClick={this.follow} className="btn btn-primary btn-follow">
+                    Theo dõi
+                </button>
+            );
         }
 
-        var actionButton = (
-            <button className="btn btn-primary">
-                {btnText}
-            </button>
-        );
 
         return (
             <div className="trader">
