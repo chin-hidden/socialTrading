@@ -213,7 +213,9 @@ var OverviewPanel = React.createClass({
             <div className="panel panel-default panel-overview panel-tabbed">
               <div className="panel-body">
                 <div className="trader-listing">
-                    {traderTabs}
+                    <div className="tabs">
+                        {traderTabs}
+                    </div>
 
                     <a className="btn btn-primary btn-add-trader" href="/traders">Thêm chiến lược gia</a>
                 </div>

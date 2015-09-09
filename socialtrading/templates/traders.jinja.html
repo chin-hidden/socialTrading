@@ -2,11 +2,32 @@
 
 
 {% block content %}
+<div class="container container-traders">
+    <h2>Chiến lược gia của AutoTrade</h2>
 
-<div class="container">
-
-Trang này đang được xây dựng. Quý khách vui lòng quay lại sau.
+    <div id="app">
+      <div class="loader">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
 </div>
+{% endblock %}
 
+
+{% block extra_scripts %}
+
+{% if config.DEBUG %}
+    <script src="/static/jspm_packages/system.js"></script>
+    <script src="/static/config.js"></script>
+
+    <script>
+      System.import("scripts/traderlistingapp");
+    </script>
+{% else %}
+    {% assets output="dist/account.bundle.js", "dist/account.bundle.js" %}
+      <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endif %}
 
 {% endblock %}
+

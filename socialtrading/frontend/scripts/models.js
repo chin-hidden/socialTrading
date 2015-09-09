@@ -70,6 +70,14 @@ export var Follower = Backbone.Model.extend({
         DISPATCHER.on("noti:account:updated", () => {
             this.fetch();
         });
+
+        this.get("following_traders").on("change update", () => {
+            this.trigger("change");
+        });
+
+        this.get("deals").on("chagne update", () => {
+            this.trigger("change");
+        });
     },
 
     parse: function(data) {
@@ -84,6 +92,12 @@ export var Follower = Backbone.Model.extend({
 
     getAvatar: function() {
         return generateAvatar(this.id);
+    },
+
+    isFollowing: function(trader) {
+        return _.any(this.get("following_traders").map((rel) => {
+            return rel.get("trader_id") === trader.id;
+        }));
     }
 });
 

@@ -1,0 +1,63 @@
+@mixin strong() {
+  font-weight: bold;
+}
+
+.container-traders {
+  $size: 120px;
+
+  .trader {
+    @include outer-container;
+    padding: 1em;
+
+    .ui-label {
+      font-size: 0.6em;
+    }
+
+    &:nth-child(odd) {
+      background-color: $gray-lighter;
+    }
+
+    .personal-info {
+      @include span-columns(5);
+
+      .avatar {
+        @include image-frame();
+        width: $size;
+        height: $size;
+        margin-right: 1em;
+        float: left;
+      }
+
+      .name {
+        @include strong();
+      }
+
+      .description {
+        font-size: 0.8em;
+        color: $gray-light;
+        flex-grow: 1;
+      }
+    }
+
+    .perf {
+      @include span-columns(5);
+
+      > * {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .perf-chart {
+        @include box-shadow($paper-shadow);
+        width: $size;
+        height: $size;
+        background-color: white;
+        margin-right: 1em;
+      }
+    }
+
+    .extra {
+      @include span-columns(2);
+    }
+  }
+}

@@ -3,9 +3,9 @@
 
   .loader {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include display(flex);
+    @include justify-content(center);
+    @include align-items(center);
   }
 
   canvas {
@@ -86,10 +86,10 @@
     padding-right: 1em;
     margin-right: 1em;
     border-right: 1px #AAA dashed;
-  }
 
-  .panel-overview .trader-listing button {
-    margin-top: 1em;
+    .tabs {
+      margin-bottom: 1em;
+    }
   }
 
   .trader-tab > div {

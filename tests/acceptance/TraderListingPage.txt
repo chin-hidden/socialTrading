@@ -1,0 +1,25 @@
+*** Settings ***
+Test Setup        Open browser    ${BASE_ADDRESS}    browser=chrome
+Test Teardown     Close all browsers
+Resource          common.txt
+
+*** Test Cases ***
+Xem traders không cần đăng nhập
+    Vào trang traders
+
+Hiện nút bỏ theo đuôi nếu đã theo đuôi
+    Load fixture    two_traders_follow_one.sql
+    Login tài khoản demo
+    Vào trang traders
+    Element Should Contain    css=.trader-listing .trader:nth-child(1)    Bỏ theo đuôi
+    Element Should Contain    css=.trader-listing .trader:nth-child(2)    Theo đuôi
+
+*** Keywords ***
+Vào trang traders
+    Go to    ${BASE_ADDRESS}/traders
+    Click Link    link=Hide »
+    Wait Until Page Does Not Contain Element    css=.loader
+
+Login tài khoản demo
+    Go To    ${BASE_ADDRESS}/login
+    Click element    btn-submit-demo

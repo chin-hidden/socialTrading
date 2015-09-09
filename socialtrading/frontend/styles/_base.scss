@@ -4,7 +4,6 @@ $vnd-light-gray: rgb(121, 121, 121);
 $vnd-milky: rgb(254, 247, 190);
 
 
-
 // Iconography $icon-font-path: "../jspm_packages/npm/bootstrap-
 // sass@3.3.5/assets/fonts/bootstrap/";
 //
@@ -23,6 +22,8 @@ $vnd-milky: rgb(254, 247, 190);
 // Typography
 $font-family-sans-serif: "Open Sans", sans-serif;
 $font-size-base: 16px;
+
+$paper-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;

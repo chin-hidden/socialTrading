@@ -22,4 +22,8 @@ BROKERS = {
     }
 }
 
-PYSCSS_LOAD_PATHS = ["../jspm_packages/npm/bootstrap-sass@3.3.5/assets/stylesheets/"]
+PYSCSS_LOAD_PATHS = [
+    "../jspm_packages/npm/bootstrap-sass@3.3.5/assets/stylesheets/",
+    "../jspm_packages/npm/bourbon@4.2.4/app/assets/stylesheets/",
+    "../jspm_packages/npm/bourbon-neat@1.7.2/app/assets/stylesheets/",
+]

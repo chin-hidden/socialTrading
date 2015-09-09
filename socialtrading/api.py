@@ -137,6 +137,6 @@ def get_all_traders():
     """\
     Return all traders
     """
-    fields = ['id', 'name', 'username', 'account_type', 'account_number', 'description', 'cash', 'people_following', 'total_allocated_money', 'roi', 'nav']
+    fields = ['id', 'name', 'username', 'account_type', 'account_number', 'description', 'cash', 'people_following', 'total_allocated_money', 'follower_roi', 'nav']
     traders = models.Trader.query.all()
     return map(make_serializer(fields), traders)

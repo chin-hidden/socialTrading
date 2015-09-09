@@ -8,20 +8,19 @@
 </div>
 {% endblock %}
 
-{% block extra_headers %}
-{% endblock %}
-
 {% block extra_scripts %}
-{% if config.DEBUG %}
-<script src="/static/jspm_packages/system.js"></script>
-<script src="/static/config.js"></script>
 
-<script>
-  System.import("scripts/accountapp");
-</script>
+{% if config.DEBUG %}
+    <script src="/static/jspm_packages/system.js"></script>
+    <script src="/static/config.js"></script>
+
+    <script>
+      System.import("scripts/accountapp");
+    </script>
 {% else %}
-{% assets output="dist/account.bundle.js", "dist/account.bundle.js" %}
-  <script src="{{ ASSET_URL }}"></script>
-{% endassets %}
+    {% assets output="dist/account.bundle.js", "dist/account.bundle.js" %}
+      <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 {% endif %}
+
 {% endblock %}

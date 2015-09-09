@@ -223,7 +223,7 @@ class Trader(Account):
         return len(self.follower_assocs)
 
     @property
-    def roi(self):
+    def follower_roi(self):
         return 0.125
 
     __mapper_args__ = {
