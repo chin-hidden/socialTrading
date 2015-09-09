@@ -19,6 +19,12 @@ export var AccountScreen = React.createClass({
         };
     },
 
+    componentDidMount: function() {
+        me.on("change", () => {
+            this.forceUpdate();
+        });
+    },
+
     switchTab: function(tabName, event) {
         event.preventDefault();
         this.setState({activeTab: tabName});
@@ -65,12 +71,6 @@ export var AccountScreen = React.createClass({
 
 
 var InfoBox = React.createClass({
-    componentDidMount: function() {
-        me.on("change", () => {
-            this.forceUpdate();
-        });
-    },
-
     riskSliderChanged: function(value) {
         me.set("risk_factor", Math.floor(value));
         me.save(null, {
@@ -157,7 +157,27 @@ var PositionPanel = React.createClass({
 
 
 var OverviewPanel = React.createClass({
+    getInitialState: function() {
+        var rels = me.get("following_traders");
+
+        return {
+            selectedRel: rels.at(0)
+        };
+    },
+
     componentDidMount: function() {
+        this.renderChart();
+    },
+
+    componentDidUpdate: function() {
+        this.renderChart();
+    },
+
+    renderChart: function() {
+        function getRandomInt(min, max) {
+          return Math.floor(Math.random() * (max - min)) + min;
+        }
+
         var data = {
             labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7"],
             datasets: [
@@ -169,7 +189,9 @@ var OverviewPanel = React.createClass({
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(255, 153, 0, 1)",
-                    data: [28, 48, 40, 30, 86, 60, 90]
+                    data: _.times(7, getRandomInt.bind(20, 90)),
+                    animationSteps: 20,
+                    scaleBeginAtZero: true,
                 }
             ]
         };
@@ -179,16 +201,28 @@ var OverviewPanel = React.createClass({
             responsive: true
         });
     },
+
+    tabClicked: function(rel) {
+        this.setState({
+            selectedRel: rel
+        });
+    },
+
     render: function () {
         var rels = me.get("following_traders");
 
         var traderTabs = rels.map((rel) => {
             var trader = traders.get(rel.get("trader_id"));
 
+            var tabClassNames = "trader-tab";
+            if (rel === this.state.selectedRel) {
+                tabClassNames += " active";
+            }
+
             return (
-                <div className="trader-tab clearfix">
-                    <div className="avatar">
-                        <img src={trader.getAvatar()} className="img-thumbnail"/>
+                <div key={rel.cid} onClick={this.tabClicked.bind(null, rel)} className={tabClassNames}>
+                    <div>
+                        <ImageLoader className="avatar" src={trader.getAvatar()}/>
                     </div>
 
                     <div>

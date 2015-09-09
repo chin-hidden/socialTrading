@@ -95,6 +95,15 @@
 
   .trader-tab {
     display: flex;
+    cursor: pointer;
+    background-color: $gray-lighter;
+    border-bottom: 1px #AAA dashed;
+    padding: 1em;
+
+    &.active,
+    &:hover {
+      background-color: white;
+    }
   }
 
   .trader-tab .avatar {
@@ -103,13 +112,6 @@
     width: $size;
     height: $size;
     margin-right: 1em;
-  }
-
-  .trader-tab {
-    border-bottom: 1px #AAA dashed;
-    padding-right: 1em;
-    padding-top: 1em;
-    padding-bottom: 1em;
   }
 }
 
