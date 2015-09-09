@@ -171,32 +171,56 @@
   }
 
   .rel-strip .deal-card {
-    border: 2px #46b94a solid;
-    color: #006f2e;
+    $green: #006f2e;
+
+    border: 1px #DDD solid;
+    color: $green;
     margin-right: 1em;
-    padding: 0.5em;
     border-radius: 4px;
     font-weight: bold;
-    text-align: center;
-
-    display: flex;
-    flex-direction: column;
-    min-width: 6em;
-    background-image: repeating-linear-gradient(to bottom, #F5F5F5, #F5F5F5 5px, #FFF 5px, #FFF 10px);
-  }
-
-  .deal-card.unprofitable {
-    border: 2px #ff4e4e solid;
-    color: #ff3636;
-  }
-
-  .deal-card .symbol {
     font-size: 1.5em;
-    flex-grow: 1;
-    display: flex;
+    text-align: center;
     flex-direction: column;
-    justify-content: center;
+    min-width: 5em;
+    background-color: white;
+    
+    &.unprofitable {
+      $red: #ff3636;
+
+      border: 2px $red solid;
+      color: $red;
+
+      .symbol {
+        background-color: $red;
+      }
+    }
+
+    .ui-label {
+      color: black;
+      text-transform: uppercase;
+      font-size: 0.6em;
+    }
+
+    .symbol {
+      font-weight: bold;
+      background-color: $green;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .value {
+      border-bottom: 1px solid #DDD;
+      color: black;
+    }
+
+    .value, .profit {
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+    }
   }
+
 
   .btn-add-trader {
     margin-top: 1em;

@@ -137,9 +137,16 @@ class DealCard extends React.Component {
 
 		return (
 			<div className={cardClassNames}>
-				<div className="value">{formatCurrency(deal.get('quantity') * deal.get('buying_price'))}<br/></div>
 				<div className="symbol">{deal.get('symbol')}</div>
-				<div className="profit">{formatCurrency(profit)}</div>
+				<div className="value">
+					<div className="ui-label">Giá trị</div>
+					<div>{formatCurrency(deal.get('quantity') * deal.get('buying_price'))}</div>
+				</div>
+
+				<div className="profit">
+					<div className="ui-label">Lãi</div>
+					<div>{formatCurrency(profit)}</div>
+				</div>
 			</div>
 		);
 	}
