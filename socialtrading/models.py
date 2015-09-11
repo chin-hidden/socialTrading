@@ -328,6 +328,26 @@ class UserService:
         db.session.add(user)
         db.session.commit()
 
+    def get_following_relationship(self, username, trader_id):
+        return Following.query \
+            .filter(Following.trader_id == trader_id, Following.follower_id == username).first()
+
+    def unfollow(self, username, trader_id):
+        rel = Following.query \
+            .filter(Following.trader_id == trader_id, Following.follower_id == username).first()
+        db.session.delete(rel)
+        db.session.commit()
+
+    def follow(self, username, trader_id):
+        following = models.Following()
+        following.follower_id = username
+        following.trader_id = trader_id
+
+        # FIXME: Auto divide the allocated money
+        following.allocated_money = 1000000
+        db.session.add(following)
+        db.session.commit()
+
 
 class DealService:
     def get_deals_by_username(self, username):

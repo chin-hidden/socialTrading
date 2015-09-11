@@ -35,6 +35,11 @@ export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         initialize: function() {
             this.cid = this.get("follower_id") + this.get("trader_id");
+            this.set("id", this.cid);
+        },
+
+        url: function() {
+            return `/api/v1/follower/${this.get('follower_id')}/following/${this.get('trader_id')}`;
         }
     }),
 
@@ -79,7 +84,7 @@ export var Follower = Backbone.Model.extend({
             this.trigger("change");
         });
 
-        this.get("deals").on("chagne update", () => {
+        this.get("deals").on("change update", () => {
             this.trigger("change");
         });
     },
@@ -107,8 +112,8 @@ export var Follower = Backbone.Model.extend({
     follow: function(traderId) {
         var rels = this.get("following_traders");
         return rels.create({
-                "follower_id": this.id,
-                "trader_id": traderId
+            "follower_id": this.id,
+            "trader_id": traderId
         });
     },
 

@@ -104,13 +104,9 @@ def follower(username):
 @rest_endpoint
 def following_relationships(username):
     if request.method == "POST":
-        following = models.Following()
-        following.follower_id = request.json['follower_id']
-        following.trader_id = request.json['trader_id']
-        # FIXME: Auto divide the allocated money
-        following.allocated_money = 1000000
-        db.session.add(following)
-        db.session.commit()
+        follower_id = request.json['follower_id']
+        trader_id = request.json['trader_id']
+        models.user_service.follow(follower_id, trader_id)
 
     user = models.user_service.get_user_by_username(username)
     if not user:
@@ -119,6 +115,22 @@ def following_relationships(username):
     fields = ['trader_id', 'follower_id', 'allocated_money', 'profit', 'roi']
 
     return map(make_serializer(fields), user.trader_assocs)
+
+
+@api_blueprint.route("/follower/<username>/following/<trader_username>", methods=["GET", "DELETE", "PUT"])
+@login_required
+@rest_endpoint
+def following_relationship(username, trader_username):
+    if request.method == "DELETE":
+        models.user_service.unfollow(username, trader_username)
+
+    if request.method == "GET":
+        rel = models.user_service.get_following_relationship(username, trader_username)
+        if not rel:
+            flask.abort(404)
+
+        fields = ['trader_id', 'follower_id', 'allocated_money', 'profit', 'roi']
+        return make_serializer(fields)(rel)
 
 
 @api_blueprint.route("/follower/<username>/deals")
