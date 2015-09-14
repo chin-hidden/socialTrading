@@ -2,23 +2,27 @@ import React from "react";
 import ImageLoader from "react-imageloader";
 import Chart from "chart";
 import _ from "underscore";
+
 import * as utils from "../utils";
+import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
 
 
-export var TraderListingScreen = React.createClass({
+var TraderListingScreen = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
     propTypes: {
         traders: React.PropTypes.object.isRequired,
-        me: React.PropTypes.object.isRequired
+        follower: React.PropTypes.object.isRequired
     },
 
     componentDidMount: function() {
-        this.props.me.on('change', this.forceUpdate.bind(this));
+        this.props.follower.on('change', this.forceUpdate.bind(this));
         this.props.traders.on('change update', this.forceUpdate.bind(this));
     },
 
     render: function() {
         var traderLines = this.props.traders.map(
-            (trader) => <Trader key={trader.cid} me={this.props.me} trader={trader}/>);
+            (trader) => <Trader key={trader.cid} trader={trader}/>);
 
         return (
             <div className="trader-listing">
@@ -30,9 +34,11 @@ export var TraderListingScreen = React.createClass({
 
 
 var Trader = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
     propTypes: {
         trader: React.PropTypes.object.isRequired,
-        me: React.PropTypes.object.isRequired,
+        follower: React.PropTypes.object.isRequired,
     },
 
     componentDidMount: function() {
@@ -49,6 +55,7 @@ var Trader = React.createClass({
                 }
             ]
         };
+
         var perfChart = new Chart(ctx).Line(data, {
             showScale: false,
             scaleShowLabels: false,
@@ -61,21 +68,21 @@ var Trader = React.createClass({
 
     follow: function() {
         if (window.confirm("Bạn có thực sự muốn theo dõi chiến lược gia này?")) {
-            this.props.me.follow(this.props.trader.id);
+            this.props.follower.follow(this.props.trader.id);
         }
     },
 
     unfollow: function() {
         if (window.confirm("Bạn có thực sự muốn bỏ theo dõi chiến lược gia này? Các cổ phiếu bạn đang giữ theo nhà đầu tư này sẽ được bán hết.")) {
-            this.props.me.unfollow(this.props.trader.id);
+            this.props.follower.unfollow(this.props.trader.id);
         }
     },
 
     render: function() {
         var trader = this.props.trader;
-        var me = this.props.me;
+        var follower = this.props.follower;
 
-        if (me.isFollowing(trader)) {
+        if (follower.isFollowing(trader)) {
             var actionButton = (
                 <button onClick={this.unfollow} className="btn btn-primary btn-unfollow">
                     Bỏ theo dõi
@@ -88,7 +95,6 @@ var Trader = React.createClass({
                 </button>
             );
         }
-
 
         return (
             <div className="trader">
@@ -128,3 +134,6 @@ var Trader = React.createClass({
         );
     }
 });
+
+
+export default TraderListingScreen;
