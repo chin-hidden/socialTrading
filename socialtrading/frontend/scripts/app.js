@@ -4,9 +4,7 @@ import $ from "jquery";
 import "jpillora/notifyjs/dist/notify-combined.min";
 
 import {AccountScreen} from "./components/AccountScreen.jsx";
-import {appRouter} from "./router";
 import TraderListingScreen from "./components/TraderListingScreen.jsx";
-import DISPATCHER from "./dispatcher";
 import * as models from "./models";
 import * as utils from "./utils";
 import "./csrf";
@@ -19,8 +17,8 @@ function isLoggedIn() {
 
 
 // Global singletons
-export var stockStore = new models.StockStore([], {priceServer: "priceservice.vndirect.com.vn", dispatcher: DISPATCHER});
-export var notificationStore = new models.NotificationStore("/realtime", DISPATCHER);
+export var stockStore = new models.StockStore([], {priceServer: "priceservice.vndirect.com.vn"});
+export var notificationStore = new models.NotificationStore("/realtime");
 export var traders = new models.Traders();
 export var follower = new models.Follower();
 
@@ -44,6 +42,17 @@ function fetchData() {
 
     return Promise.all(promises);
 }
+
+
+var AppRouter = Backbone.Router.extend({
+    routes: {
+        "account": "account",
+        "traders": "traders"
+    }
+});
+
+var appRouter = new AppRouter();
+
 
 appRouter.on("route:account", () => {
     if (!isLoggedIn()) {

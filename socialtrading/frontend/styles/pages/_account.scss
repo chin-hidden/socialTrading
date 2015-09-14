@@ -1,4 +1,4 @@
-.container-account {
+.account-screen {
   height: 100%;
 
   .loader {
@@ -183,7 +183,7 @@
     flex-direction: column;
     min-width: 5em;
     background-color: white;
-    
+
     &.unprofitable {
       $red: #ff3636;
 

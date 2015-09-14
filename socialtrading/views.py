@@ -145,6 +145,11 @@ def internal_server_error(e):
     return flask.render_template('error.jinja.html', **context), 500
 
 
+@app.route("/app/<frontend_route>")
+def application(frontend_route):
+    return flask.render_template("app.jinja.html")
+
+
 @app.route("/")
 @menu.register_menu(app, '.', u'Trang chủ', order=0)
 def index():

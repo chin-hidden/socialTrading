@@ -2,26 +2,30 @@ import React from "react";
 import _ from "underscore";
 import Carousel from 'nuka-carousel';
 
-import {traders, me} from "../common";
+import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
 import {formatCurrency} from "../utils";
-import {stockStore} from "../models";
-import DISPATCHER from "../dispatcher";
 
 
-export default class Portfolio extends React.Component {
+var Portfolio = React.createClass({
+	mixins: [DependencyInjectedMixin],
+
+	propTypes: {
+		follower: React.PropTypes.object.isRequired
+	},
+
 	componentDidMount() {
-		me.get("deals").on("update change", () => {
+		this.props.follower.get("deals").on("update change", () => {
 		    this.forceUpdate();
 		});
 
-		me.get("following_traders").on("update change", () => {
+		this.props.follower.get("following_traders").on("update change", () => {
 		    this.forceUpdate();
 		});
 
 		DISPATCHER.on("stock:changed", () => {
 		    this.forceUpdate();
 		});
-	}
+	},
 
 	render() {
 		// List of RelStrip's
@@ -33,22 +37,22 @@ export default class Portfolio extends React.Component {
 				{relStrips}
 			</div>
 		);
-	}
-}
-Portfolio.propTypes = {
-	follower: React.PropTypes.object.isRequired
-};
+	},
+});
 
 
 var RelStrip = React.createClass({
+	mixins: [DependencyInjectedMixin],
+
 	propTypes: {
-		relationship: React.PropTypes.object.isRequired
+		relationship: React.PropTypes.object.isRequired,
+		traders: React.PropTypes.object.isRequired
 	},
 
 	render: function() {
 		var rel = this.props.relationship;
 		var trader = traders.get(rel.get('trader_id'));
-		var follower = me;
+
 		var deals = follower.get('deals').filter((deal) => {
 			return deal.get("mimicking_username") == trader.get('username') && deal.get('username') == follower.get('username');
 		});

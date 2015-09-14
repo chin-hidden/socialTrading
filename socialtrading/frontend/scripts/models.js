@@ -1,7 +1,7 @@
 import Backbone from "backbone";
-import DISPATCHER from "./dispatcher";
 import SockJS from "sockjs-client";
 import _ from "underscore";
+import * as app from "./app";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -48,9 +48,9 @@ export var FollowingRels = Backbone.Collection.extend({
     },
 
     initialize: function() {
-        DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
-            this.fetch();
-        });
+        // DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
+        //     this.fetch();
+        // });
     },
 
     parse: function(data) {
@@ -72,13 +72,13 @@ export var Follower = Backbone.Model.extend({
     },
 
     initialize: function() {
-        DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
-            this.get("deals").fetch();
-        });
+        // DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
+        //     this.get("deals").fetch();
+        // });
 
-        DISPATCHER.on("noti:account:updated", () => {
-            this.fetch();
-        });
+        // DISPATCHER.on("noti:account:updated", () => {
+        //     this.fetch();
+        // });
 
         this.get("following_traders").on("change update", () => {
             this.trigger("change");
@@ -126,9 +126,8 @@ export var Follower = Backbone.Model.extend({
 });
 
 
-class NotificationStore {
-    constructor(address, dispatcher) {
-        this.dispatcher = dispatcher;
+export class NotificationStore {
+    constructor(address) {
         this.conn = new SockJS(address);
 
         this.conn.onopen = this.onOpen.bind(this);
@@ -138,20 +137,20 @@ class NotificationStore {
     }
 
     onError(e) {
-        this.dispatcher.trigger("noti:error", e);
+        // this.dispatcher.trigger("noti:error", e);
     }
 
     onOpen(e) {
         console.log("Websocket connection established!");
-        this.dispatcher.trigger("noti:open", e);
+        // this.dispatcher.trigger("noti:open", e);
     }
 
     onMessage(e) {
-        this.dispatcher.trigger("noti:" + e.data.headers.topic, e.data.payload);
+        // this.dispatcher.trigger("noti:" + e.data.headers.topic, e.data.payload);
     }
 
     onClose(e) {
-        this.dispatcher.trigger("noti:close", e);
+        // this.dispatcher.trigger("noti:close", e);
     }
 
     close() {
@@ -166,12 +165,11 @@ var Stock = Backbone.Model.extend({
 
 
 // FIXME: Add functionality to register a specific stock symbol
-var StockStore = Backbone.Collection.extend({
+export var StockStore = Backbone.Collection.extend({
     model: Stock,
 
     initialize: function (models, options) {
         this.models = models;
-        this.dispatcher = options.dispatcher;
 
         this.sock = SockJS(options.priceServer + "/realtime");
         this.sock.onopen = () => {
@@ -194,8 +192,8 @@ var StockStore = Backbone.Collection.extend({
                 var parsed = this.parseStockMessage(stockInfo);
                 this.add(parsed);
 
-                this.dispatcher.trigger(`stock:changed`);
-                this.dispatcher.trigger(`stock:${parsed.code}:changed`);
+                // this.dispatcher.trigger(`stock:changed`);
+                // this.dispatcher.trigger(`stock:${parsed.code}:changed`);
             });
         };
     },
@@ -248,6 +246,3 @@ var StockStore = Backbone.Collection.extend({
         this.sock.send(JSON.stringify(object));
     }
 });
-
-export var stockStore = new StockStore([], {priceServer: "priceservice.vndirect.com.vn", dispatcher: DISPATCHER});
-export var notificationStore = new NotificationStore("/realtime", DISPATCHER);
