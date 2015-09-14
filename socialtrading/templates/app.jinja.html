@@ -1,0 +1,26 @@
+{% extends "base.jinja.html" %}
+
+{% block content %}
+<div id="app" class="container">
+  <div class="loader">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+
+{% if config.DEBUG %}
+    <script src="/static/jspm_packages/system.js"></script>
+    <script src="/static/config.js"></script>
+
+    <script>
+      System.import("scripts/app");
+    </script>
+{% else %}
+    {% assets output="dist/account.bundle.js", "dist/account.bundle.js" %}
+      <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+{% endif %}
+
+{% endblock %}

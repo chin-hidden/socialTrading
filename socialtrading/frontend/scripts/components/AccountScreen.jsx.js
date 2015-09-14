@@ -5,14 +5,20 @@ import $ from "jquery";
 import _ from "underscore";
 
 import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
-import DISPATCHER from "../dispatcher";
-import {stockStore} from "../models";
-import {me, traders} from "../common";
 import RiskSlider from "./RiskSlider.jsx";
 import Portfolio from "./Portfolio.jsx";
+import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
+import * as app from "../app";
 
 
 export var AccountScreen = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
+    propTypes: {
+        traders: React.PropTypes.object.isRequired,
+        follower: React.PropTypes.object.isRequired,
+    },
+
     getInitialState: function() {
         return {
             activeTab: "overview"
@@ -20,7 +26,7 @@ export var AccountScreen = React.createClass({
     },
 
     componentDidMount: function() {
-        me.on("change", () => {
+        this.props.follower.on("change", () => {
             this.forceUpdate();
         });
     },
@@ -42,7 +48,13 @@ export var AccountScreen = React.createClass({
                 active["overview"] = "active";
                 break;
             case "danhmuc":
-                tabContent = (<PositionPanel/>);
+                tabContent = (
+                    <div className="panel panel-default panel-tabbed panel-deals">
+                        <div className="panel-body">
+                            <Portfolio/>
+                        </div>
+                    </div>
+                );
                 active["danhmuc"] = "active";
         }
 
@@ -71,9 +83,15 @@ export var AccountScreen = React.createClass({
 
 
 var InfoBox = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
+    propTypes: {
+        follower: React.PropTypes.object.isRequired
+    },
+
     riskSliderChanged: function(value) {
-        me.set("risk_factor", Math.floor(value));
-        me.save(null, {
+        this.props.follower.set("risk_factor", Math.floor(value));
+        this.props.follower.save(null, {
             success: () => {
                 $.notify("Đã lưu");
             },
@@ -86,10 +104,10 @@ var InfoBox = React.createClass({
     },
 
     render: function() {
-        // FIXME Decouple from `me`
+        var follower = this.props.follower;
 
         var riskSliderConfig = {
-            start: [ me.get("risk_factor") ],
+            start: [ follower.get("risk_factor") ],
             connect: "lower",
             step: 1,
             range: {
@@ -101,31 +119,31 @@ var InfoBox = React.createClass({
         return (
             <div className="panel panel-default info-box">
               <div className="panel-body clearfix">
-                <ImageLoader src={me.getAvatar()} className="avatar"/>
+                <ImageLoader src={follower.getAvatar()} className="avatar"/>
 
                 <div className="personal-info">
-                    <div className="name">{me.get("name")}</div>
-                    <div className="username">{me.get("id")}</div>
-                    <span className="ui-label">TK:</span> {me.get("account_number")}
+                    <div className="name">{follower.get("name")}</div>
+                    <div className="username">{follower.get("id")}</div>
+                    <span className="ui-label">TK:</span> {follower.get("account_number")}
                 </div>
 
                 <div className="accountStats">
                   <div className="row">
                     <div className="col-md-3">
                       <span className="ui-label">Lợi nhuận</span><br/>
-                      <strong>{formatCurrency(me.get("gross_profit"))}</strong>
+                      <strong>{formatCurrency(follower.get("gross_profit"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Tài sản</span><br/>
-                      <strong>{formatCurrency(me.get("nav"))}</strong>
+                      <strong>{formatCurrency(follower.get("nav"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Chứng khoán</span><br/>
-                      <strong>{formatCurrency(me.get("gross_stock_value"))}</strong>
+                      <strong>{formatCurrency(follower.get("gross_stock_value"))}</strong>
                     </div>
                     <div className="col-md-3">
                       <span className="ui-label">Tiền mặt</span><br/>
-                      <strong>{formatCurrency(me.get("cash"))}</strong>
+                      <strong>{formatCurrency(follower.get("cash"))}</strong>
                     </div>
                   </div>
 
@@ -143,22 +161,17 @@ var InfoBox = React.createClass({
 });
 
 
-var PositionPanel = React.createClass({
-    render: function() {
-        return (
-            <div className="panel panel-default panel-tabbed panel-deals">
-                <div className="panel-body">
-                    <Portfolio follower={me}/>
-                </div>
-            </div>
-        );
-    }
-});
-
 
 var OverviewPanel = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
+    propTypes: {
+        follower: React.PropTypes.object.isRequired,
+        traders: React.PropTypes.object.isRequired
+    },
+
     getInitialState: function() {
-        var rels = me.get("following_traders");
+        var rels = this.props.follower.get("following_traders");
 
         return {
             selectedRel: rels.at(0)
@@ -209,10 +222,11 @@ var OverviewPanel = React.createClass({
     },
 
     render: function () {
-        var rels = me.get("following_traders");
+        var follower = this.props.follower;
+        var rels = follower.get("following_traders");
 
         var traderTabs = rels.map((rel) => {
-            var trader = traders.get(rel.get("trader_id"));
+            var trader = this.props.traders.get(rel.get("trader_id"));
 
             var tabClassNames = "trader-tab";
             if (rel === this.state.selectedRel) {
