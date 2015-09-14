@@ -3,6 +3,7 @@ import Chart from "chart";
 import ImageLoader from 'react-imageloader';
 import $ from "jquery";
 import _ from "underscore";
+import Backbone from "backbone";
 
 import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
 import RiskSlider from "./RiskSlider.jsx";
@@ -256,6 +257,9 @@ var OverviewPanel = React.createClass({
             );
         });
 
+        function goToTradersPage() {
+            Backbone.history.navigate("traders", {trigger: true});
+        };
 
         return (
             <div className="panel panel-default panel-overview panel-tabbed">
@@ -265,7 +269,7 @@ var OverviewPanel = React.createClass({
                         {traderTabs}
                     </div>
 
-                    <a className="btn btn-primary btn-add-trader" href="/traders">Thêm chiến lược gia</a>
+                    <button className="btn btn-primary btn-add-trader" onClick={goToTradersPage}>Thêm chiến lược gia</button>
                 </div>
 
                 <div ref="graph" className="graph">
