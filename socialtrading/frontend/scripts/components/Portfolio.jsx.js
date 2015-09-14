@@ -94,7 +94,7 @@ var RelStrip = React.createClass({
 					<div className="name">{trader.get('name')}</div>
 					<table className="ui-label">
 						<tr>
-							<td>lãi:</td>
+							<td>kết quả:</td>
 							<td>{formatCurrency(rel.get("profit"))}</td>
 						</tr>
 					</table>
@@ -144,7 +144,7 @@ class DealCard extends React.Component {
 				</div>
 
 				<div className="profit">
-					<div className="ui-label">Lãi</div>
+					<div className="ui-label">Kết quả</div>
 					<div>{formatCurrency(profit)}</div>
 				</div>
 			</div>
