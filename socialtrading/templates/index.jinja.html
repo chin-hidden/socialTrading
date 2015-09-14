@@ -21,7 +21,7 @@
 
         <p>{{ autotrade() }} - Hệ thống tự động sao chép chiến lược đầu tư lãi nhất thị trường</p>
 
-        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}" style="background-color: #D20D1F;">Bắt đầu</a>
+        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('application', frontend_route='account') }}" style="background-color: #D20D1F;">Bắt đầu</a>
       </div>
 
       <img src="{{ url_for('static', filename='img/man-riding.png') }}">
@@ -34,7 +34,7 @@
         <div class="text">
           <h2>Chia sẻ giao dịch<br/>lãi nhất thị trường</h2>
           <p>Các nhà đầu tư ở Autotrade sẵn sàng chia sẻ thông tin các giao dịch lãi nhất của họ với bạn. Chọn nhà đầu tư bạn muốn kiếm lời cùng và Autotrade sẽ sao chép giao dịch của họ vào tài khoản của bạn.</p>
-          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('traders') }}" style="background-color: #008A45;">
+          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('application', frontend_route='traders') }}" style="background-color: #008A45;">
             Thông tin nhà đầu tư
           </a>
         </div>
@@ -49,7 +49,7 @@
           <h2>Không cần kinh nghiệm <br/> Tiết kiệm thời gian</h2>
           <p>Không cần tốn thời gian tìm hiểu và theo dõi thị trường chứng khoán, nhà đầu tư bạn tin tưởng sẽ đưa ra quyết định đầu tư giúp bạn kiếm lời.</p>
 
-          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}" style="background-color: #F95F25;">Dùng thử</a>
+          <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('application', frontend_route='account') }}" style="background-color: #F95F25;">Dùng thử</a>
         </div>
 
         <img src="{{ url_for('static', filename='img/trader_and_follower.png') }}">
@@ -62,7 +62,7 @@
       <div class="text">
         <h2>Minh bạch thông tin <br> Yên tâm đầu tư</h2>
         <p>Quản lý tài khoản dễ dàng, hiển thị minh bạch kết quả đầu tư của bạn và Nhà đầu tư bạn sao chép. Hệ thống bảo vệ ba tầng hỗ trợ đảm bảo an toàn cho tài khoản của Khách hàng.</p>
-        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('account') }}">Bắt đầu</a>
+        <a class="btn btn-primary btn-next btn-lg" href="{{ url_for('application', frontend_route='account') }}">Bắt đầu</a>
       </div>
     </div>
   </div>
