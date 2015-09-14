@@ -1,6 +1,5 @@
 *** Settings ***
 Test Setup        Open browser    ${BASE_ADDRESS}    browser=chrome
-Test Teardown     Close all browsers
 Resource          common.txt
 
 *** Test Cases ***
@@ -23,7 +22,7 @@ Bỏ theo đuôi khi nhấn vào nút bỏ theo đuôi
 
 *** Keywords ***
 Vào trang traders
-    Go to    ${BASE_ADDRESS}/traders
+    Go to    ${BASE_ADDRESS}/app/traders
     Click Link    link=Hide »
     Wait Until Page Does Not Contain Element    css=.loader
 

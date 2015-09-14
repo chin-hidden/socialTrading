@@ -339,7 +339,7 @@ class UserService:
         db.session.commit()
 
     def follow(self, username, trader_id):
-        following = models.Following()
+        following = Following()
         following.follower_id = username
         following.trader_id = trader_id
 

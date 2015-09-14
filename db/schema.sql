@@ -20,7 +20,7 @@ CREATE TABLE account (
 
 CREATE TABLE followerInfo (
 	username text PRIMARY KEY REFERENCES account (username),
-	risk_factor integer NOT NULL
+	risk_factor integer NOT NULL DEFAULT 50
 );
 
 CREATE TABLE traderInfo (

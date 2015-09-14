@@ -14,6 +14,10 @@ db:
 	psql duber < db/schema.sql
 	psql duber < db/fixtures.sql
 
+db-demo:
+	psql duber < db/schema.sql
+	psql duber < db/demo_fixtures.sql
+
 test:
 	PYTHONPATH=. py.test
 

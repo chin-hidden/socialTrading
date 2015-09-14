@@ -1,43 +1,42 @@
 *** Settings ***
-Resource  common.txt
-Test teardown  Close all browsers
+Test Teardown     Close All Browsers
+Resource          common.txt
+
+*** Test Cases ***
+Follow 1 trader chưa có deal
+    Load fixture    follow_one_trader_no_deal.sql
+    Vao trang danh muc dau tu
+    Element should contain    css=.portfolio    Xin Một Lần Thua
+    Element should contain    css=.portfolio    Bạn không có cổ phiếu nào mua theo nhà đầu tư này
+
+Cập nhật giao diện khi có lệnh mua
+    Load fixture    order_fixtures.sql
+    Vao trang danh muc dau tu
+    Execute order    {"orderId": "lol", "account": "0101807860", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
+    Sleep    1
+    Element should contain    css=.rel-strip    Xin Một Lần Thua
+    Element should contain    css=.active-deals    VND
+
+Hai lệnh mua của hai trader
+    Load fixture    two_traders_buy.sql
+    Vao trang danh muc dau tu
+    Execute order    {"orderId": "lol1", "account": "account-trader-01", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
+    Sleep    1
+    Execute order    {"orderId": "lol2", "account": "account-trader-02", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
+    Sleep    1
+    Element should contain    css=.portfolio    Xin Một Lần Thua
+    Element should contain    css=.portfolio    Lỗ Là Gì
+
+Cập nhật giao diện khi bán deal đang giữ
+    Load fixture    selling.sql
+    Vao trang danh muc dau tu
+    Execute order    {"orderId": "lol", "account": "0101807860", "side": "2", "symbol": "VND", "qty": 100, "price": 24000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
+    Sleep    2
+    Element should contain    css=.old-deals    VND
 
 *** Keywords ***
 Vao trang danh muc dau tu
     Login to account page
-    Wait until element is visible  link=Danh mục đầu tư
-    Sleep  1
-    Click element                  link=Danh mục đầu tư
-
-*** Test Cases ***
-
-Follow 1 trader chưa có deal
-    Load fixture  follow_one_trader_no_deal.sql
-    Vao trang danh muc dau tu
-    Element should contain  css=.portfolio  Xin Một Lần Thua
-    Element should contain  css=.portfolio  Bạn không có cổ phiếu nào mua theo nhà đầu tư này
-
-Cập nhật giao diện khi có lệnh mua
-    Load fixture                   order_fixtures.sql
-    Vao trang danh muc dau tu
-    Execute order                  {"orderId": "lol", "account": "0101807860", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
-    Sleep  1
-    Element should contain         css=.rel-strip  Xin Một Lần Thua
-    Element should contain         css=.active-deals  VND
-
-Hai lệnh mua của hai trader
-    Load fixture                   two_traders_buy.sql
-    Vao trang danh muc dau tu
-    Execute order                  {"orderId": "lol1", "account": "account-trader-01", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
-    Sleep                          1
-    Execute order                  {"orderId": "lol2", "account": "account-trader-02", "side": "1", "symbol": "VND", "qty": 100, "price": 23000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
-    Sleep                          1
-    Element should contain         css=.portfolio  Xin Một Lần Thua
-    Element should contain         css=.portfolio  Lỗ Là Gì
-
-Cập nhật giao diện khi bán deal đang giữ
-    Load fixture                   selling.sql
-    Vao trang danh muc dau tu
-    Execute order                  {"orderId": "lol", "account": "0101807860", "side": "2", "symbol": "VND", "qty": 100, "price": 24000, "transactTime": 1428285620000, "tradeDate": "20150406-09:00:20", "matchedQty": 100, "matchedPrice": 23100, "eventName": "EXECUTED"}
-    Sleep                          2
-    Element should contain         css=.old-deals  VND
+    Wait until element is visible    link=Danh mục đầu tư
+    Sleep    1
+    Click element    link=Danh mục đầu tư

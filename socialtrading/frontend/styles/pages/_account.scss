@@ -90,6 +90,7 @@
 
     .tabs {
       margin-bottom: 1em;
+      width: 15em;
     }
   }
 
@@ -187,7 +188,6 @@
     &.unprofitable {
       $red: #ff3636;
 
-      border: 2px $red solid;
       color: $red;
 
       .symbol {

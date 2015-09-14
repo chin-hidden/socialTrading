@@ -18,7 +18,6 @@ function isLoggedIn() {
 
 // Global singletons
 export var stockStore = new models.StockStore([], {priceServer: "priceservice.vndirect.com.vn"});
-export var notificationStore = new models.NotificationStore("/realtime");
 export var traders = new models.Traders();
 export var follower = new models.Follower();
 

@@ -32,6 +32,14 @@ export var AccountScreen = React.createClass({
         this.props.follower.on("change", () => {
             this.forceUpdate();
         });
+
+        this.props.follower.get("deals").on("update change", () => {
+            this.forceUpdate();
+        });
+
+        this.props.follower.get("following_traders").on("update change", () => {
+            this.forceUpdate();
+        });
     },
 
     switchTab: function(tabName, event) {

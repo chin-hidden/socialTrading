@@ -55,7 +55,7 @@ def debug():
 
 def login_arguments():
     return {
-        "next": "/account"
+        "next": "/app/account"
     }
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -75,15 +75,19 @@ def login():
             # FIXME: Extract this into a method in the UserService.
             user = models.Follower()
             user.username = username
-            user.broker = "VNDIRECT"
+            user.broker = "__DEMO__"
             user.account_type = "FOLLOWER"
 
             user_detail = client.get_user_detail()
             user.name = user_detail.customer_name
             user.account_number = user_detail.accounts[0].account_number
+            user.risk_factor = 50
 
             account_detail = client.get_account_detail(user.account_number)
             user.cash = account_detail.cash
+
+            if user.cash == 0:
+                user.cash = 100000000
 
             models.user_service.save_user(user)
 

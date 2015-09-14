@@ -2,7 +2,9 @@ export function formatCurrency(amount) {
     if (amount === undefined) {
         amount = NaN;
     }
-    return (amount / 1000).toLocaleString("vi") + "K";
+    return (amount / 1000).toLocaleString("vi", {
+        maximumFractionDigits: 1
+    }) + "K";
     // return amount.toLocaleString("vi", {
     //     style: "currency",
     //     currency: "VND",

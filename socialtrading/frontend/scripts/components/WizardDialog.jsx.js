@@ -31,15 +31,13 @@ var WizardDialog = React.createClass({
         follower.set("risk_factor", riskFactor);
         var followings = follower.get("following_traders");
 
-        // FIXME: Wrap all these in an async operation.
-        selectedTraders.forEach((trader) => {
-            followings.create({
-                "follower_id": follower.id,
-                "trader_id": trader.id
-            });
+        var promises = selectedTraders.map((trader) => {
+            return follower.follow(trader.id);
         });
 
-        follower.save().then(this.props.onHide);
+        promises.push(follower.save());
+
+        Promise.all(promises).then(this.props.onHide);
     },
 
     render: function() {

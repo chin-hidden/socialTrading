@@ -1,19 +1,21 @@
 *** Settings ***
-Library         Process
-Library         Selenium2Library  timeout=10
-Library         CustomCommands.py
+Library           Process
+Library           Selenium2Library    timeout=10
+Library           CustomCommands.py
 
 *** Variables ***
-${ROOT}          ../..
-${BASE_ADDRESS}  http://localhost:8080/
-${USERNAME}
-${PASSWORD}
+${ROOT}           ../..
+${BASE_ADDRESS}    http://localhost:8080
+${USERNAME}       ${EMPTY}
+${PASSWORD}       ${EMPTY}
 
 *** Keywords ***
 Load fixture
-    [Arguments]   ${name}
-    Run process   vagrant ssh -c "cd /vagrant/tests/acceptance; psql duber < ${ROOT}/db/schema.sql; psql duber < ${name};"  shell=True
+    [Arguments]    ${name}
+    Run process    vagrant ssh -c "cd /vagrant/tests/acceptance; psql duber < ${ROOT}/db/schema.sql; psql duber < ${name};"    shell=True
 
 Login to account page
-        Open browser                   ${BASE_ADDRESS}/account  browser=chrome
-        Click element                  btn-submit-demo
+    Open browser    ${BASE_ADDRESS}/app/account    browser=chrome
+    Wait Until Page Contains Element    btn-submit-demo
+    Click element    btn-submit-demo
+    Wait until page contains element    css=.account-screen

@@ -1,7 +1,7 @@
 import Backbone from "backbone";
-import SockJS from "sockjs-client";
 import _ from "underscore";
-import * as app from "./app";
+import SockJS from "sockjs-client";
+import {notificationStore} from "./server-noti";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -35,11 +35,15 @@ export var FollowingRels = Backbone.Collection.extend({
     model: Backbone.Model.extend({
         initialize: function() {
             this.cid = this.get("follower_id") + this.get("trader_id");
-            this.set("id", this.cid);
         },
 
         url: function() {
             return `/api/v1/follower/${this.get('follower_id')}/following/${this.get('trader_id')}`;
+        },
+
+        parse: function(data) {
+            data['id'] = data['follower_id'] + data['trader_id'];
+            return data;
         }
     }),
 
@@ -48,9 +52,9 @@ export var FollowingRels = Backbone.Collection.extend({
     },
 
     initialize: function() {
-        // DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
-        //     this.fetch();
-        // });
+        notificationStore.on("noti:deal:created noti:deal:updated", () => {
+            this.fetch();
+        });
     },
 
     parse: function(data) {
@@ -72,9 +76,9 @@ export var Follower = Backbone.Model.extend({
     },
 
     initialize: function() {
-        // DISPATCHER.on("noti:deal:created noti:deal:updated", () => {
-        //     this.get("deals").fetch();
-        // });
+        notificationStore.on("noti:deal:created noti:deal:updated", () => {
+            this.get("deals").fetch();
+        });
 
         // DISPATCHER.on("noti:account:updated", () => {
         //     this.fetch();
@@ -111,9 +115,12 @@ export var Follower = Backbone.Model.extend({
 
     follow: function(traderId) {
         var rels = this.get("following_traders");
+        console.log("here");
         return rels.create({
             "follower_id": this.id,
             "trader_id": traderId
+        }, {
+            url: "/api/v1/follower/" + this.id + "/following"
         });
     },
 
@@ -125,38 +132,6 @@ export var Follower = Backbone.Model.extend({
     }
 });
 
-
-export class NotificationStore {
-    constructor(address) {
-        this.conn = new SockJS(address);
-
-        this.conn.onopen = this.onOpen.bind(this);
-        this.conn.onmessage = this.onMessage.bind(this);
-        this.conn.onclose = this.onClose.bind(this);
-        this.conn.onError = this.onError.bind(this);
-    }
-
-    onError(e) {
-        // this.dispatcher.trigger("noti:error", e);
-    }
-
-    onOpen(e) {
-        console.log("Websocket connection established!");
-        // this.dispatcher.trigger("noti:open", e);
-    }
-
-    onMessage(e) {
-        // this.dispatcher.trigger("noti:" + e.data.headers.topic, e.data.payload);
-    }
-
-    onClose(e) {
-        // this.dispatcher.trigger("noti:close", e);
-    }
-
-    close() {
-        this.conn.close();
-    }
-}
 
 var Stock = Backbone.Model.extend({
     idAttribute: "code"

@@ -4,6 +4,7 @@ import Carousel from 'nuka-carousel';
 
 import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
 import {formatCurrency} from "../utils";
+import {notificationStore} from "../server-noti";
 
 
 var Portfolio = React.createClass({
