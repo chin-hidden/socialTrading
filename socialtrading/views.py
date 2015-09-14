@@ -156,51 +156,8 @@ def index():
     return flask.render_template("index.jinja.html")
 
 
-@only_allow(["FOLLOWER"])
-@menu.register_menu(app, '.account', u'Trang của tôi', order=1, visible_when=is_logged_in)
-@app.route("/account")
-@login_required
-def account():
-    user = models.user_service.get_user_by_username(session['user_id'])
-    if not user.initialized:
-        return redirect(url_for('.wizard'))
-    return render_template("account.jinja.html")
-
-
-@app.route("/traders")
-@menu.register_menu(app, '.traders', u'Chiến lược gia', order=2)
-def traders():
-    return render_template("traders.jinja.html")
-
-
 @app.route("/help")
 @menu.register_menu(app, '.help', u'Tìm hiểu về AutoTrade', order=3)
 def help():
     return render_template("help.jinja.html")
 
-
-@only_allow(["FOLLOWER"])
-@app.route("/wizard")
-@login_required
-def wizard():
-    return render_template("wizard.jinja.html")
-
-
-@app.route("/noti")
-def noti():
-    from . import cloner
-
-    trader01 = models.user_service.get_user_by_username('trader01')
-    cloner.order_processor.process_trader_message(trader01, {
-        'orderId': "12312",
-        'account': "13223",
-        'transactTime': 123213,
-        'tradeDate': "12323",
-        'side': 1,
-        'symbol': "VND",
-        'qty': 100,
-        'price': 121313,
-        'matchedQty': 1312,
-        'matchedPrice': 343432,
-        })
-    return "ok"
