@@ -22,9 +22,9 @@ var Portfolio = React.createClass({
 		    this.forceUpdate();
 		});
 
-		DISPATCHER.on("stock:changed", () => {
-		    this.forceUpdate();
-		});
+		// DISPATCHER.on("stock:changed", () => {
+		//     this.forceUpdate();
+		// });
 	},
 
 	render() {
@@ -51,10 +51,11 @@ var RelStrip = React.createClass({
 
 	render: function() {
 		var rel = this.props.relationship;
-		var trader = traders.get(rel.get('trader_id'));
+		var trader = this.props.traders.get(rel.get('trader_id'));
 
-		var deals = follower.get('deals').filter((deal) => {
-			return deal.get("mimicking_username") == trader.get('username') && deal.get('username') == follower.get('username');
+		var deals = this.props.follower.get('deals').filter((deal) => {
+			return deal.get("mimicking_username") == trader.get('username')
+				&& deal.get('username') == this.props.follower.get('username');
 		});
 
 		var partitionedDeals = _.partition(deals, (deal) => deal.get('status') === 'SELLING:Filled');
@@ -120,7 +121,21 @@ var RelStrip = React.createClass({
 	}
 });
 
-class DealCard extends React.Component {
+
+var DealCard = React.createClass({
+	mixins: [DependencyInjectedMixin],
+
+	propTypes: {
+		deal: React.PropTypes.object.isRequired,
+		stockStore: React.PropTypes.object.isRequired
+	},
+
+	componentDidMount() {
+		this.props.stockStore.on("change", () => {
+			this.forceUpdate();
+		});
+	},
+
 	render() {
 		var deal = this.props.deal;
 
@@ -128,7 +143,7 @@ class DealCard extends React.Component {
 		if (deal.get("status") === "SELLING:Filled") {
 		    marketPrice = deal.get("selling_price");
 		} else {
-		    marketPrice = stockStore.get(deal.get("symbol")).get("matchPrice");
+		    marketPrice = this.props.stockStore.get(deal.get("symbol")).get("matchPrice");
 		}
 		console.log(marketPrice);
 
@@ -154,7 +169,6 @@ class DealCard extends React.Component {
 			</div>
 		);
 	}
-}
-DealCard.propTypes = {
-	deal: React.PropTypes.object.isRequired
-};
+});
+
+export default Portfolio;
