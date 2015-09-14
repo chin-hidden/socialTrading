@@ -145,7 +145,6 @@ var DealCard = React.createClass({
 		} else {
 		    marketPrice = this.props.stockStore.get(deal.get("symbol")).get("matchPrice");
 		}
-		console.log(marketPrice);
 
 		var profit = deal.get("quantity") * (marketPrice - deal.get("buying_price"));
 		var cardClassNames = "deal-card";
