@@ -11,5 +11,5 @@ import $ from "jquery";
 // });
 
 // DISPATCHER.on("noti:deal:created", (eventName) => {
-// 	$.notify("Đã mua cổ phiếu mới!");
+//     $.notify("Đã mua cổ phiếu mới!");
 // });
