@@ -5,12 +5,15 @@ import * as BS from "react-bootstrap";
 import _ from "underscore";
 import Carousel from 'nuka-carousel';
 
+import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
 import RiskSlider from "./RiskSlider.jsx";
 import MoneySlider from "./MoneySlider.jsx";
 import {formatCurrency, getMarketInfo, formatPercent} from "../utils";
 
 
-var Wizard = React.createClass({
+var WizardDialog = React.createClass({
+    mixins: [DependencyInjectedMixin],
+
     propTypes: {
         follower: React.PropTypes.object.isRequired,
     },
@@ -71,7 +74,7 @@ var Wizard = React.createClass({
         var Modal = BS.Modal,
             Button = BS.Button;
         return (
-            <Modal className="wizard" {...this.props}>
+            <Modal className="wizard" {...this.props} bsSize="large">
               <Modal.Header closeButton>
                 <Modal.Title>Xin chào {this.props.follower.get("name")}</Modal.Title>
               </Modal.Header>
@@ -226,4 +229,4 @@ var TraderLine = React.createClass({
 });
 
 
-export default Wizard;
+export default WizardDialog;

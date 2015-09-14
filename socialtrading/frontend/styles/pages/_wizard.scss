@@ -1,4 +1,18 @@
-.container-wizard {
+.wizard {
+  .modal-header {
+    background-color: $vnd-orange;
+    color: white;
+    font-weight: bold;
+  }
+
+  .modal-content {
+    border: none;react
+  }
+
+  .modal-footer .btn-toolbar {
+    float: right;
+  }
+
   .trader-line {
     padding: 1rem;
     border: 1px solid transparent;
@@ -48,15 +62,11 @@
     text-transform: uppercase;
   }
 
-  .wizard {
-    /*font-size: 18px;*/
-  }
-
-  .wizard .step {
+  .step {
     margin-bottom: 20px;
   }
 
-  .wizard .step h3 {
+  .step h3 {
     margin-bottom: 20px;
   }
 

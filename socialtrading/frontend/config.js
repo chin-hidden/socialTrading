@@ -17,7 +17,7 @@ System.config({
 System.config({
   "map": {
     "babel": "npm:babel-core@5.8.22",
-    "babel-runtime": "npm:babel-runtime@5.8.20",
+    "babel-runtime": "npm:babel-runtime@5.8.24",
     "backbone": "npm:backbone@1.2.1",
     "bootstrap": "github:twbs/bootstrap@3.3.5",
     "bootstrap-sass": "npm:bootstrap-sass@3.3.5",
@@ -26,13 +26,14 @@ System.config({
     "chart": "github:nnnick/Chart.js@1.0.2",
     "clean-css": "npm:clean-css@3.3.9",
     "core-js": "npm:core-js@0.9.18",
-    "css": "github:systemjs/plugin-css@0.1.13", 
+    "css": "github:systemjs/plugin-css@0.1.13",
     "highslide-software/highcharts.com": "github:highslide-software/highcharts.com@4.1.8",
     "jpillora/notifyjs": "github:jpillora/notifyjs@0.3.2",
     "jquery": "github:components/jquery@2.1.4",
     "leongersen/noUiSlider": "github:leongersen/noUiSlider@8.0.2",
     "nuka-carousel": "npm:nuka-carousel@0.0.17",
     "react": "npm:react@0.13.3",
+    "react-bootstrap": "npm:react-bootstrap@0.25.2",
     "react-highcharts": "npm:react-highcharts@2.0.0",
     "react-imageloader": "npm:react-imageloader@2.1.0",
     "sockjs-client": "npm:sockjs-client@1.0.3",
@@ -120,7 +121,7 @@ System.config({
     "npm:assert@1.3.0": {
       "util": "npm:util@0.10.3"
     },
-    "npm:babel-runtime@5.8.20": {
+    "npm:babel-runtime@5.8.24": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:backbone@1.2.1": {
@@ -128,9 +129,6 @@ System.config({
       "underscore": "npm:underscore@1.8.3"
     },
     "npm:bourbon@4.2.4": {
-      "path": "github:jspm/nodelibs-path@0.1.0"
-    },
-    "npm:bourbon@5.0.0-alpha.0": {
       "path": "github:jspm/nodelibs-path@0.1.0"
     },
     "npm:browserify-aes@1.0.3": {
@@ -170,6 +168,11 @@ System.config({
       "base64-js": "npm:base64-js@0.0.8",
       "ieee754": "npm:ieee754@1.1.6",
       "is-array": "npm:is-array@1.0.1"
+    },
+    "npm:classnames@2.1.3": {
+      "assert": "github:jspm/nodelibs-assert@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.0"
     },
     "npm:clean-css@3.3.9": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -303,6 +306,10 @@ System.config({
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
+    "npm:invariant@2.1.0": {
+      "envify": "npm:envify@3.4.0",
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
     "npm:jstransform@10.1.0": {
       "base62": "npm:base62@0.1.1",
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
@@ -310,6 +317,9 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "process": "github:jspm/nodelibs-process@0.1.1",
       "source-map": "npm:source-map@0.1.31"
+    },
+    "npm:lodash@3.10.1": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:miller-rabin@2.0.1": {
       "bn.js": "npm:bn.js@2.2.0",
@@ -368,6 +378,17 @@ System.config({
       "crypto": "github:jspm/nodelibs-crypto@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
+    "npm:react-bootstrap@0.25.2": {
+      "babel-runtime": "npm:babel-runtime@5.8.24",
+      "classnames": "npm:classnames@2.1.3",
+      "dom-helpers": "npm:dom-helpers@2.4.0",
+      "keycode": "npm:keycode@2.1.0",
+      "lodash": "npm:lodash@3.10.1",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "react": "npm:react@0.13.3",
+      "react-overlays": "npm:react-overlays@0.4.4",
+      "uncontrollable": "npm:uncontrollable@3.1.2"
+    },
     "npm:react-highcharts@2.0.0": {
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.1",
@@ -375,6 +396,16 @@ System.config({
     },
     "npm:react-imageloader@2.1.0": {
       "react": "npm:react@0.13.3"
+    },
+    "npm:react-overlays@0.4.4": {
+      "classnames": "npm:classnames@2.1.3",
+      "dom-helpers": "npm:dom-helpers@2.4.0",
+      "react": "npm:react@0.13.3",
+      "react-prop-types": "npm:react-prop-types@0.2.2",
+      "warning": "npm:warning@2.0.0"
+    },
+    "npm:react-prop-types@0.2.2": {
+      "warning": "npm:warning@2.0.0"
     },
     "npm:react-tween-state@0.0.5": {
       "tween-functions": "npm:tween-functions@1.0.2"
@@ -445,6 +476,11 @@ System.config({
     "npm:timers-browserify@1.4.1": {
       "process": "npm:process@0.11.1"
     },
+    "npm:uncontrollable@3.1.2": {
+      "invariant": "npm:invariant@2.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "react": "npm:react@0.13.3"
+    },
     "npm:url-parse@0.2.3": {
       "querystringify": "npm:querystringify@0.0.3",
       "requires-port": "npm:requires-port@0.0.1"
@@ -465,6 +501,10 @@ System.config({
     },
     "npm:vm-browserify@0.0.4": {
       "indexof": "npm:indexof@0.0.1"
+    },
+    "npm:warning@2.0.0": {
+      "envify": "npm:envify@3.4.0",
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:websocket-driver@0.6.2": {
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",

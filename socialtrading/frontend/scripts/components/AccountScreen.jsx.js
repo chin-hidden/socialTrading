@@ -8,6 +8,7 @@ import Backbone from "backbone";
 import {formatCurrency, getMarketInfo, formatPercent, dealStatusName} from "../utils";
 import RiskSlider from "./RiskSlider.jsx";
 import Portfolio from "./Portfolio.jsx";
+import WizardDialog from "./WizardDialog.jsx";
 import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
 import * as app from "../app";
 
@@ -22,7 +23,8 @@ export var AccountScreen = React.createClass({
 
     getInitialState: function() {
         return {
-            activeTab: "overview"
+            activeTab: "overview",
+            showWizard: !this.props.follower.get("initialized")
         };
     },
 
@@ -61,6 +63,7 @@ export var AccountScreen = React.createClass({
 
         return (
             <div className="account-screen">
+                <WizardDialog show={this.state.showWizard} onHide={this.hideWizard}/>
                 <InfoBox/>
 
                 <ul className="nav nav-tabs">
@@ -79,6 +82,12 @@ export var AccountScreen = React.createClass({
                 {tabContent}
             </div>
         );
+    },
+
+    hideWizard() {
+        this.setState({
+            showWizard: false
+        });
     }
 });
 
