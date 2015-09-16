@@ -198,9 +198,9 @@ class OrderProcessor:
                            follower: models.Follower):
         new_price = self.clone_price(follower, trader_order)
 
-        # FIXME: Maybe we should loosen up a bit here?
-        if follower.next_money_slot() < new_price:
-            logger.debug("Follower doesn't have enough money.")
+        # Assert that the follower has enough money to buy at least 100 shares.
+        if follower.next_money_slot() < new_price * 100:
+            logger.debug("Follower %s doesn't have enough money.", follower.name)
             return
 
         return Order(
@@ -208,7 +208,8 @@ class OrderProcessor:
             account_number=follower.account_number,
             price=new_price,
             symbol=trader_order.symbol,
-            quantity=(follower.next_money_slot() // new_price) // 10 * 10,
+            # Always
+            quantity=(follower.next_money_slot() // new_price) // 100 * 100,
             side=trader_order.side,
             type=OrderType.MP
         )
