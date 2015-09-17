@@ -198,6 +198,7 @@ class Follower(Account):
     }
 
     def next_money_slot(self):
+        # FIXME: We would want the slot size to be dynamically calculated
         SLOT_SIZE = 10000000  # 10 million VND
         quo, rem = divmod(self.cash, SLOT_SIZE)
         if quo == 0:

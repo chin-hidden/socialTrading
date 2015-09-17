@@ -16,6 +16,7 @@ import typing
 import socialtrading
 from . import models
 from . import notification
+from . import market_rules
 from .models import db, OrderSide, OrderType
 
 
@@ -198,8 +199,12 @@ class OrderProcessor:
                            follower: models.Follower):
         new_price = self.clone_price(follower, trader_order)
 
+        stock = market_rules.get_stock_from_symbol(trader_order.symbol)
+        floor = market_rules.get_floor_from_stock(stock)
+        volume_step = floor.volume_step(100)
+
         # Assert that the follower has enough money to buy at least 100 shares.
-        if follower.next_money_slot() < new_price * 100:
+        if follower.next_money_slot() < new_price * volume_step:
             logger.debug("Follower %s doesn't have enough money.", follower.name)
             return
 
@@ -209,7 +214,7 @@ class OrderProcessor:
             price=new_price,
             symbol=trader_order.symbol,
             # Always
-            quantity=(follower.next_money_slot() // new_price) // 100 * 100,
+            quantity=(follower.next_money_slot() // new_price) // volume_step * volume_step,
             side=trader_order.side,
             type=OrderType.MP
         )
@@ -230,10 +235,14 @@ class OrderProcessor:
         )
 
     def clone_price(self, follower: models.Follower, trader_order: ExecutedOrderResponse) -> float:
+        stock = market_rules.get_stock_from_symbol(trader_order.symbol)
+        floor = market_rules.get_floor_from_stock(stock)
+
         # Buying price = Init_price*(1 + (risk-0.5)*40%)
         # Selling price = Init_print*(1-(risk-0.5)*40%)
         coef = 1 if trader_order.side == OrderSide.NORMAL_BUY else -1
-        return trader_order.price * (1 + coef * (follower.risk_factor / 100 - 0.5) * 0.04)
+        new_price = trader_order.price * (1 + coef * (follower.risk_factor / 100 - 0.5) * 0.04)
+        return floor.round_price(new_price)
 
     def on_follower_order_executed(self,
                                    follower: models.Follower,
