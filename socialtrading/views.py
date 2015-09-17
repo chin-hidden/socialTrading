@@ -58,6 +58,7 @@ def login_arguments():
         "next": "/app/account"
     }
 
+
 @app.route('/login', methods=['GET', 'POST'])
 @menu.register_menu(app, '.login', u'Đăng nhập', order=4, visible_when=lambda: not is_logged_in(), endpoint_arguments_constructor=login_arguments)
 def login():
@@ -165,3 +166,42 @@ def index():
 def help():
     return render_template("help.jinja.html")
 
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "GET":
+        context = {
+            "traders": models.Trader.query.all()
+        }
+        return render_template("admin.jinja.html", **context)
+
+    import subprocess
+
+    action = request.form["action"]
+    if action == "reset_db":
+        subprocess.call("make db", shell=True)
+
+    if action == "fake_trader_signal":
+        from . import cloner
+        import datetime
+
+        trader = models.user_service.get_user_by_username(request.form["trader_id"])
+        side = cloner.OrderSide.NORMAL_SELL if request.form["side"] == "selling" else cloner.OrderSide.NORMAL_BUY
+
+        order_resp = cloner.ExecutedOrderResponse(
+            "random-id",
+            trader.account_number,
+            datetime.datetime.now(),
+            "now",
+            side,
+            request.form["symbol"],
+            int(request.form["amount"]),
+            float(request.form["price"]),
+            0,
+            0,
+            "SEND"
+        )
+
+        cloner.order_processor.on_trader_order_executed(trader, order_resp)
+
+    return redirect("/admin")

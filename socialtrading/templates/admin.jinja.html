@@ -1,0 +1,66 @@
+{% extends "base.jinja.html" %}
+
+{% block content %}
+<div class="container">
+
+  <style scoped>
+    form {
+      margin-bottom: 1em;
+      max-width: 20em;
+    }
+
+    form > * {
+      display: flex;
+      margin-bottom: 0.5em;
+    }
+
+    form > * > * {
+      margin-right: 1em;
+    }
+  </style>
+
+  <form action="" method="POST">
+    <input type="hidden" name="action" value="reset_db">
+    <input type="submit" value="Reset DB" class="btn btn-danger">
+  </form>
+
+  <form action="" method="POST">
+    <input name="action" value="fake_trader_signal" type="hidden">
+
+    Fake trader signal:
+
+    <select name="trader_id" class="form-control">
+      {% for trader in traders %}
+      <option value="{{ trader.id }}">{{ trader.name }}</option>
+      {% endfor %}
+    </select>
+
+    <!-- <input name="symbol" list="symbols" placeholder="symbol" class="form-control"> -->
+    <select name="symbol" class="form-control">
+      <option value="ACB">ACB</option>
+      <option value="SSI">SSD</option>
+      <option value="VND" selected="selected">VND</option>
+    </select>
+
+    <input name="amount" type="number" placeholder="amount" class="form-control">
+    <input name="price" type="number" placeholder="price" class="form-control">
+
+    <div>
+      <div><input name="side" type="radio" value="buying" checked> Buying</div>
+      <div><input name="side" type="radio" value="selling"> Selling</div>
+    </div>
+
+    <div>
+      <div><input name="matched" type="radio" value="false" checked> Matched</div>
+      <div><input name="matched" type="radio" value="true"> New signal</div>
+    </div>
+
+    <input type="submit" value="Fake" class="btn btn-danger">
+
+    <datalist id="symbols">
+      <option value="VND">
+      <option value="ACB">
+    </datalist>
+  </form>
+</div>
+{% endblock %}
