@@ -1,9 +1,10 @@
 import React from "react";
+import * as BS from "react-bootstrap";
 import _ from "underscore";
 import Carousel from 'nuka-carousel';
 
 import DependencyInjectedMixin from "./DependencyInjectedMixin.jsx";
-import {formatCurrency} from "../utils";
+import * as utils from "../utils";
 import {notificationStore} from "../server-noti";
 
 
@@ -101,7 +102,7 @@ var RelStrip = React.createClass({
                     <table className="ui-label">
                         <tr>
                             <td>kết quả:</td>
-                            <td>{formatCurrency(rel.get("profit"))}</td>
+                            <td>{utils.formatCurrency(rel.get("profit"))}</td>
                         </tr>
                     </table>
                 </div>
@@ -131,6 +132,12 @@ var DealCard = React.createClass({
         stockStore: React.PropTypes.object.isRequired
     },
 
+    getInitialState() {
+        return {
+            showDealDetail: false
+        };
+    },
+
     componentDidMount() {
         this.props.stockStore.on("change", () => {
             this.forceUpdate();
@@ -139,15 +146,9 @@ var DealCard = React.createClass({
 
     render() {
         var deal = this.props.deal;
+        var marketPrice = deal.getMarketPrice();
 
-        var marketPrice = 0;
-        if (deal.get("status") === "SELLING:Filled") {
-            marketPrice = deal.get("selling_price");
-        } else {
-            marketPrice = this.props.stockStore.get(deal.get("symbol")).get("matchPrice");
-        }
-
-        var profit = deal.get("quantity") * (marketPrice - deal.get("buying_price"));
+        var profit = deal.getProfit();
         var cardClassNames = "deal-card";
 
         if (profit < 0) {
@@ -155,18 +156,107 @@ var DealCard = React.createClass({
         }
 
         return (
-            <div className={cardClassNames}>
+            <div className={cardClassNames} onClick={this.toggleDetail.bind(this, true)}>
                 <div className="symbol">{deal.get('symbol')}</div>
                 <div className="value">
                     <div className="ui-label">Giá trị</div>
-                    <div>{formatCurrency(deal.get('quantity') * deal.get('buying_price'))}</div>
+                    <div>{utils.formatCurrency(deal.get('quantity') * deal.get('buying_price'))}</div>
                 </div>
 
                 <div className="profit">
                     <div className="ui-label">Kết quả</div>
-                    <div>{formatCurrency(profit)}</div>
+                    <div>{utils.formatCurrency(profit)}</div>
                 </div>
+
+                <DealDetail {...this.props}
+                            show={this.state.showDealDetail}
+                            onHide={this.toggleDetail.bind(this, false)}/>
             </div>
+        );
+    },
+
+    toggleDetail(isShow) {
+        this.setState({
+            showDealDetail: isShow
+        });
+    }
+});
+
+
+var DealDetail = React.createClass({
+    propTypes: {
+        deal: React.PropTypes.object.isRequired
+    },
+
+    render() {
+        var Modal = BS.Modal,
+            Button = BS.Button,
+            ButtonToolbar = BS.ButtonToolbar,
+            Row = BS.Row,
+            Col = BS.Col,
+            deal = this.props.deal;
+
+        var stock = this.props.stockStore.get(this.props.deal.get("symbol"));
+
+        return (
+            <Modal className="deal-detail" {...this.props}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Chi tiết về giao dịch này</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <dl>
+                        <Row>
+                            <Col md={6}>
+                                <dt>Mã CK</dt>
+                                <dd>{deal.get("symbol")}</dd>
+
+                                <dt>Mua theo</dt>
+                                <dd>{deal.get("mimicking_username")}</dd>
+
+                                <dt>Trạng thái</dt>
+                                <dd>{utils.dealStatusName(deal.get("status"))}</dd>
+
+                                <dt>Sàn</dt>
+                                <dd>{stock.get("floor")}</dd>
+
+                                <dt>Ngày mua</dt>
+                                <dd>{deal.get("buying_date")}</dd>
+
+                                <dt>Ngày bán</dt>
+                                <dd>{deal.get("selling_date") || "-"}</dd>
+                            </Col>
+
+                            <Col md={6}>
+                                <dt>Số lượng</dt>
+                                <dd>{deal.get("quantity")}</dd>
+
+                                <dt>Giá vốn</dt>
+                                <dd>{utils.formatCurrency(deal.get("buying_price"), true)}</dd>
+
+                                <dt>Giá hiện tại</dt>
+                                <dd>{utils.formatCurrency(deal.getMarketPrice(), true)}</dd>
+
+                                <dt>Tổng giá vốn (1)</dt>
+                                <dd>{utils.formatCurrency(deal.get("quantity") * deal.get("buying_price"), true)}</dd>
+
+                                <dt>Tổng giá trị thị trường (2)</dt>
+                                <dd>{utils.formatCurrency(deal.get("quantity") * deal.getMarketPrice(), true)}</dd>
+
+                                <dt>Kết quả (2 - 1)</dt>
+                                <dd>{utils.formatCurrency(deal.getProfit(), true)}</dd>
+                            </Col>
+                        </Row>
+                    </dl>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <ButtonToolbar className="pull-right">
+                        <Button bsStyle='primary' onClick={() => alert("Tính năng này đang được xây dựng. \nQuý khách vui lòng quay lại sau.")}>Bán</Button>
+                        <Button onClick={this.props.onHide}>Đóng</Button>
+                    </ButtonToolbar>
+                </Modal.Footer>
+            </Modal>
         );
     }
 });

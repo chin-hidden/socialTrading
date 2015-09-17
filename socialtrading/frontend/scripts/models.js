@@ -2,6 +2,7 @@ import Backbone from "backbone";
 import _ from "underscore";
 import SockJS from "sockjs-client";
 import {notificationStore} from "./server-noti";
+import * as app from "./app";
 
 //
 // These models are the "stores" in Facebook's Flux architecture
@@ -63,7 +64,22 @@ export var FollowingRels = Backbone.Collection.extend({
 });
 
 
+var Deal = Backbone.Model.extend({
+    getMarketPrice() {
+        if (this.get("status") === "SELLING:Filled") {
+            return this.get("selling_price");
+        } else {
+            return app.stockStore.get(this.get("symbol")).get("matchPrice");
+        }
+    },
+
+    getProfit() {
+        return this.get("quantity") * (this.getMarketPrice() - this.get("buying_price"));
+    }
+});
+
 var Deals = Backbone.Collection.extend({
+    model: Deal,
     parse: function(data) {
         return data.result;
     }
@@ -134,10 +150,12 @@ export var Follower = Backbone.Model.extend({
 
 
 var Stock = Backbone.Model.extend({
-    idAttribute: "code"
+    idAttribute: "code",
+
+    initialize() {
+        this.set("floor", "HOSE");
+    }
 });
-
-
 
 // FIXME: Add functionality to register a specific stock symbol
 export var StockStore = Backbone.Collection.extend({

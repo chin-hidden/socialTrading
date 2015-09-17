@@ -184,6 +184,8 @@
     flex-direction: column;
     min-width: 5em;
     background-color: white;
+    box-shadow: $paper-shadow;
+    cursor: pointer;
 
     &.unprofitable {
       $red: #ff3636;
@@ -221,8 +223,15 @@
     }
   }
 
-
   .btn-add-trader {
     margin-top: 1em;
+  }
+}
+
+
+.deal-detail {
+  dd {
+    margin-left: 1em;
+    margin-bottom: 0.5em;
   }
 }
