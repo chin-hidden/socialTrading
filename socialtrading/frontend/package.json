@@ -51,7 +51,6 @@
     }
   },
   "devDependencies": {
-    "eslint-plugin-react": "^3.3.0",
     "jspm": "^0.15.7"
   }
 }
