@@ -66,6 +66,8 @@ class OrderProcessor:
     def on_trader_order_executed(self, trader: models.Trader, trader_order: ExecutedOrderResponse):
         try:
             for following_rel in trader.follower_assocs:
+                logger.debug("Cloning %s's %s order for %s", trader.username, trader_order.side, following_rel.follower_id)
+
                 follower = following_rel.follower
 
                 # FIXME: this code is blocking so it would take a while to process
