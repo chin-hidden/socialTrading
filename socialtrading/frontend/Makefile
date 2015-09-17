@@ -2,11 +2,10 @@ all: bundle
 
 deps:
 	npm install
+	jspm install
 
 js:
-	jspm bundle-sfx scripts/accountapp dist/account.bundle.js --minify
-	jspm bundle-sfx scripts/wizardapp dist/wizard.bundle.js --minify
-
+	jspm bundle-sfx scripts/app dist/app.bundle.js --minify
 bundle: js
 
 .PHONY: js all bundle deps

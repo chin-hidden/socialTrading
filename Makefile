@@ -1,6 +1,10 @@
 # Install dependencies
 deps:
 	env python3.4 -m pip install -r requirements.txt
+	cd socialtrading/frontend && make deps
+
+prep:
+	cd socialtrading/frontend && make
 
 # Launch the server
 launch:
