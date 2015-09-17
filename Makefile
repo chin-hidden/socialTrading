@@ -1,3 +1,5 @@
+deploy: deps prep
+
 # Install dependencies
 deps:
 	env python3.4 -m pip install -r requirements.txt
@@ -7,10 +9,10 @@ prep:
 	cd socialtrading/frontend && make
 
 # Launch the server
-launch:
+run:
 	./launcher.py
 
-launch-production:
+run-prod:
 	CONFIG_FILE=$(PWD)/production_configs.py ./launcher.py
 
 # Create the database
