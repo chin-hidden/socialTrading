@@ -7,9 +7,7 @@ import requests
 from collections import namedtuple
 
 Stock = namedtuple('Stock', ['symbol', 'company_name', 'floor_code'])
-stocks = [
-    Stock('VND', 'VNDIRECT', '01')
-]
+stocks = []
 
 
 class PriceService:
