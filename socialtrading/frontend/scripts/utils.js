@@ -1,6 +1,6 @@
 export function formatCurrency(amount, full) {
-    if (amount === undefined) {
-        amount = NaN;
+    if (typeof amount !== "number" || isNaN(amount)) {
+        return "-";
     }
 
     if (full) {
@@ -16,15 +16,15 @@ export function formatCurrency(amount, full) {
 }
 
 export function formatAmount(amount) {
-    if (amount === undefined) {
-        amount = NaN;
+    if (typeof amount !== "number" || isNaN(amount)) {
+        return "-";
     }
     return amount.toLocaleString("vi");
 }
 
 export function formatPercent(amount) {
-    if (amount === undefined) {
-        amount = NaN;
+    if (typeof amount !== "number" || isNaN(amount)) {
+        return "-";
     }
     return amount.toLocaleString("vi", {style: "percent", maximumFractionDigits: 2});
 }
