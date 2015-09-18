@@ -131,7 +131,6 @@ export var Follower = Backbone.Model.extend({
 
     follow: function(traderId) {
         var rels = this.get("following_traders");
-        console.log("here");
         return rels.create({
             "follower_id": this.id,
             "trader_id": traderId
@@ -152,8 +151,12 @@ export var Follower = Backbone.Model.extend({
 var Stock = Backbone.Model.extend({
     idAttribute: "code",
 
-    initialize() {
-        this.set("floor", "HOSE");
+    getFloor() {
+        return {
+            "02": "HNX",
+            "10": "HOSE",
+            "03": "UPCOM"
+        }[this.get("floorCode")];
     }
 });
 
@@ -183,10 +186,8 @@ export var StockStore = Backbone.Collection.extend({
 
             _.each(data, (stockInfo) => {
                 var parsed = this.parseStockMessage(stockInfo);
-                this.add(parsed);
-
-                // this.dispatcher.trigger(`stock:changed`);
-                // this.dispatcher.trigger(`stock:${parsed.code}:changed`);
+                var stock = new Stock(parsed);
+                this.add(stock);
             });
         };
     },

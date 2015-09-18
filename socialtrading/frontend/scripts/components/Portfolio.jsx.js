@@ -139,40 +139,46 @@ var DealCard = React.createClass({
     },
 
     componentDidMount() {
-        this.props.stockStore.on("change", () => {
+        this.props.stockStore.on("update", () => {
             this.forceUpdate();
         });
     },
 
     render() {
-        var deal = this.props.deal;
-        var marketPrice = deal.getMarketPrice();
+        try {
+            var deal = this.props.deal;
+            var marketPrice = deal.getMarketPrice();
+            var profit = deal.getProfit();
 
-        var profit = deal.getProfit();
-        var cardClassNames = "deal-card";
+            var cardClassNames = "deal-card";
 
-        if (profit < 0) {
-            cardClassNames += " unprofitable";
+            if (profit < 0) {
+                cardClassNames += " unprofitable";
+            }
+
+            return (
+                <div className={cardClassNames} onClick={this.toggleDetail.bind(this, true)}>
+                    <div className="symbol">{deal.get('symbol')}</div>
+                    <div className="value">
+                        <div className="ui-label">Giá trị</div>
+                        <div>{utils.formatCurrency(deal.get('quantity') * deal.get('buying_price'))}</div>
+                    </div>
+
+                    <div className="profit">
+                        <div className="ui-label">Kết quả</div>
+                        <div>{utils.formatCurrency(profit)}</div>
+                    </div>
+
+                    <DealDetail {...this.props}
+                                show={this.state.showDealDetail}
+                                onHide={this.toggleDetail.bind(this, false)}/>
+                </div>
+            );
+        } catch (e) {
+            return (
+                <div className="deal-card">Loading</div>
+            );
         }
-
-        return (
-            <div className={cardClassNames} onClick={this.toggleDetail.bind(this, true)}>
-                <div className="symbol">{deal.get('symbol')}</div>
-                <div className="value">
-                    <div className="ui-label">Giá trị</div>
-                    <div>{utils.formatCurrency(deal.get('quantity') * deal.get('buying_price'))}</div>
-                </div>
-
-                <div className="profit">
-                    <div className="ui-label">Kết quả</div>
-                    <div>{utils.formatCurrency(profit)}</div>
-                </div>
-
-                <DealDetail {...this.props}
-                            show={this.state.showDealDetail}
-                            onHide={this.toggleDetail.bind(this, false)}/>
-            </div>
-        );
     },
 
     toggleDetail(isShow) {
@@ -185,6 +191,7 @@ var DealCard = React.createClass({
 
 var DealDetail = React.createClass({
     propTypes: {
+        stockStore: React.PropTypes.object.isRequired,
         deal: React.PropTypes.object.isRequired
     },
 
@@ -218,7 +225,7 @@ var DealDetail = React.createClass({
                                 <dd>{utils.dealStatusName(deal.get("status"))}</dd>
 
                                 <dt>Sàn</dt>
-                                <dd>{stock.get("floor")}</dd>
+                                <dd>{stock.getFloor()}</dd>
 
                                 <dt>Ngày mua</dt>
                                 <dd>{deal.get("buying_date")}</dd>
