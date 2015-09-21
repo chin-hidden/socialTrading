@@ -203,58 +203,56 @@ var DealDetail = React.createClass({
             Col = BS.Col,
             deal = this.props.deal;
 
-        var stock = this.props.stockStore.get(this.props.deal.get("symbol"));
+        var symbol = this.props.deal.get("symbol");
+        var stock = this.props.stockStore.get(symbol);
+        var symbolDetailLink = `https://www.vndirect.com.vn/portal/tong-quan/${symbol.toLowerCase()}.shtml`;
 
         return (
             <Modal className="deal-detail" {...this.props}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Chi tiết về giao dịch này</Modal.Title>
+                    <Modal.Title>
+                        <div className="symbol">
+                            <a href={symbolDetailLink} target="_blank">{deal.get("symbol")}</a>
+                        </div>
+
+                        <div className="value">
+                            Giá trị<br/>
+                            <span className="number">{utils.formatCurrency(deal.getMarketValue())}</span>
+                        </div>
+
+                        <div className="profit">
+                            Kết quả<br/>
+                            <span className="number">{utils.formatCurrency(deal.getProfit())}</span>
+                        </div>
+                    </Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
-                    <dl>
-                        <Row>
-                            <Col md={6}>
-                                <dt>Mã CK</dt>
-                                <dd>{deal.get("symbol")}</dd>
+                    <div>
+                        <table className="table table-colored">
+                            <tr>
+                                <th>Số lượng</th>
+                                <th>Giá vốn</th>
+                                <th>Giá thị trường</th>
+                                <th>Tổng vốn</th>
+                                <th>Tổng giá trị thị trường</th>
+                                <th>Lãi/lỗ</th>
+                            </tr>
 
-                                <dt>Mua theo</dt>
-                                <dd>{deal.get("mimicking_username")}</dd>
+                            <tr>
+                                <td>{deal.get("quantity")}</td>
+                                <td>{utils.formatCurrency(deal.get("buying_price"), true)}</td>
+                                <td>{utils.formatCurrency(deal.getMarketPrice(), true)}</td>
+                                <td>{utils.formatCurrency(deal.getBuyingValue(), true)}</td>
+                                <td>{utils.formatCurrency(deal.getMarketValue(), true)}</td>
+                                <td>{utils.formatCurrency(deal.getProfit(), true)}</td>
+                            </tr>
+                        </table>
+                    </div>
 
-                                <dt>Trạng thái</dt>
-                                <dd>{utils.dealStatusName(deal.get("status"))}</dd>
+                    <div>
 
-                                <dt>Sàn</dt>
-                                <dd>{stock.getFloor()}</dd>
-
-                                <dt>Ngày mua</dt>
-                                <dd>{deal.get("buying_date")}</dd>
-
-                                <dt>Ngày bán</dt>
-                                <dd>{deal.get("selling_date") || "-"}</dd>
-                            </Col>
-
-                            <Col md={6}>
-                                <dt>Số lượng</dt>
-                                <dd>{deal.get("quantity")}</dd>
-
-                                <dt>Giá vốn</dt>
-                                <dd>{utils.formatCurrency(deal.get("buying_price"), true)}</dd>
-
-                                <dt>Giá hiện tại</dt>
-                                <dd>{utils.formatCurrency(deal.getMarketPrice(), true)}</dd>
-
-                                <dt>Tổng giá vốn (1)</dt>
-                                <dd>{utils.formatCurrency(deal.get("quantity") * deal.get("buying_price"), true)}</dd>
-
-                                <dt>Tổng giá trị thị trường (2)</dt>
-                                <dd>{utils.formatCurrency(deal.get("quantity") * deal.getMarketPrice(), true)}</dd>
-
-                                <dt>Kết quả (2 - 1)</dt>
-                                <dd>{utils.formatCurrency(deal.getProfit(), true)}</dd>
-                            </Col>
-                        </Row>
-                    </dl>
+                    </div>
                 </Modal.Body>
 
                 <Modal.Footer>

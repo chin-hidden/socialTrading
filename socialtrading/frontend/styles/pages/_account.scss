@@ -228,10 +228,33 @@
   }
 }
 
+.modal.deal-detail {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
 
-.deal-detail {
-  dd {
-    margin-left: 1em;
-    margin-bottom: 0.5em;
+  .modal-title {
+    @include clearfix;
+
+    >div {
+      float: left;
+      margin-right: 24px;
+      text-align: center;
+      font-size: 24px;
+
+      span.number {
+        font-size: 36px;
+      }
+    }
+
+    .symbol {
+      font-size: 72px;
+      font-weight: bold;
+      color: green;
+    }
+  }
+
+  .modal-dialog {
+    width: 40em;
   }
 }

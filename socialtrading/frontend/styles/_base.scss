@@ -1,11 +1,21 @@
+
+// Colors
 $vnd-orange: rgb(243, 145, 0);
 $vnd-dark-gray: rgb(124, 124, 124);
 $vnd-light-gray: rgb(121, 121, 121);
 $vnd-milky: rgb(254, 247, 190);
 
+$brand-primary: $vnd-orange;
+$brand-info: $vnd-milky;
+
+// #f0ad4e
+// #d9534f
+// #5bc0de
+// #5cb85c
+
 
 // Iconography $icon-font-path: "../jspm_packages/npm/bootstrap-
-// sass@3.3.5/assets/fonts/bootstrap/";
+// sass@3.3.5/assets/fonts/trap/";
 //
 // FIXME: This is a hack as the above line doesn't work. The generated CSS
 // looks okay but the browser never loads the font files.
@@ -25,6 +35,12 @@ $font-size-base: 16px;
 
 // $paper-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
 $paper-shadow: 2px 3px 10px #DDD;
+
+
+// Modal
+$modal-padding: 1em;
+$modal-inner-padding: $modal-padding;
+$modal-title-padding: $modal-padding;
 
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;

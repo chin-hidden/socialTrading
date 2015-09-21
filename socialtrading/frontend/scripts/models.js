@@ -73,6 +73,14 @@ var Deal = Backbone.Model.extend({
         }
     },
 
+    getBuyingValue() {
+        return this.get("quantity") * this.get("buying_price");
+    },
+
+    getMarketValue() {
+        return this.get("quantity") * this.getMarketPrice();
+    },
+
     getProfit() {
         return this.get("quantity") * (this.getMarketPrice() - this.get("buying_price"));
     }

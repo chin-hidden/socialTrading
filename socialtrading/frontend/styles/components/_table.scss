@@ -1,0 +1,10 @@
+.table-colored {
+  tr:first-child {
+    background-color: $brand-primary;
+    color: white;
+  }
+
+  tr {
+    background-color: $brand-info;
+  }
+}
