@@ -16,8 +16,13 @@ var TraderListingScreen = React.createClass({
     },
 
     componentDidMount: function() {
-        this.props.follower.on('change', this.forceUpdate.bind(this));
-        this.props.traders.on('change update', this.forceUpdate.bind(this));
+        this.props.follower.on('change', () => {
+            this.forceUpdate();
+        });
+
+        this.props.traders.on('change update', () => {
+            this.forceUpdate();
+        });
     },
 
     render: function() {
