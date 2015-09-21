@@ -2,7 +2,6 @@
 
 {% block content %}
 <div class="container">
-
   <style scoped>
     form {
       margin-bottom: 1em;
@@ -37,9 +36,9 @@
 
     <!-- <input name="symbol" list="symbols" placeholder="symbol" class="form-control"> -->
     <select name="symbol" class="form-control">
-      <option value="ACB">ACB</option>
-      <option value="SSI">SSD</option>
-      <option value="VND" selected="selected">VND</option>
+      {% for stock in stocks %}
+      <option value="{{ stock.symbol }}" {% if stock.symbol == "VND" %}selected{% endif %}>{{stock.symbol}}</option>
+      {% endfor %}
     </select>
 
     <input name="amount" step="100" type="number" placeholder="amount" class="form-control">

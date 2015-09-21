@@ -85,5 +85,11 @@ def run_order_processing_thread():
     order_processing_thread.start()
 
 
+@app.before_first_request
+def prefetch_stock_info():
+    from socialtrading.market_rules import prefetch_stock_info
+    threading.Thread(target=prefetch_stock_info).start()
+
+
 # Load the view functions for their decorator side effect
 import socialtrading.views

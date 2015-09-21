@@ -169,9 +169,11 @@ def help():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    from . import market_rules
     if request.method == "GET":
         context = {
-            "traders": models.Trader.query.all()
+            "traders": models.Trader.query.all(),
+            "stocks": market_rules.stocks
         }
         return render_template("admin.jinja.html", **context)
 
